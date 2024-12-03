@@ -11,13 +11,17 @@ import frc.robot.subsystems.ExampleSubsystem;
 import swervelib.SwerveDrive;
 import swervelib.parser.SwerveParser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.SwerveSubsystem;
 import java.io.File;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.XboxController;
 
 
 
@@ -29,18 +33,29 @@ import edu.wpi.first.wpilibj.Filesystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final SwerveSubsystem drivebase;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
-
+  XboxController driverController;
+  XboxController driverXbox;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
-    SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"swerve/neo"));
+    drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"swerve/neo"));
     //SwerveDrive swerveDrive=new SwerveParser(new File(Filesystem.getDeployDirectory(),"swerve")).createSwerveDrive(Units.feetToMeters(14.5));
+
+    driverXbox = new XboxController(0);
+    driverController = new XboxController(1);
+    Command driveCommand = null;
+    driveCommand = drivebase.driveCommand(
+        () -> MathUtil.applyDeadband(driverXbox.getLeftY(), 0.05),
+        () -> MathUtil.applyDeadband(driverXbox.getLeftX(), 0.05),
+        () -> MathUtil.applyDeadband(-driverXbox.getRightX(), 0.05));
     configureBindings();
+
+    drivebase.setDefaultCommand(driveCommand);
   }
 
   /**
@@ -54,12 +69,12 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
-
+//    new Trigger(m_exampleSubsystem::exampleCondition)
+//        .onTrue(new ExampleCommand(m_exampleSubsystem));
+    new JoystickButton(driverXbox, 7).onTrue((new InstantCommand(drivebase::zeroGyro)));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+//    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
   /**
@@ -69,6 +84,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+//    return Autos.exampleAuto(m_exampleSubsystem);
+    return null;
   }
 }
