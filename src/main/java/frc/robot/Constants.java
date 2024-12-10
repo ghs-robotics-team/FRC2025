@@ -4,16 +4,34 @@
 
 package frc.robot;
 
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
- *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
- */
+import com.pathplanner.lib.util.PIDConstants;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.math.geometry.Translation3d;
+import swervelib.math.Matter;
+
+/** Add your docs here. */
 public final class Constants {
-  public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
+  //public static final double ROBOT_MASS = (89.8) * 0.453592; // 32lbs * kg per pound
+  //public static final Matter CHASSIS    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);
+  public static final double LOOP_TIME  = 0.13; //s, 20ms + 110ms sprk max velocity lag
+
+  public static class OperatorConstants 
+  {
+    // Joystick Deadband
+    public static final double LEFT_X_DEADBAND  = 0.05;
+    public static final double LEFT_Y_DEADBAND  = 0.05;
+    public static final double RIGHT_X_DEADBAND = 0.05;
+    public static final double TURN_CONSTANT    = 6;
+  }
+  public static final class AutonConstants
+  {
+    public static final PIDConstants TRANSLATION_PID = new PIDConstants(6, 0, 0);
+    public static final PIDConstants ANGLE_PID   = new PIDConstants(2.0, 0, 0.00);
+  }
+  public static class MaximumTemps
+  {
+    public static final double MaxNeoTemp = 90;
+    public static final double MaxFalconTemp = 90;
   }
 }
+
