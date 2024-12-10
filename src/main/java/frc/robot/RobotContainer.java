@@ -36,8 +36,6 @@ public class RobotContainer {
   private final SwerveSubsystem drivebase;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
   XboxController driverController;
   XboxController driverXbox;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -50,9 +48,9 @@ public class RobotContainer {
     driverController = new XboxController(1);
     Command driveCommand = null;
     driveCommand = drivebase.driveCommand(
-        () -> MathUtil.applyDeadband(driverXbox.getLeftY()*0.25, 0.05),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftX()*0.25, 0.05),
-        () -> MathUtil.applyDeadband(-driverXbox.getRightX()*0.25, 0.05));
+        () -> MathUtil.applyDeadband(driverXbox.getLeftY()*0.25, OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(driverXbox.getLeftX()*0.25, OperatorConstants.LEFT_X_DEADBAND),
+        () -> MathUtil.applyDeadband(-driverXbox.getRightX()*0.25, OperatorConstants.RIGHT_X_DEADBAND));
     configureBindings();
 
     drivebase.setDefaultCommand(driveCommand);
