@@ -50,9 +50,9 @@ public class RobotContainer {
     driverController = new XboxController(1);
     Command driveCommand = null;
     driveCommand = drivebase.driveCommand(
-        () -> MathUtil.applyDeadband(driverXbox.getLeftY(), 0.05),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftX(), 0.05),
-        () -> MathUtil.applyDeadband(-driverXbox.getRightX(), 0.05));
+        () -> MathUtil.applyDeadband(driverXbox.getLeftY()*0.25, 0.05),
+        () -> MathUtil.applyDeadband(driverXbox.getLeftX()*0.25, 0.05),
+        () -> MathUtil.applyDeadband(-driverXbox.getRightX()*0.25, 0.05));
     configureBindings();
 
     drivebase.setDefaultCommand(driveCommand);
