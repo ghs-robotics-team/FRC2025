@@ -22,6 +22,8 @@ public final class Constants {
     public static final double LEFT_Y_DEADBAND  = 0.05;
     public static final double RIGHT_X_DEADBAND = 0.05;
     public static final double TURN_CONSTANT    = 6;
+
+    public static final boolean XBOX_DRIVE = false;
   }
   public static final class AutonConstants
   {
