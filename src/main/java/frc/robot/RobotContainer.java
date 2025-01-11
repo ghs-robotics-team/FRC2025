@@ -58,9 +58,9 @@ public class RobotContainer {
     if (OperatorConstants.XBOX_DRIVE)
     {
       driveCommand = drivebase.driveCommand(
-        () -> MathUtil.applyDeadband(driverXbox.getLeftY()*0.25, OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftX()*0.25, OperatorConstants.LEFT_X_DEADBAND),
-        () -> MathUtil.applyDeadband(-driverXbox.getRightX()*0.25, OperatorConstants.RIGHT_X_DEADBAND));
+        () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+        () -> MathUtil.applyDeadband(-driverXbox.getRightX()*0.4, OperatorConstants.RIGHT_X_DEADBAND));
     } else
     {
       driveCommand = drivebase.driveCommand(
