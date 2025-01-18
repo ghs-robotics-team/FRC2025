@@ -22,6 +22,7 @@ import edu.wpi.first.networktables.NetworkTablesJNI;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import java.awt.Desktop;
 import java.util.ArrayList;
@@ -143,6 +144,9 @@ public class Vision
     for (Cameras camera : Cameras.values())
     {
       Optional<EstimatedRobotPose> poseEst = getEstimatedGlobalPose(camera);
+      SmartDashboard.putBoolean("poseEst", poseEst.isPresent());
+      //SmartDashboard.putNumber("TargetPositionX", poseEst.get().estimatedPose.toPose2d().getX());
+      //SmartDashboard.putNumber("TargetPositionY", poseEst.get().estimatedPose.toPose2d().getY());
       if (poseEst.isPresent())
       {
         var pose = poseEst.get();
