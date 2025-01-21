@@ -66,7 +66,7 @@ public final class Constants
     public static final boolean SHOOTING_DATA_COLLECTION_MODE = false;
 
     // XBOX mode
-    public static final boolean XBOX_DRIVE = false;
+    public static final boolean XBOX_DRIVE = true;
   }
 
   public static class EagleEyeConstants{

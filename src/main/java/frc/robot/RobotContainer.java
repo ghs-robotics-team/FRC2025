@@ -19,6 +19,8 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.DriveToPointCommand;
+import frc.robot.commands.TargetPoints;
 
 
 /**
@@ -86,8 +88,10 @@ public class RobotContainer {
     
     if (OperatorConstants.XBOX_DRIVE)
     {
+      new JoystickButton(driverXbox, 2).onTrue(new DriveToPointCommand(TargetPoints.TOP_LEFT));
       new JoystickButton(driverXbox, 7).onTrue((new InstantCommand(drivebase::zeroGyro)));
     } 
+  
     else
     {
 

@@ -172,6 +172,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public void setupPathPlanner()
   {
+    System.out.println("Configuring PathPlaner");
     // Load the RobotConfig from the GUI settings. You should probably
     // store this in your Constants file
     RobotConfig config;
