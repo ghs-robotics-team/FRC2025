@@ -20,11 +20,20 @@ public enum TargetPoints {
     private TargetPoints(Pose2d pose){
         this.pose = pose;
     }
+    public Pose2d distanceFromTag(Pose2d pose) {
+        double x = pose.getX();
+        double y = pose.getY();
+        x += Units.inchesToMeters(24)*Math.cos(pose.getRotation().getRadians());
+        y += Units.inchesToMeters(24)*Math.sin(pose.getRotation().getRadians());
+        return new Pose2d(x,y,Rotation2d.fromDegrees(180).minus(pose.getRotation()));
+    }
     public Pose2d get(){
+        Pose2d newpose = distanceFromTag(pose);
         if(DriverStation.getAlliance().get() == Alliance.Red){
-            return new Pose2d(16.5354 - pose.getX(), pose.getY(), Rotation2d.fromDegrees(180).minus(pose.getRotation()));
+
+            return new Pose2d(16.5354 - newpose.getX(),newpose.getY(), newpose.getRotation());
         }else{
-            return pose;
+            return newpose;
         }
     }
 }

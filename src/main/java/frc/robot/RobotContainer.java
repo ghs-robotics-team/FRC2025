@@ -4,23 +4,23 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import swervelib.SwerveDrive;
-import swervelib.parser.SwerveParser;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.subsystems.SwerveSubsystem;
 import java.io.File;
+
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveToPointCommand;
 import frc.robot.commands.TargetPoints;
+import frc.robot.subsystems.SwerveSubsystem;
 
 
 /**
@@ -89,7 +89,9 @@ public class RobotContainer {
     if (OperatorConstants.XBOX_DRIVE)
     {
       new JoystickButton(driverXbox, 2).onTrue(new DriveToPointCommand(TargetPoints.TOP_LEFT));
+      new JoystickButton(driverXbox, 3).onTrue(new DriveToPointCommand(TargetPoints.TOP_RIGHT));
       new JoystickButton(driverXbox, 7).onTrue((new InstantCommand(drivebase::zeroGyro)));
+      /* Stopping commands is hard */
     } 
   
     else
