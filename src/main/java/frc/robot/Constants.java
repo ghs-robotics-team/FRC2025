@@ -22,7 +22,7 @@ public final class Constants
   public static final double ROBOT_MASS = (89.8) * 0.453592; // 32lbs * kg per pound
   public static final Matter CHASSIS    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);
   public static final double LOOP_TIME  = 0.13; //s, 20ms + 110ms sprk max velocity lag
-  public static final double MAX_SPEED  = 2;
+  public static final double MAX_SPEED  = 0.2; //2
   public static final class UnitConversionConstants{
     public static final double INDEXER_TICKS_PER_DEGREES = 0.4; //To be calculated later
   }
@@ -70,9 +70,7 @@ public final class Constants
   }
 
   public static class EagleEyeConstants{
-    public static final boolean USE_OLD_EAGLE_EYE = false;
-    public static final boolean USE_MEGATAG_V1 = false;
-    public static final double MAX_VISION_SPEED = 2;//m/s
+    public static final double MAX_VISION_SPEED = 2; //m/s
   }
   
   public static class MaximumTemps

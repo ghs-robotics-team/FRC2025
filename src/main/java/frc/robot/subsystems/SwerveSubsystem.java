@@ -19,6 +19,7 @@ import com.pathplanner.lib.util.swerve.SwerveSetpoint;
 import com.pathplanner.lib.util.swerve.SwerveSetpointGenerator;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -30,12 +31,16 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 import frc.robot.Constants;
+import frc.robot.Constants.EagleEyeConstants;
+import frc.robot.Globals;
 import frc.robot.subsystems.Vision.Cameras;
 import java.io.File;
 import java.io.IOException;
@@ -155,11 +160,32 @@ public class SwerveSubsystem extends SubsystemBase
   public void periodic()
   {
     // When vision is enabled we must manually update odometry in SwerveDrive
-    if (visionDriveTest)
+    /*if (visionDriveTest)
     {
       swerveDrive.updateOdometry();
       vision.updatePoseEstimation(swerveDrive);
+    }*/
+    if (RobotBase.isSimulation())
+    {
+      //addFakeVisionReading();
     }
+    else
+    {
+      if(!DriverStation.isAutonomous()){
+        if(Globals.LastVisionMeasurement.confidence > 0){
+          swerveDrive.addVisionMeasurement(Globals.LastVisionMeasurement.position, Globals.LastVisionMeasurement.timeStamp, VecBuilder.fill(Globals.LastVisionMeasurement.confidence, Globals.LastVisionMeasurement.confidence, 999999));
+          SmartDashboard.putBoolean("EagleeyeRead", true);
+        }else{
+          SmartDashboard.putBoolean("EagleeyeRead", false);
+        }
+        Globals.LastVisionMeasurement.notRead = false;
+      }
+    }
+    
+    Globals.EagleEye.position = swerveDrive.getPose();
+    Globals.EagleEye.xVel = swerveDrive.getFieldVelocity().vxMetersPerSecond;
+    Globals.EagleEye.yVel = swerveDrive.getFieldVelocity().vyMetersPerSecond;
+    Globals.EagleEye.rotVel = swerveDrive.getFieldVelocity().omegaRadiansPerSecond;
   }
 
   @Override

@@ -21,8 +21,8 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveToPointCommand;
 import frc.robot.commands.TargetPoints;
 import frc.robot.subsystems.SwerveSubsystem;
-
-
+import frc.robot.commands.EagleEyeCommand;
+import frc.robot.subsystems.EagleEye;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -38,11 +38,14 @@ public class RobotContainer {
   XboxController driverXbox;
   Joystick rightjoystick;
   Joystick leftjoystick;
+  private final EagleEye eagleye = new EagleEye();
+  private final EagleEyeCommand eagleeyecommand = new EagleEyeCommand(eagleye);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"swerve/neo"));
+    eagleye.setDefaultCommand(eagleeyecommand);
     //SwerveDrive swerveDrive=new SwerveParser(new File(Filesystem.getDeployDirectory(),"swerve")).createSwerveDrive(Units.feetToMeters(14.5));
 
     if (Constants.OperatorConstants.XBOX_DRIVE)
@@ -89,7 +92,7 @@ public class RobotContainer {
     if (OperatorConstants.XBOX_DRIVE)
     {
       new JoystickButton(driverXbox, 2).onTrue(new DriveToPointCommand(TargetPoints.TOP_LEFT));
-      new JoystickButton(driverXbox, 3).onTrue(new DriveToPointCommand(TargetPoints.TOP_RIGHT));
+      //new JoystickButton(driverXbox, 3).onTrue(new DriveToPointCommand(TargetPoints.TOP_RIGHT));
       new JoystickButton(driverXbox, 7).onTrue((new InstantCommand(drivebase::zeroGyro)));
       /* Stopping commands is hard */
     } 
