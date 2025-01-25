@@ -173,13 +173,16 @@ public class SwerveSubsystem extends SubsystemBase
     {
       if(!DriverStation.isAutonomous()){
         if(Globals.LastVisionMeasurement.confidence > 0){
-          swerveDrive.addVisionMeasurement(Globals.LastVisionMeasurement.position, Globals.LastVisionMeasurement.timeStamp, VecBuilder.fill(Globals.LastVisionMeasurement.confidence, Globals.LastVisionMeasurement.confidence, 999999));
+          swerveDrive.addVisionMeasurement(Globals.LastVisionMeasurement.position, Globals.LastVisionMeasurement.timeStamp, VecBuilder.fill(Globals.LastVisionMeasurement.confidence, Globals.LastVisionMeasurement.confidence, 99));
           SmartDashboard.putBoolean("EagleeyeRead", true);
         }else{
           SmartDashboard.putBoolean("EagleeyeRead", false);
         }
         Globals.LastVisionMeasurement.notRead = false;
       }
+      SmartDashboard.putNumber("VisionRotation", Globals.LastVisionMeasurement.position.getRotation().getDegrees());
+      SmartDashboard.putNumber("Confidence", Globals.LastVisionMeasurement.confidence);
+      SmartDashboard.putNumber("BotRotation", swerveDrive.getPose().getRotation().getDegrees());
     }
     
     Globals.EagleEye.position = swerveDrive.getPose();

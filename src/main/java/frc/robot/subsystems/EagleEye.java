@@ -43,22 +43,26 @@ public class EagleEye extends SubsystemBase {
     SmartDashboard.putNumber("Total Vel", Math.hypot(Globals.EagleEye.xVel, Globals.EagleEye.yVel));
 
     // No tag found so check no further or pose not within field boundary
-    if(limelightMeasurement.tagCount >= 1 /* && fieldBoundary.isPoseWithinArea(limelightMeasurement.pose)*/) {
+    if(limelightMeasurement.tagCount >= 1/* && fieldBoundary.isPoseWithinArea(limelightMeasurement.pose)*/) {
       // Excluding different measurements that are absolute showstoppers even with full trust 
       if(limelightMeasurement.avgTagDist < Units.feetToMeters(15) && Globals.EagleEye.rotVel < Math.PI && Math.hypot(Globals.EagleEye.xVel, Globals.EagleEye.yVel) < EagleEyeConstants.MAX_VISION_SPEED) {
         // Reasons to blindly trust as much as odometry
         if (DriverStation.isDisabled() || 
-            (/*limelightMeasurement.tagCount >= 2 && --removed bc multitag isn't needed anymore*/limelightMeasurement.avgTagDist < Units.feetToMeters(10))) {
-              confidence = 0.1;
+            (limelightMeasurement.tagCount >= 2 && limelightMeasurement.avgTagDist < Units.feetToMeters(10))) {
+              confidence = 0.2;
         } else {
           // High trust level anything less than this we shouldn't bother with
           double compareDistance = limelightMeasurement.pose.getTranslation().getDistance(Globals.EagleEye.position.getTranslation());
           if( compareDistance < 0.5 ||
           (limelightMeasurement.tagCount >= 2 && limelightMeasurement.avgTagDist < Units.feetToMeters(20)) ||
-          (limelightMeasurement.tagCount == 1 && limelightMeasurement.avgTagDist < Units.feetToMeters(15))) {
+          (limelightMeasurement.tagCount == 1 && limelightMeasurement.avgTagDist < Units.feetToMeters(10))) {
             double tagDistance = Units.metersToFeet(limelightMeasurement.avgTagDist);
+            // Double the distance for solo tag
+            if (limelightMeasurement.tagCount == 1) {
+              tagDistance = tagDistance * 2;
+            }
             // Add up to .2 confidence depending on how far away
-            confidence = 0.5 + (tagDistance / 100);
+            confidence = 0.7 + (tagDistance / 100);
           }
         }
       }
