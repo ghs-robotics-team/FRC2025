@@ -16,10 +16,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class DriveToPointCommand extends Command {
   /** Creates a new DriveToPointCommand. */
   TargetPoints point;
+  //Command pathfindingCommand;
 
   public DriveToPointCommand(TargetPoints point) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.point = point;
+    //this.pathfindingCommand = null;
   }
 
   // Called when the command is initially scheduled.
@@ -38,7 +40,12 @@ public class DriveToPointCommand extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    if(interrupted){
+      System.out.println("Canceled");
+      pathfindingCommand.cancel();
+    }
+  }
 
   // Returns true when the command should end.
   @Override

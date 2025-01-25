@@ -91,10 +91,12 @@ public class RobotContainer {
     
     if (OperatorConstants.XBOX_DRIVE)
     {
-      new JoystickButton(driverXbox, 2).onTrue(new DriveToPointCommand(TargetPoints.TOP_LEFT));
+      DriveToPointCommand driveTopLeft = new DriveToPointCommand(TargetPoints.TOP_LEFT);
+
+      new JoystickButton(driverXbox, 2).onTrue(driveTopLeft); //B
       //new JoystickButton(driverXbox, 3).onTrue(new DriveToPointCommand(TargetPoints.TOP_RIGHT));
-      new JoystickButton(driverXbox, 7).onTrue((new InstantCommand(drivebase::zeroGyro)));
-      /* Stopping commands is hard */
+      new JoystickButton(driverXbox, 7).onTrue((new InstantCommand(drivebase::zeroGyro))); //Back Button
+      new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(() -> driveTopLeft.cancel())); //X
     } 
   
     else
