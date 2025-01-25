@@ -43,7 +43,7 @@ public class DriveToPointCommand extends Command {
   public void end(boolean interrupted) {
     if(interrupted){
       System.out.println("Canceled");
-      pathfindingCommand.cancel();
+      //pathfindingCommand.cancel();
     }
   }
 
