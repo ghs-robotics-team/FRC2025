@@ -34,17 +34,21 @@ public class RobotContainer {
   private final SwerveSubsystem drivebase;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  XboxController driverController;
+  Joystick buttonBox;
   XboxController driverXbox;
   Joystick rightjoystick;
   Joystick leftjoystick;
   private final EagleEye eagleye = new EagleEye();
   private final EagleEyeCommand eagleeyecommand = new EagleEyeCommand(eagleye);
 
+  // Defining commands (NOT dependent on Xbox/Joystick drive)
   private final DriveToPointCommand driveTopLeft = new DriveToPointCommand(TargetPoints.TOP_LEFT);
-
-
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  private final DriveToPointCommand driveTopRight = new DriveToPointCommand(TargetPoints.TOP_RIGHT);
+  private final DriveToPointCommand driveRight = new DriveToPointCommand(TargetPoints.RIGHT);
+  private final DriveToPointCommand driveBottomRight = new DriveToPointCommand(TargetPoints.BOTTOM_RIGHT);
+  private final DriveToPointCommand driveBottomLeft = new DriveToPointCommand(TargetPoints.BOTTOM_LEFT);
+  private final DriveToPointCommand driveLeft = new DriveToPointCommand(TargetPoints.LEFT);
+   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"swerve/neo"));
@@ -54,12 +58,12 @@ public class RobotContainer {
     if (Constants.OperatorConstants.XBOX_DRIVE)
     {
       driverXbox = new XboxController(0); 
-      driverController = new XboxController(1);
+      buttonBox = new Joystick(1);
     } else
     {
       rightjoystick = new Joystick(0);
       leftjoystick = new Joystick(1);
-      driverController = new XboxController(2);
+      buttonBox = new Joystick(2);
     }
 
     Command driveCommand = null;
@@ -91,11 +95,15 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    
+  // Binding commands
+  new JoystickButton(buttonBox, 1).onTrue(driveTopRight);
+  new JoystickButton(buttonBox, 2).onTrue(driveRight); 
+  new JoystickButton(buttonBox, 3).onTrue(driveBottomRight);
+  new JoystickButton(buttonBox, 4).onTrue(driveBottomLeft); 
+  new JoystickButton(buttonBox, 5).onTrue(driveLeft);
+  new JoystickButton(buttonBox, 6).onTrue(driveTopLeft);
     if (OperatorConstants.XBOX_DRIVE)
     {
-      new JoystickButton(driverXbox, 2).onTrue(driveTopLeft); //B
-      //new JoystickButton(driverXbox, 3).onTrue(new DriveToPointCommand(TargetPoints.TOP_RIGHT));
       new JoystickButton(driverXbox, 7).onTrue((new InstantCommand(drivebase::zeroGyro))); //Back Button
       new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(() -> {
         CommandScheduler.getInstance().cancelAll();
