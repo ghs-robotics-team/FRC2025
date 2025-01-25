@@ -41,6 +41,9 @@ public class RobotContainer {
   private final EagleEye eagleye = new EagleEye();
   private final EagleEyeCommand eagleeyecommand = new EagleEyeCommand(eagleye);
 
+  private final DriveToPointCommand driveTopLeft = new DriveToPointCommand(TargetPoints.TOP_LEFT);
+
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
@@ -91,12 +94,19 @@ public class RobotContainer {
     
     if (OperatorConstants.XBOX_DRIVE)
     {
-      DriveToPointCommand driveTopLeft = new DriveToPointCommand(TargetPoints.TOP_LEFT);
-
       new JoystickButton(driverXbox, 2).onTrue(driveTopLeft); //B
       //new JoystickButton(driverXbox, 3).onTrue(new DriveToPointCommand(TargetPoints.TOP_RIGHT));
       new JoystickButton(driverXbox, 7).onTrue((new InstantCommand(drivebase::zeroGyro))); //Back Button
-      new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(() -> driveTopLeft.cancel())); //X
+      new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(() -> {
+        CommandScheduler.getInstance().cancelAll();
+        /*if (CommandScheduler.getInstance().isScheduled(driveTopLeft)) {
+            CommandScheduler.getInstance().cancel(driveTopLeft);
+            System.out.println("driveTopLeft canceled.");
+        } else {
+            System.out.println("driveTopLeft is not running.");
+        }
+        */}));
+     //X
     } 
   
     else
