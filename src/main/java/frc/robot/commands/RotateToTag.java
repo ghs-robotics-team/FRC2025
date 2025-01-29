@@ -5,10 +5,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.LimelightHelpers.LimelightResults;
 import frc.robot.LimelightHelpers.LimelightTarget_Fiducial;
 import frc.robot.LimelightHelpers;
 
@@ -17,11 +20,15 @@ public class RotateToTag extends Command {
   /** Creates a new RotateToTag. */
   SwerveSubsystem swerve;
   PIDController pid;
-  public RotateToTag(SwerveSubsystem swerve) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(swerve);
-    this.swerve = swerve;
-    this.pid = new PIDController(0.08, 0, 0.004);
+  LimelightTarget_Fiducial tag;
+  double targetDegree;
+  double direction;
+      public RotateToTag(SwerveSubsystem swerve, LimelightTarget_Fiducial tag) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(swerve);
+        this.swerve = swerve;
+        this.tag = tag;
+    this.pid = new PIDController(0.08, 0, 0.004); // set PID directions
     pid.enableContinuousInput(-180, 180);
     SmartDashboard.putNumber("PID-P", pid.getP());
     SmartDashboard.putNumber("PID-I", pid.getI());
@@ -32,14 +39,52 @@ public class RotateToTag extends Command {
   @Override
   public void initialize() {
     swerve.drive(new Translation2d(0, 0), 0, true);
-   /*  LimelightTarget_Fiducial[] target_Fiducials = LimelightHelpers
-        .getLatestResults("limelight-cam1").targetingResults.targets_Fiducials; */
+    LimelightTarget_Fiducial[] target_Fiducials = LimelightHelpers
+        .getLatestResults("limelight-april").targets_Fiducials;
+  
+    double degreeError;
+    double P = SmartDashboard.getNumber("PID-P", 1.0 / 150.0);
+    double I = SmartDashboard.getNumber("PID-I", 0.0);
+    double D = SmartDashboard.getNumber("PID-D", 0);
+    // Set PID numbers
+    pid.setP(P);
+    pid.setI(I);
+    pid.setD(D);
+
+    degreeError = 0;
+
+    for (LimelightTarget_Fiducial target : target_Fiducials) {
+      if (target.fiducialID == 4) {
+        degreeError = target.tx;
+        SmartDashboard.putNumber("degreeError",degreeError);
+      }
+    }
+
+    targetDegree = swerve.getPose().getRotation().getDegrees() - degreeError;
+
+    if (targetDegree > 180) {
+      targetDegree -= 360;
+    } else if (targetDegree < -180) {
+      targetDegree += 360;
+    }
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
 
+    direction = pid.calculate(swerve.getPose().getRotation().getDegrees(), targetDegree);
+
+    if (direction < 0.06 && direction > -0.06) {
+      direction = Math.copySign(0.06, direction);
+    }
+    if (pid.getPositionError() > -0.25 && pid.getPositionError() < 0.25) {
+      swerve.drive(new Translation2d(0, 0), 0, true);
+      // deadzone
+    } else {
+      swerve.drive(new Translation2d(0, 0), direction, true);
+  }
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
@@ -49,4 +94,5 @@ public class RotateToTag extends Command {
   public boolean isFinished() {
     return false;
   }
+}
 }
