@@ -96,16 +96,26 @@ public class RobotContainer {
    */
   private void configureBindings() {
   // Binding commands
-  new JoystickButton(buttonBox, 1).onTrue(driveTopRight);
-  new JoystickButton(buttonBox, 2).onTrue(driveRight); 
-  new JoystickButton(buttonBox, 3).onTrue(driveBottomRight);
-  new JoystickButton(buttonBox, 4).onTrue(driveBottomLeft); 
-  new JoystickButton(buttonBox, 5).onTrue(driveLeft);
-  new JoystickButton(buttonBox, 6).onTrue(driveTopLeft);
+    new JoystickButton(buttonBox, 1).onTrue(driveTopRight);
+    new JoystickButton(buttonBox, 2).onTrue(driveRight); 
+    new JoystickButton(buttonBox, 3).onTrue(driveBottomRight);
+    new JoystickButton(buttonBox, 4).onTrue(driveBottomLeft); 
+    new JoystickButton(buttonBox, 5).onTrue(driveLeft);
+    new JoystickButton(buttonBox, 6).onTrue(driveTopLeft);
+    
     if (OperatorConstants.XBOX_DRIVE)
     {
       new JoystickButton(driverXbox, 7).onTrue((new InstantCommand(drivebase::zeroGyro))); //Back Button
-      new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(() -> driveTopLeft.cancel())); //X
+      new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(() -> {
+        CommandScheduler.getInstance().cancelAll();
+        if (CommandScheduler.getInstance().isScheduled(driveTopLeft)) {
+            CommandScheduler.getInstance().cancel(driveTopLeft);
+            System.out.println("driveTopLeft canceled.");
+        } else {
+            System.out.println("driveTopLeft is not running.");
+        }
+      }));
+     //X
     } 
   
     else
