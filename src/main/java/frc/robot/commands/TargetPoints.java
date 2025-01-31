@@ -14,7 +14,8 @@ public enum TargetPoints {
     BOTTOM_RIGHT(new Pose2d(Units.inchesToMeters(193.1), Units.inchesToMeters(130.17), Rotation2d.fromDegrees(300))),
     BOTTOM_LEFT(new Pose2d(Units.inchesToMeters(160.39), Units.inchesToMeters(130.17), Rotation2d.fromDegrees(240))),
     TOP_STATION(new Pose2d(Units.inchesToMeters(33.51), Units.inchesToMeters(291.2), Rotation2d.fromDegrees(306))),
-    BOTTOM_STATION(new Pose2d(Units.inchesToMeters(33.51), Units.inchesToMeters(25.8), Rotation2d.fromDegrees(54)));
+    BOTTOM_STATION(new Pose2d(Units.inchesToMeters(33.51), Units.inchesToMeters(25.8), Rotation2d.fromDegrees(54))),
+    TEST_LEFT_STATION(new Pose2d(Units.inchesToMeters(144), Units.inchesToMeters(158.5-(12.94/2)), Rotation2d.fromDegrees(180)));
 
     public Pose2d pose;
     private TargetPoints(Pose2d pose){
@@ -23,8 +24,8 @@ public enum TargetPoints {
     public Pose2d distanceFromTag(Pose2d pose) {
         double x = pose.getX();
         double y = pose.getY();
-        x += Units.inchesToMeters(24)*Math.cos(pose.getRotation().getRadians());
-        y += Units.inchesToMeters(24)*Math.sin(pose.getRotation().getRadians());
+        x += Units.inchesToMeters(18)*Math.cos(pose.getRotation().getRadians()); //24
+        y += Units.inchesToMeters(18)*Math.sin(pose.getRotation().getRadians()); //24
         return new Pose2d(x,y,Rotation2d.fromDegrees(180).plus(pose.getRotation()));
     }
     public Pose2d get(){

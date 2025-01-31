@@ -10,6 +10,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -48,13 +49,14 @@ public class RobotContainer {
   private final DriveToPointCommand driveBottomRight = new DriveToPointCommand(TargetPoints.BOTTOM_RIGHT);
   private final DriveToPointCommand driveBottomLeft = new DriveToPointCommand(TargetPoints.BOTTOM_LEFT);
   private final DriveToPointCommand driveLeft = new DriveToPointCommand(TargetPoints.LEFT);
+  private final DriveToPointCommand TESTdriveLeft = new DriveToPointCommand(TargetPoints.TEST_LEFT_STATION);
    /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"swerve/neo"));
     eagleye.setDefaultCommand(eagleeyecommand);
     //SwerveDrive swerveDrive=new SwerveParser(new File(Filesystem.getDeployDirectory(),"swerve")).createSwerveDrive(Units.feetToMeters(14.5));
-
+    SmartDashboard.putData(CommandScheduler.getInstance());
     if (Constants.OperatorConstants.XBOX_DRIVE)
     {
       driverXbox = new XboxController(0); 
@@ -100,7 +102,8 @@ public class RobotContainer {
     new JoystickButton(buttonBox, 2).onTrue(driveRight); 
     new JoystickButton(buttonBox, 3).onTrue(driveBottomRight);
     new JoystickButton(buttonBox, 4).onTrue(driveBottomLeft); 
-    new JoystickButton(buttonBox, 5).onTrue(driveLeft);
+    //new JoystickButton(buttonBox, 5).onTrue(driveLeft);
+    new JoystickButton(buttonBox, 5).onTrue(TESTdriveLeft);
     new JoystickButton(buttonBox, 6).onTrue(driveTopLeft);
     
     if (OperatorConstants.XBOX_DRIVE)

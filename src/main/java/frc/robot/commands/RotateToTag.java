@@ -84,6 +84,7 @@ public class RotateToTag extends Command {
       // deadzone
     } else {
       swerve.drive(new Translation2d(0, 0), direction, true);
+    }
   }
   // Called once the command ends or is interrupted.
   @Override
@@ -95,4 +96,4 @@ public class RotateToTag extends Command {
     return false;
   }
 }
-}
+
