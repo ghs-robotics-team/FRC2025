@@ -53,6 +53,9 @@ public class RobotContainer {
   private final DriveToPointCommand driveLeft = new DriveToPointCommand(TargetPoints.LEFT);
   //private final DriveToPointCommand driveLeftPeg = new DriveToPointCommand(TargetPoints.LEFT_LEFT_PEG);
   private final DriveToPointCommand driveRightPeg = new DriveToPointCommand(TargetPoints.LEFT_RIGHT_PEG);
+  private final DriveToPointCommand driveLeftPeg = new DriveToPointCommand(TargetPoints.LEFT_LEFT_PEG);
+  private final DriveToPointCommand TESTdriveRightPeg = new DriveToPointCommand(TargetPoints.TEST_LEFT_RIGHT_PEG);
+
 
   private final DriveLocalCommand driveLocalTest;
 
@@ -110,9 +113,14 @@ public class RobotContainer {
     new JoystickButton(buttonBox, 2).onTrue(driveRight); 
     new JoystickButton(buttonBox, 3).onTrue(driveBottomRight);
     new JoystickButton(buttonBox, 4).onTrue(driveBottomLeft); 
-    //new JoystickButton(buttonBox, 5).onTrue(driveLeft);
-    new JoystickButton(buttonBox, 5).onTrue(driveRightPeg);
-    new JoystickButton(buttonBox, 6).onTrue(driveLeft);
+    new JoystickButton(buttonBox, 5).onTrue(driveLeft);
+    new JoystickButton(buttonBox, 6).onTrue(TESTdriveRightPeg);
+    //new JoystickButton(buttonBox, 6).onTrue(driveTopLeft);
+
+    new JoystickButton(buttonBox, 7).onTrue(driveLeftPeg);
+    new JoystickButton(buttonBox, 8).onTrue(driveRightPeg);
+
+
     
     if (OperatorConstants.XBOX_DRIVE)
     {
