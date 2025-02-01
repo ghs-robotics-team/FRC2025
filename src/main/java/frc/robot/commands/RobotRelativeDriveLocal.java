@@ -8,6 +8,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -21,6 +22,7 @@ public class RobotRelativeDriveLocal extends Command {
   SwerveSubsystem swerve;
   PIDController pid;
   double direction;
+  double measurement;
   public RobotRelativeDriveLocal(SwerveSubsystem swerve) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(swerve);
@@ -36,7 +38,7 @@ public class RobotRelativeDriveLocal extends Command {
   @Override
   public void initialize() {
     swerve.drive(new Translation2d(0, 0), 0, true);
-
+    measurement = 0;
     double P = SmartDashboard.getNumber("Local-PID-P", 1.0 / 150.0);
     double I = SmartDashboard.getNumber("Local-PID-I", 0.0);
     double D = SmartDashboard.getNumber("Local-PID-D", 0);
@@ -50,16 +52,16 @@ public class RobotRelativeDriveLocal extends Command {
   @Override
   public void execute() {
 
-    direction = pid.calculate(0, 6.47);
-
+    direction = pid.calculate(measurement, 6.47);
+    measurement += direction*0.003333;
     if (direction < 0.06 && direction > -0.06) {
       direction = Math.copySign(0.06, direction);
     }
     if (pid.getPositionError() > -0.25 && pid.getPositionError() < 0.25) {
-      swerve.drive(new Translation2d(0, direction), 0, false);
+      swerve.drive(new Translation2d(0, 0), 0, false);
       // deadzone
     } else {
-      swerve.drive(new Translation2d(0, direction), 0, false);
+      swerve.drive(new Translation2d(0, Units.inchesToMeters(direction)), 0, false);
     }
   }
   // Called once the command ends or is interrupted.
