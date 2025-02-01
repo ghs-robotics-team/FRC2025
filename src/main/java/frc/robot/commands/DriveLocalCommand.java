@@ -61,7 +61,7 @@ public class DriveLocalCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    swerve.drive(new Translation2d(0, 0), 0, true);
+    swerve.drive(new Translation2d(0, 0), 0, true); 
 
     double Px = SmartDashboard.getNumber("XLocal-PID-P", 1.0 / 150.0);
     double Ix = SmartDashboard.getNumber("XLocal-PID-I", 0.0);
