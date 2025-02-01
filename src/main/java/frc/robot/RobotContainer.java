@@ -24,6 +24,8 @@ import frc.robot.commands.TargetPoints;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.EagleEyeCommand;
 import frc.robot.subsystems.EagleEye;
+import frc.robot.commands.DriveLocalCommand;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -51,7 +53,9 @@ public class RobotContainer {
   private final DriveToPointCommand driveLeft = new DriveToPointCommand(TargetPoints.LEFT);
   //private final DriveToPointCommand driveLeftPeg = new DriveToPointCommand(TargetPoints.LEFT_LEFT_PEG);
   private final DriveToPointCommand driveRightPeg = new DriveToPointCommand(TargetPoints.LEFT_RIGHT_PEG);
-  // 6328 code can be used for alignment
+
+  private final DriveLocalCommand driveLocalTest;
+
    /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
@@ -59,6 +63,8 @@ public class RobotContainer {
     eagleye.setDefaultCommand(eagleeyecommand);
     //SwerveDrive swerveDrive=new SwerveParser(new File(Filesystem.getDeployDirectory(),"swerve")).createSwerveDrive(Units.feetToMeters(14.5));
     SmartDashboard.putData(CommandScheduler.getInstance());
+    driveLocalTest = new DriveLocalCommand(drivebase, 40);
+
     if (Constants.OperatorConstants.XBOX_DRIVE)
     {
       driverXbox = new XboxController(0); 
@@ -111,6 +117,7 @@ public class RobotContainer {
     if (OperatorConstants.XBOX_DRIVE)
     {
       new JoystickButton(driverXbox, 7).onTrue((new InstantCommand(drivebase::zeroGyro))); //Back Button
+      new JoystickButton(driverXbox, 1).onTrue(driveLocalTest); //TEST RIGHT (A)
       new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(() -> {
         CommandScheduler.getInstance().cancelAll();
        /*  if (CommandScheduler.getInstance().isScheduled(driveTopLeft)) {
