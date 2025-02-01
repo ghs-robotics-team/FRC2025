@@ -12,6 +12,7 @@ import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 
 public class DriveToPointCommand extends Command {
   /** Creates a new DriveToPointCommand. */
@@ -27,7 +28,7 @@ public class DriveToPointCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Command pathfindingCommand = AutoBuilder.pathfindToPose(point.get(), new PathConstraints(3, 3, 2*Math.PI, 4*Math.PI), 0.0);
+    Command pathfindingCommand = AutoBuilder.pathfindToPose(point.get(), new PathConstraints(Constants.MAX_SPEED, 0.5 /* 3 */, 2*Math.PI, 4*Math.PI), 0.0);
     Field2d field = new Field2d();
     field.setRobotPose(point.get());
     SmartDashboard.putData("target point", field);

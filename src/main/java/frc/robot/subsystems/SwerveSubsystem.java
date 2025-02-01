@@ -183,6 +183,8 @@ public class SwerveSubsystem extends SubsystemBase
       SmartDashboard.putNumber("VisionRotation", Globals.LastVisionMeasurement.position.getRotation().getDegrees());
       SmartDashboard.putNumber("Confidence", Globals.LastVisionMeasurement.confidence);
       SmartDashboard.putNumber("BotRotation", swerveDrive.getPose().getRotation().getDegrees());
+      SmartDashboard.putNumber("Swerve-Botpose-x",Units.metersToInches(swerveDrive.getPose().getX()));
+      SmartDashboard.putNumber("Swerve-Botpose-y",Units.metersToInches(swerveDrive.getPose().getY()));
     }
     
     Globals.EagleEye.position = swerveDrive.getPose();

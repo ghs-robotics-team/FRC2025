@@ -49,7 +49,9 @@ public class RobotContainer {
   private final DriveToPointCommand driveBottomRight = new DriveToPointCommand(TargetPoints.BOTTOM_RIGHT);
   private final DriveToPointCommand driveBottomLeft = new DriveToPointCommand(TargetPoints.BOTTOM_LEFT);
   private final DriveToPointCommand driveLeft = new DriveToPointCommand(TargetPoints.LEFT);
-  private final DriveToPointCommand TESTdriveLeft = new DriveToPointCommand(TargetPoints.TEST_LEFT_STATION);
+  //private final DriveToPointCommand driveLeftPeg = new DriveToPointCommand(TargetPoints.LEFT_LEFT_PEG);
+  private final DriveToPointCommand driveRightPeg = new DriveToPointCommand(TargetPoints.LEFT_RIGHT_PEG);
+  // 6328 code can be used for alignment
    /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
@@ -103,20 +105,21 @@ public class RobotContainer {
     new JoystickButton(buttonBox, 3).onTrue(driveBottomRight);
     new JoystickButton(buttonBox, 4).onTrue(driveBottomLeft); 
     //new JoystickButton(buttonBox, 5).onTrue(driveLeft);
-    new JoystickButton(buttonBox, 5).onTrue(TESTdriveLeft);
-    new JoystickButton(buttonBox, 6).onTrue(driveTopLeft);
+    new JoystickButton(buttonBox, 5).onTrue(driveRightPeg);
+    new JoystickButton(buttonBox, 6).onTrue(driveLeft);
     
     if (OperatorConstants.XBOX_DRIVE)
     {
       new JoystickButton(driverXbox, 7).onTrue((new InstantCommand(drivebase::zeroGyro))); //Back Button
       new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(() -> {
         CommandScheduler.getInstance().cancelAll();
-        if (CommandScheduler.getInstance().isScheduled(driveTopLeft)) {
+       /*  if (CommandScheduler.getInstance().isScheduled(driveTopLeft)) {
             CommandScheduler.getInstance().cancel(driveTopLeft);
             System.out.println("driveTopLeft canceled.");
         } else {
             System.out.println("driveTopLeft is not running.");
         }
+            */
       }));
      //X
     } 
