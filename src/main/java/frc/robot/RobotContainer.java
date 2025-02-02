@@ -130,8 +130,8 @@ public class RobotContainer {
     if (OperatorConstants.XBOX_DRIVE)
     {
       new JoystickButton(driverXbox, 7).onTrue((new InstantCommand(drivebase::zeroGyro))); //Back Button
-      //new JoystickButton(driverXbox, 1).onTrue(driveLocalTest); TEST RIGHT (A)
-      new JoystickButton(driverXbox, 1).onTrue(robotDriveLocalTest);
+      new JoystickButton(driverXbox, 1).onTrue(driveLocalTest); //TEST RIGHT (A)
+      //new JoystickButton(driverXbox, 1).onTrue(robotDriveLocalTest);
       new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(() -> {
         CommandScheduler.getInstance().cancelAll();
        /*  if (CommandScheduler.getInstance().isScheduled(driveTopLeft)) {
