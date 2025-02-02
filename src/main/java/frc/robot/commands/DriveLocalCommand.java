@@ -51,10 +51,22 @@ public class DriveLocalCommand extends Command {
   public Pose2d distanceToPos(Pose2d pose) {
     double x = pose.getX();
     double y = pose.getY();
-    x += Units.inchesToMeters(inches)*Math.cos(Rotation2d.fromDegrees(pose.getRotation().getDegrees()).getRadians()); // pose.getRotation().getRadians() - Units.degreesToRadians(90)); 
-    y += Units.inchesToMeters(inches)*Units.inchesToMeters(18)*Math.sin(Rotation2d.fromDegrees(pose.getRotation().getDegrees()).getRadians()); 
+
+    double angle = pose.getRotation().getRadians();
+
+    if(Math.abs(pose.getRotation().getDegrees()) > 90){
+      x -= Units.inchesToMeters(inches) * Math.cos(angle);
+      y -= Units.inchesToMeters(inches) * Math.sin(angle); 
+    }
+    else{
+      x += Units.inchesToMeters(inches) * Math.cos(angle);
+      y += Units.inchesToMeters(inches) * Math.sin(angle); 
+    }
+    
+
     SmartDashboard.putNumber("NewX", x);
     SmartDashboard.putNumber("NewY", y);
+
     return new Pose2d(x, y, pose.getRotation()); 
 }
 
@@ -104,7 +116,7 @@ public class DriveLocalCommand extends Command {
       swerve.drive(new Translation2d(0, 0), 0, true);
       // deadzone
     } else {
-      swerve.drive(new Translation2d(toX* swerve.getSwerveDrive().getMaximumChassisVelocity(), toY* swerve.getSwerveDrive().getMaximumChassisVelocity()), 0, true);
+      swerve.drive(new Translation2d(toX*swerve.getSwerveDrive().getMaximumChassisVelocity(), toY*swerve.getSwerveDrive().getMaximumChassisVelocity()), 0, true);
     }
   }
   // Called once the command ends or is interrupted.

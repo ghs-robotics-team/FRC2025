@@ -54,9 +54,7 @@ public class RobotRelativeDriveLocal extends Command {
 
     direction = pid.calculate(measurement, 6.47);
     measurement += direction*0.003333;
-    if (direction < 0.06 && direction > -0.06) {
-      direction = Math.copySign(0.06, direction);
-    }
+
     if (pid.getPositionError() > -0.25 && pid.getPositionError() < 0.25) {
       swerve.drive(new Translation2d(0, 0), 0, false);
       // deadzone

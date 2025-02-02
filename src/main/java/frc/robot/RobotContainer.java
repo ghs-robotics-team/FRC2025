@@ -26,6 +26,7 @@ import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.EagleEyeCommand;
 import frc.robot.subsystems.EagleEye;
 import frc.robot.commands.DriveLocalCommand;
+import frc.robot.commands.RobotRelativeDriveLocal;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -59,6 +60,8 @@ public class RobotContainer {
 
 
   private final DriveLocalCommand driveLocalTest;
+  private final RobotRelativeDriveLocal robotDriveLocalTest;
+
 
    /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -68,6 +71,7 @@ public class RobotContainer {
     //SwerveDrive swerveDrive=new SwerveParser(new File(Filesystem.getDeployDirectory(),"swerve")).createSwerveDrive(Units.feetToMeters(14.5));
     SmartDashboard.putData(CommandScheduler.getInstance());
     driveLocalTest = new DriveLocalCommand(drivebase, 40);
+    robotDriveLocalTest = new RobotRelativeDriveLocal(drivebase);
 
     if (Constants.OperatorConstants.XBOX_DRIVE)
     {
@@ -126,7 +130,8 @@ public class RobotContainer {
     if (OperatorConstants.XBOX_DRIVE)
     {
       new JoystickButton(driverXbox, 7).onTrue((new InstantCommand(drivebase::zeroGyro))); //Back Button
-      new JoystickButton(driverXbox, 1).onTrue(driveLocalTest); //TEST RIGHT (A)
+      //new JoystickButton(driverXbox, 1).onTrue(driveLocalTest); TEST RIGHT (A)
+      new JoystickButton(driverXbox, 1).onTrue(robotDriveLocalTest);
       new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(() -> {
         CommandScheduler.getInstance().cancelAll();
        /*  if (CommandScheduler.getInstance().isScheduled(driveTopLeft)) {
