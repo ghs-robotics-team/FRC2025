@@ -52,17 +52,17 @@ public class DriveLocalCommand extends Command {
   public Pose2d distanceToPos(Pose2d pose) {
     double x = pose.getX();
     double y = pose.getY();
-
-    double angle = pose.getRotation().getRadians();
-
-    if(Math.abs(pose.getRotation().getDegrees()) > 90){
-      x -= Units.inchesToMeters(inches) * Math.cos(angle);
-      y -= Units.inchesToMeters(inches) * Math.sin(angle); 
+    double angle_degree;
+    if(inches>=0){
+      angle_degree = pose.getRotation().getDegrees() - 90;
     }
     else{
-      x += Units.inchesToMeters(inches) * Math.cos(angle);
-      y += Units.inchesToMeters(inches) * Math.sin(angle); 
+      angle_degree = pose.getRotation().getDegrees() + 90;
     }
+    double angle = Units.degreesToRadians(angle_degree);
+
+    x += Units.inchesToMeters(inches) * Math.cos(angle);
+    y += Units.inchesToMeters(inches) * Math.sin(angle); 
     
     SmartDashboard.putNumber("NewX", x);
     SmartDashboard.putNumber("NewY", y);
@@ -91,17 +91,16 @@ public class DriveLocalCommand extends Command {
     pidy.setI(Iy);
     pidy.setD(Dy);
 
-    Pose2d newPose = distanceToPos(swerve.getPose());
-    xDistance = newPose.getX();
-    yDistance = newPose.getY();
     newPos = distanceToPos(swerve.getPose());
+    xDistance = newPos.getX();
+    yDistance = newPos.getY();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    toX = pidx.calculate(swerve.getPose().getX(), xDistance);
-    toY = pidy.calculate(swerve.getPose().getY(), yDistance);
+    toX = pidx.calculate(swerve.getPose().getX(), newPos.getX());
+    toY = pidy.calculate(swerve.getPose().getY(), newPos.getY());
 
     SmartDashboard.putNumber("PIDxError", pidx.getPositionError());
     SmartDashboard.putNumber("PIDyError", pidy.getPositionError());
@@ -118,7 +117,12 @@ public class DriveLocalCommand extends Command {
       swerve.drive(new Translation2d(0, 0), 0, true);
       // deadzone
     } else {
-      swerve.drive(new Translation2d(toX*swerve.getSwerveDrive().getMaximumChassisVelocity(), toY*swerve.getSwerveDrive().getMaximumChassisVelocity()), 0, true);
+      if(inches>=0){ //-6
+        swerve.drive(new Translation2d(0, -6/*toX*swerve.getSwerveDrive().getMaximumChassisVelocity())*/), 0, false);
+      }
+      else{
+        swerve.drive(new Translation2d(0, 6/*toX*swerve.getSwerveDrive().getMaximumChassisVelocity())*/), 0, false);
+      }
     }
 
   }
