@@ -36,7 +36,7 @@ public class DriveLocalCommand extends Command {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(swerve);
     this.swerve = swerve;
-    /*this.pidx = new PIDController(1, 0, 0.004); // set PID directions
+    this.pidx = new PIDController(1, 0, 0.004); // set PID directions
     this.pidy = new PIDController(1, 0, 0.004); // set PID directions
     this.inches = inches;
 
@@ -46,7 +46,7 @@ public class DriveLocalCommand extends Command {
 
     SmartDashboard.putNumber("YLocal-PID-P", pidy.getP());
     SmartDashboard.putNumber("YLocal-PID-I", pidy.getI());
-    SmartDashboard.putNumber("YLocal-PID-D", pidy.getD());*/
+    SmartDashboard.putNumber("YLocal-PID-D", pidy.getD());
   }
 
   public Pose2d distanceToPos(Pose2d pose) {
@@ -64,7 +64,6 @@ public class DriveLocalCommand extends Command {
       y += Units.inchesToMeters(inches) * Math.sin(angle); 
     }
     
-
     SmartDashboard.putNumber("NewX", x);
     SmartDashboard.putNumber("NewY", y);
 
@@ -76,7 +75,7 @@ public class DriveLocalCommand extends Command {
   public void initialize() {
     swerve.drive(new Translation2d(0, 0), 0, true); 
 
-    /*double Px = SmartDashboard.getNumber("XLocal-PID-P", 1.0 / 150.0);
+    double Px = SmartDashboard.getNumber("XLocal-PID-P", 1.0 / 150.0);
     double Ix = SmartDashboard.getNumber("XLocal-PID-I", 0.0);
     double Dx = SmartDashboard.getNumber("XLocal-PID-D", 0);
     // Set PID numbers
@@ -94,25 +93,15 @@ public class DriveLocalCommand extends Command {
 
     Pose2d newPose = distanceToPos(swerve.getPose());
     xDistance = newPose.getX();
-    yDistance = newPose.getY();*/
+    yDistance = newPose.getY();
     newPos = distanceToPos(swerve.getPose());
-    swerve.driveToPose(newPos);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    /*toX = pidx.calculate(swerve.getPose().getX(), xDistance);
+    toX = pidx.calculate(swerve.getPose().getX(), xDistance);
     toY = pidy.calculate(swerve.getPose().getY(), yDistance);
-
-    double magnitude = Math.hypot(toX, toY);
-    if(magnitude > 1){
-      toX /= magnitude;
-      toY /= magnitude;
-    }
-
-    double headingError = swerve.getPose().getRotation().getRadians();
-    double headingCorrection = -0.02 * headingError;
 
     SmartDashboard.putNumber("PIDxError", pidx.getPositionError());
     SmartDashboard.putNumber("PIDyError", pidy.getPositionError());
@@ -129,8 +118,8 @@ public class DriveLocalCommand extends Command {
       swerve.drive(new Translation2d(0, 0), 0, true);
       // deadzone
     } else {
-      swerve.drive(new Translation2d(toX*swerve.getSwerveDrive().getMaximumChassisVelocity(), toY*swerve.getSwerveDrive().getMaximumChassisVelocity()), headingCorrection, true);
-    }*/
+      swerve.drive(new Translation2d(toX*swerve.getSwerveDrive().getMaximumChassisVelocity(), toY*swerve.getSwerveDrive().getMaximumChassisVelocity()), 0, true);
+    }
 
   }
   // Called once the command ends or is interrupted.
@@ -141,18 +130,15 @@ public class DriveLocalCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    /*if (pidx.getPositionError() > -Units.inchesToMeters(1) && pidx.getPositionError() < Units.inchesToMeters(1) && pidy.getPositionError() > -Units.inchesToMeters(5) && pidy.getPositionError() < Units.inchesToMeters(5)) {
+    if (pidx.getPositionError() > -Units.inchesToMeters(1) && pidx.getPositionError() < Units.inchesToMeters(1) && pidy.getPositionError() > -Units.inchesToMeters(5) && pidy.getPositionError() < Units.inchesToMeters(5)) {
       swerve.drive(new Translation2d(0, 0), 0, true);
       return true;
       // deadzone
     }
     else{
       return false;
-    }*/
-    if(swerve.getPose().getTranslation().getDistance(newPos.getTranslation())<0.1){
-      return true;
     }
-    return false;
+    
   }
 }
 
