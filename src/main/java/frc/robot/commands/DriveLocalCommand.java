@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -31,6 +32,8 @@ public class DriveLocalCommand extends Command {
   double xDistance;
   double yDistance;
   Pose2d newPos;
+  double xError;
+  double yError;
 
   public DriveLocalCommand(SwerveSubsystem swerve, double inches) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -62,7 +65,13 @@ public class DriveLocalCommand extends Command {
     double angle = Units.degreesToRadians(angle_degree);
 
     x += Units.inchesToMeters(inches) * Math.cos(angle);
-    y += Units.inchesToMeters(inches) * Math.sin(angle); 
+
+    if(inches>=0){
+      y += Units.inchesToMeters(inches) * Math.sin(angle); 
+    }
+    else{
+      y -= Units.inchesToMeters(inches) * Math.sin(angle); 
+    }
     
     SmartDashboard.putNumber("NewX", x);
     SmartDashboard.putNumber("NewY", y);
@@ -94,13 +103,22 @@ public class DriveLocalCommand extends Command {
     newPos = distanceToPos(swerve.getPose());
     xDistance = newPos.getX();
     yDistance = newPos.getY();
+
+    xError = Math.abs(pidx.getPositionError());
+    yError = Math.abs(pidy.getPositionError());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     toX = pidx.calculate(swerve.getPose().getX(), newPos.getX());
-    toY = pidy.calculate(swerve.getPose().getY(), newPos.getY());
+
+    if(Math.abs(newPos.getRotation().getDegrees())<=90){
+      toY = pidy.calculate(swerve.getPose().getY(), newPos.getY());
+    }
+    else{
+      toY = -pidy.calculate(swerve.getPose().getY(), newPos.getY());
+    }
 
     SmartDashboard.putNumber("PIDxError", pidx.getPositionError());
     SmartDashboard.putNumber("PIDyError", pidy.getPositionError());
@@ -113,15 +131,28 @@ public class DriveLocalCommand extends Command {
     SmartDashboard.putNumber("YPos", swerve.getPose().getY());
 
 
-    if (pidx.getPositionError() > -Units.inchesToMeters(5) && pidx.getPositionError() < Units.inchesToMeters(5) && pidy.getPositionError() > -Units.inchesToMeters(5) && pidy.getPositionError() < Units.inchesToMeters(5)) {
+    /*if (pidx.getPositionError() > -Units.inchesToMeters(5) && pidx.getPositionError() < Units.inchesToMeters(5) && pidy.getPositionError() > -Units.inchesToMeters(5) && pidy.getPositionError() < Units.inchesToMeters(5)) {
       swerve.drive(new Translation2d(0, 0), 0, true);
       // deadzone
     } else {
       if(inches>=0){ //-6
-        swerve.drive(new Translation2d(0, -6/*toX*swerve.getSwerveDrive().getMaximumChassisVelocity())*/), 0, false);
+        swerve.drive(new Translation2d(0, toY*swerve.getSwerveDrive().getMaximumChassisVelocity()), 0, false);
       }
       else{
-        swerve.drive(new Translation2d(0, 6/*toX*swerve.getSwerveDrive().getMaximumChassisVelocity())*/), 0, false);
+        swerve.drive(new Translation2d(0, toY*swerve.getSwerveDrive().getMaximumChassisVelocity()), 0, false);
+      }
+    }*/
+    xError = Math.abs(pidx.getPositionError());
+    yError = Math.abs(pidy.getPositionError());
+
+    if (yError < Units.inchesToMeters(1)) {
+        swerve.drive(new Translation2d(0, 0), 0, true); // Stop the robot if within tolerance
+    } else {
+      if(inches>=0){ //-6
+        swerve.drive(new Translation2d(0, toY*swerve.getSwerveDrive().getMaximumChassisVelocity()), 0, false);
+      }
+      else{
+        swerve.drive(new Translation2d(0, toY*swerve.getSwerveDrive().getMaximumChassisVelocity()), 0, false);
       }
     }
 
@@ -134,7 +165,7 @@ public class DriveLocalCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (pidx.getPositionError() > -Units.inchesToMeters(1) && pidx.getPositionError() < Units.inchesToMeters(1) && pidy.getPositionError() > -Units.inchesToMeters(5) && pidy.getPositionError() < Units.inchesToMeters(5)) {
+    if (yError < Units.inchesToMeters(1)) {
       swerve.drive(new Translation2d(0, 0), 0, true);
       return true;
       // deadzone
