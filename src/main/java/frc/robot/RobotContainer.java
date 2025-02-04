@@ -5,6 +5,7 @@
 package frc.robot;
 
 import java.io.File;
+import java.time.Instant;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -15,18 +16,19 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.DriveLocalCommand;
+import frc.robot.commands.DriveLocalCommandInches;
 import frc.robot.commands.DriveToPointCommand;
 import frc.robot.commands.TargetPoints;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.EagleEyeCommand;
 import frc.robot.subsystems.EagleEye;
-import frc.robot.commands.DriveLocalCommand;
-import frc.robot.commands.RobotRelativeDriveLocal;
+import frc.robot.commands.DriveLocalCommandInches;
+import frc.robot.commands.DriveLocalCommandAbsolute;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -53,14 +55,17 @@ public class RobotContainer {
   private final DriveToPointCommand driveBottomRight = new DriveToPointCommand(TargetPoints.BOTTOM_RIGHT);
   private final DriveToPointCommand driveBottomLeft = new DriveToPointCommand(TargetPoints.BOTTOM_LEFT);
   private final DriveToPointCommand driveLeft = new DriveToPointCommand(TargetPoints.LEFT);
+
   //private final DriveToPointCommand driveLeftPeg = new DriveToPointCommand(TargetPoints.LEFT_LEFT_PEG);
   private final DriveToPointCommand driveRightPeg = new DriveToPointCommand(TargetPoints.LEFT_RIGHT_PEG);
   private final DriveToPointCommand driveLeftPeg = new DriveToPointCommand(TargetPoints.LEFT_LEFT_PEG);
   private final DriveToPointCommand TESTdriveRightPeg = new DriveToPointCommand(TargetPoints.TEST_LEFT_RIGHT_PEG);
 
 
-  private final DriveLocalCommand driveLocalTest;
-  private final RobotRelativeDriveLocal robotDriveLocalTest;
+  private final DriveLocalCommandInches driveLocalTestRight;
+  private final DriveLocalCommandAbsolute AdriveLocalTestRight;
+  private final DriveLocalCommandAbsolute AdriveLocalTestLeft;
+  private final DriveLocalCommandInches driveLocalTestLeft;
 
 
    /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -70,8 +75,13 @@ public class RobotContainer {
     eagleye.setDefaultCommand(eagleeyecommand);
     //SwerveDrive swerveDrive=new SwerveParser(new File(Filesystem.getDeployDirectory(),"swerve")).createSwerveDrive(Units.feetToMeters(14.5));
     SmartDashboard.putData(CommandScheduler.getInstance());
-    driveLocalTest = new DriveLocalCommand(drivebase, 40);
-    robotDriveLocalTest = new RobotRelativeDriveLocal(drivebase);
+    driveLocalTestRight = new DriveLocalCommandInches(drivebase, 6);
+    driveLocalTestLeft = new DriveLocalCommandInches(drivebase, -6);
+    AdriveLocalTestRight = new DriveLocalCommandAbsolute(drivebase, 6.0, TargetPoints.LEFT.get());
+    AdriveLocalTestLeft = new DriveLocalCommandAbsolute(drivebase, -6.0, TargetPoints.LEFT.get());
+
+
+    
 
     if (Constants.OperatorConstants.XBOX_DRIVE)
     {
@@ -119,8 +129,8 @@ public class RobotContainer {
     new JoystickButton(buttonBox, 3).onTrue(driveBottomRight);
     new JoystickButton(buttonBox, 4).onTrue(driveBottomLeft); 
     new JoystickButton(buttonBox, 5).onTrue(driveLeft);
-    new JoystickButton(buttonBox, 6).onTrue(TESTdriveRightPeg);
-    //new JoystickButton(buttonBox, 6).onTrue(driveTopLeft);
+    //new JoystickButton(buttonBox, 6).onTrue(TESTdriveRightPeg);
+    new JoystickButton(buttonBox, 6).onTrue(driveTopLeft);
 
     new JoystickButton(buttonBox, 7).onTrue(driveLeftPeg);
     new JoystickButton(buttonBox, 8).onTrue(driveRightPeg);
@@ -130,17 +140,13 @@ public class RobotContainer {
     if (OperatorConstants.XBOX_DRIVE)
     {
       new JoystickButton(driverXbox, 7).onTrue((new InstantCommand(drivebase::zeroGyro))); //Back Button
-      new JoystickButton(driverXbox, 1).onTrue(driveLocalTest); //TEST RIGHT (A)
-      //new JoystickButton(driverXbox, 1).onTrue(robotDriveLocalTest);
+      //new JoystickButton(driverXbox, 2).onTrue(driveLocalTestRight); //TEST RIGHT (B)
+      new JoystickButton(driverXbox, 2).onTrue(AdriveLocalTestRight); //TEST RIGHT (B)
+      new JoystickButton(driverXbox, 2).onTrue(AdriveLocalTestLeft); //TEST RIGHT (B)
+      //new JoystickButton(driverXbox, 1).onTrue(driveLocalTestLeft); //TEST RIGHT (A)
+
       new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(() -> {
         CommandScheduler.getInstance().cancelAll();
-       /*  if (CommandScheduler.getInstance().isScheduled(driveTopLeft)) {
-            CommandScheduler.getInstance().cancel(driveTopLeft);
-            System.out.println("driveTopLeft canceled.");
-        } else {
-            System.out.println("driveTopLeft is not running.");
-        }
-            */
       }));
      //X
     } 
