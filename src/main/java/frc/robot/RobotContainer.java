@@ -77,8 +77,8 @@ public class RobotContainer {
     SmartDashboard.putData(CommandScheduler.getInstance());
     driveLocalTestRight = new DriveLocalCommandInches(drivebase, 6);
     driveLocalTestLeft = new DriveLocalCommandInches(drivebase, -6);
-    AdriveLocalTestRight = new DriveLocalCommandAbsolute(drivebase, 6.0, TargetPoints.LEFT.get());
-    AdriveLocalTestLeft = new DriveLocalCommandAbsolute(drivebase, -6.0, TargetPoints.LEFT.get());
+    AdriveLocalTestRight = new DriveLocalCommandAbsolute(drivebase, 6.47, TargetPoints.LEFT.get());
+    AdriveLocalTestLeft = new DriveLocalCommandAbsolute(drivebase, -6.47, TargetPoints.LEFT.get());
 
 
     
@@ -142,7 +142,7 @@ public class RobotContainer {
       new JoystickButton(driverXbox, 7).onTrue((new InstantCommand(drivebase::zeroGyro))); //Back Button
       //new JoystickButton(driverXbox, 2).onTrue(driveLocalTestRight); //TEST RIGHT (B)
       new JoystickButton(driverXbox, 2).onTrue(AdriveLocalTestRight); //TEST RIGHT (B)
-      new JoystickButton(driverXbox, 2).onTrue(AdriveLocalTestLeft); //TEST RIGHT (B)
+      new JoystickButton(driverXbox, 1).onTrue(AdriveLocalTestLeft); //TEST RIGHT (A)
       //new JoystickButton(driverXbox, 1).onTrue(driveLocalTestLeft); //TEST RIGHT (A)
 
       new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(() -> {

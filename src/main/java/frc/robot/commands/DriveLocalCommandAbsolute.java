@@ -34,7 +34,7 @@ public class DriveLocalCommandAbsolute extends Command {
     addRequirements(swerve);
     this.swerve = swerve;
     //this.pidx = new PIDController(1, 0, 0.004); // set PID directions
-    this.pidy = new PIDController(1, 0, 0.004); // set PID directions
+    this.pidy = new PIDController(3, 0, 0.004); // set PID directions
     this.inches = inches;
     this.target = target;
 
@@ -89,7 +89,7 @@ public class DriveLocalCommandAbsolute extends Command {
     pidx.setI(Ix);
     pidx.setD(Dx);*/
 
-    double Py = SmartDashboard.getNumber("YLocal-PID-P", 1.0 / 150.0);
+    double Py = SmartDashboard.getNumber("YLocal-PID-P", 3);
     double Iy = SmartDashboard.getNumber("YLocal-PID-I", 0.0);
     double Dy = SmartDashboard.getNumber("YLocal-PID-D", 0);
     // Set PID numbers
@@ -128,7 +128,7 @@ public class DriveLocalCommandAbsolute extends Command {
     //xError = Math.abs(pidx.getPositionError());
     yError = Math.abs(pidy.getPositionError());
 
-    if (yError < Units.inchesToMeters(1)) {
+    if (yError < Units.inchesToMeters(0.2)) {
         swerve.drive(new Translation2d(0, 0), 0, true); // Stop the robot if within tolerance
     } else {
       if(inches>=0){ //-6
@@ -148,7 +148,7 @@ public class DriveLocalCommandAbsolute extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (yError < Units.inchesToMeters(1)) {
+    if (yError < Units.inchesToMeters(0.2)) {
       swerve.drive(new Translation2d(0, 0), 0, true);
       return true;
       // deadzone
