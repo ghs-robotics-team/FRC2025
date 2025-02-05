@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 
-public class DriveToPointCommand extends Command {
+public class DriveToPointCommandForPose2d extends Command {
   /** Creates a new DriveToPointCommand. */
-  TargetPoints point;
+  Pose2d point;
   //Command pathfindingCommand;
 
-  public DriveToPointCommand(TargetPoints point) {
+  public DriveToPointCommandForPose2d(Pose2d point) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.point = point;
     //this.pathfindingCommand = null;
@@ -26,9 +26,9 @@ public class DriveToPointCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Command pathfindingCommand = AutoBuilder.pathfindToPose(point.get(), new PathConstraints(Constants.MAX_SPEED, 0.5 /* 3 */, 2*Math.PI, 4*Math.PI), 0.0);
+    Command pathfindingCommand = AutoBuilder.pathfindToPose(point, new PathConstraints(Constants.MAX_SPEED, 0.5 /* 3 */, 2*Math.PI, 4*Math.PI), 0.0);
     Field2d field = new Field2d();
-    field.setRobotPose(point.get());
+    field.setRobotPose(point);
     SmartDashboard.putData("DTP target point", field);
     pathfindingCommand.schedule();
   }

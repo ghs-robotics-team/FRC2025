@@ -14,13 +14,14 @@ public enum TargetPoints {
     BOTTOM_RIGHT(new Pose2d(Units.inchesToMeters(193.1), Units.inchesToMeters(130.17), Rotation2d.fromDegrees(300))),
     BOTTOM_LEFT(new Pose2d(Units.inchesToMeters(160.39), Units.inchesToMeters(130.17), Rotation2d.fromDegrees(240))),
     TOP_STATION(new Pose2d(Units.inchesToMeters(33.51), Units.inchesToMeters(291.2), Rotation2d.fromDegrees(306))),
-    BOTTOM_STATION(new Pose2d(Units.inchesToMeters(33.51), Units.inchesToMeters(25.8), Rotation2d.fromDegrees(54))),
-    LEFT_RIGHT_PEG(new Pose2d(Units.inchesToMeters(144), Units.inchesToMeters(158.5 - (12.94 / 2)),
+    BOTTOM_STATION(new Pose2d(Units.inchesToMeters(33.51), Units.inchesToMeters(25.8), Rotation2d.fromDegrees(54)));
+
+    /*LEFT_RIGHT_PEG(new Pose2d(Units.inchesToMeters(144), Units.inchesToMeters(158.5 - (12.94 / 2)),
             Rotation2d.fromDegrees(180))),
     TEST_LEFT_RIGHT_PEG(
             new Pose2d(Units.inchesToMeters(144), Units.inchesToMeters(158.5 - (12.94)), Rotation2d.fromDegrees(180))),
     LEFT_LEFT_PEG(new Pose2d(Units.inchesToMeters(144), Units.inchesToMeters(158.5 + (12.94 / 2)),
-            Rotation2d.fromDegrees(180)));
+            Rotation2d.fromDegrees(180)));*/
 
     public Pose2d pose;
 

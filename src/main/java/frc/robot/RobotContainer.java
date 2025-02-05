@@ -17,6 +17,7 @@ import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.EagleEyeCommand;
 import frc.robot.subsystems.EagleEye;
 import frc.robot.commands.DriveLocalCommandAbsolute;
+import frc.robot.commands.NearestTag;
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
@@ -37,17 +38,21 @@ public class RobotContainer {
   private final DriveToPointCommand driveBottomLeft = new DriveToPointCommand(TargetPoints.BOTTOM_LEFT);
   private final DriveToPointCommand driveLeft = new DriveToPointCommand(TargetPoints.LEFT);
 
-  private final DriveToPointCommand driveRightPeg = new DriveToPointCommand(TargetPoints.LEFT_RIGHT_PEG);
-  private final DriveToPointCommand driveLeftPeg = new DriveToPointCommand(TargetPoints.LEFT_LEFT_PEG);
+  //private final DriveToPointCommand driveRightPeg = new DriveToPointCommand(TargetPoints.LEFT_RIGHT_PEG);
+  //private final DriveToPointCommand driveLeftPeg = new DriveToPointCommand(TargetPoints.LEFT_LEFT_PEG);
 
   private final DriveLocalCommandAbsolute AdriveLocalTestRight;
   private final DriveLocalCommandAbsolute AdriveLocalTestLeft;
+
+  //private final NearestTag nearestTag;
+
 
   public RobotContainer() {
     drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve/neo"));
     eagleye.setDefaultCommand(eagleeyecommand);
     AdriveLocalTestRight = new DriveLocalCommandAbsolute(drivebase, 6.47, TargetPoints.LEFT.get());
     AdriveLocalTestLeft = new DriveLocalCommandAbsolute(drivebase, -6.47, TargetPoints.LEFT.get());
+
 
     if (Constants.OperatorConstants.XBOX_DRIVE) {
       driverXbox = new XboxController(0);
@@ -73,6 +78,9 @@ public class RobotContainer {
     configureBindings();
     SmartDashboard.putData(CommandScheduler.getInstance());
     drivebase.setDefaultCommand(driveCommand);
+
+    //nearestTag = new NearestTag(drivebase);
+
   }
 
   private void configureBindings() {
@@ -83,13 +91,14 @@ public class RobotContainer {
     new JoystickButton(buttonBox, 4).onTrue(driveBottomLeft);
     new JoystickButton(buttonBox, 5).onTrue(driveLeft);
     new JoystickButton(buttonBox, 6).onTrue(driveTopLeft);
-    new JoystickButton(buttonBox, 7).onTrue(driveLeftPeg);
-    new JoystickButton(buttonBox, 8).onTrue(driveRightPeg);
+    //new JoystickButton(buttonBox, 7).onTrue(driveLeftPeg);
+    //new JoystickButton(buttonBox, 8).onTrue(driveRightPeg);
 
     if (OperatorConstants.XBOX_DRIVE) {
       new JoystickButton(driverXbox, 7).onTrue((new InstantCommand(drivebase::zeroGyro))); // Back Button
       new JoystickButton(driverXbox, 2).onTrue(AdriveLocalTestRight); // TEST RIGHT (B)
       new JoystickButton(driverXbox, 1).onTrue(AdriveLocalTestLeft); // TEST RIGHT (A)
+      //new JoystickButton(driverXbox, 4).onTrue(nearestTag); // TEST RIGHT (Y)
       new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(() -> {
         CommandScheduler.getInstance().cancelAll();
       })); // X
