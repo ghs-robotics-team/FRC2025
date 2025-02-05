@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveSubsystem;
 
+
 public class DriveLocalCommandInches extends Command {
   SwerveSubsystem swerve;
   PIDController pidx;
@@ -25,9 +26,9 @@ public class DriveLocalCommandInches extends Command {
     this.pidy = new PIDController(1, 0, 0.004); // set PID directions
     this.inches = inches;
 
-    SmartDashboard.putNumber("DLC YLocal PID P", pidy.getP());
-    SmartDashboard.putNumber("DLC YLocal PID I", pidy.getI());
-    SmartDashboard.putNumber("DLC YLocal PID D", pidy.getD());
+    SmartDashboard.putNumber("DLCI YLocal PID P", pidy.getP());
+    SmartDashboard.putNumber("DLCI YLocal PID I", pidy.getI());
+    SmartDashboard.putNumber("DLCI YLocal PID D", pidy.getD());
   }
 
   public Pose2d distanceToPos(Pose2d pose) {
@@ -50,8 +51,8 @@ public class DriveLocalCommandInches extends Command {
       y -= Units.inchesToMeters(inches) * Math.sin(angle);
     }
 
-    SmartDashboard.putNumber("DLC NewX", x);
-    SmartDashboard.putNumber("DLC NewY", y);
+    SmartDashboard.putNumber("DLCI NewX", x);
+    SmartDashboard.putNumber("DLCI NewY", y);
 
     return new Pose2d(x, y, pose.getRotation());
   }
@@ -60,9 +61,9 @@ public class DriveLocalCommandInches extends Command {
   public void initialize() {
     swerve.drive(new Translation2d(0, 0), 0, true);
 
-    double Py = SmartDashboard.getNumber("DLC YLocal PID P", 3);
-    double Iy = SmartDashboard.getNumber("DLC YLocal PID I", 0.0);
-    double Dy = SmartDashboard.getNumber("DLC YLocal PID D", 0.004);
+    double Py = SmartDashboard.getNumber("DLCI YLocal PID P", 3);
+    double Iy = SmartDashboard.getNumber("DLCI YLocal PID I", 0.0);
+    double Dy = SmartDashboard.getNumber("DLCI YLocal PID D", 0.004);
 
     pidy.setP(Py);
     pidy.setI(Iy);
@@ -70,7 +71,7 @@ public class DriveLocalCommandInches extends Command {
 
     newPos = distanceToPos(swerve.getPose());
 
-    yError = Math.abs(pidy.getPositionError());
+    yError = Math.abs(pidy.getError());
   }
 
   @Override
@@ -82,16 +83,16 @@ public class DriveLocalCommandInches extends Command {
       toY = -pidy.calculate(swerve.getPose().getY(), newPos.getY());
     }
 
-    SmartDashboard.putNumber("DLC PIDy Error", pidy.getPositionError());
+    SmartDashboard.putNumber("DLCI PIDy Error", pidy.getError());
 
-    SmartDashboard.putNumber("DLC toX", toX);
-    SmartDashboard.putNumber("DLC toY", toY);
+    SmartDashboard.putNumber("DLCI toX", toX);
+    SmartDashboard.putNumber("DLCI toY", toY);
 
-    SmartDashboard.putNumber("DLC AngleLocal", swerve.getPose().getRotation().getDegrees());
-    SmartDashboard.putNumber("DLC XPos", swerve.getPose().getX());
-    SmartDashboard.putNumber("DLC YPos", swerve.getPose().getY());
+    SmartDashboard.putNumber("DLCI AngleLocal", swerve.getPose().getRotation().getDegrees());
+    SmartDashboard.putNumber("DLCI XPos", swerve.getPose().getX());
+    SmartDashboard.putNumber("DLCI YPos", swerve.getPose().getY());
 
-    yError = Math.abs(pidy.getPositionError());
+    yError = Math.abs(pidy.getError());
 
     if (yError < Units.inchesToMeters(0.2)) {
       swerve.drive(new Translation2d(0, 0), 0, true); // Stop the robot if within tolerance
