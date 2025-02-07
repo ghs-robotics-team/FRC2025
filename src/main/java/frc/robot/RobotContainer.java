@@ -1,7 +1,12 @@
 package frc.robot;
 
 import java.io.File;
+import java.lang.annotation.Target;
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -38,20 +43,15 @@ public class RobotContainer {
   private final DriveToPointCommand driveBottomLeft = new DriveToPointCommand(TargetPoints.BOTTOM_LEFT);
   private final DriveToPointCommand driveLeft = new DriveToPointCommand(TargetPoints.LEFT);
 
-  //private final DriveToPointCommand driveRightPeg = new DriveToPointCommand(TargetPoints.LEFT_RIGHT_PEG);
-  //private final DriveToPointCommand driveLeftPeg = new DriveToPointCommand(TargetPoints.LEFT_LEFT_PEG);
-
-  private final DriveLocalCommandAbsolute AdriveLocalTestRight;
-  private final DriveLocalCommandAbsolute AdriveLocalTestLeft;
-
-  //private final NearestTag nearestTag;
+  //private final DriveLocalCommandAbsolute AdriveLocalTestRight;
+  //private final DriveLocalCommandAbsolute AdriveLocalTestLeft;
 
 
   public RobotContainer() {
     drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve/neo"));
     eagleye.setDefaultCommand(eagleeyecommand);
-    AdriveLocalTestRight = new DriveLocalCommandAbsolute(drivebase, 6.47, TargetPoints.LEFT.get());
-    AdriveLocalTestLeft = new DriveLocalCommandAbsolute(drivebase, -6.47, TargetPoints.LEFT.get());
+    //AdriveLocalTestRight = new DriveLocalCommandAbsolute(drivebase, 6.47, TargetPoints.LEFT.get());
+    //AdriveLocalTestLeft = new DriveLocalCommandAbsolute(drivebase, -6.47, TargetPoints.LEFT.get());
 
 
     if (Constants.OperatorConstants.XBOX_DRIVE) {
@@ -78,10 +78,8 @@ public class RobotContainer {
     configureBindings();
     SmartDashboard.putData(CommandScheduler.getInstance());
     drivebase.setDefaultCommand(driveCommand);
-
-    //nearestTag = new NearestTag(drivebase);
-
   }
+
 
   private void configureBindings() {
     // Binding commands
@@ -91,14 +89,17 @@ public class RobotContainer {
     new JoystickButton(buttonBox, 4).onTrue(driveBottomLeft);
     new JoystickButton(buttonBox, 5).onTrue(driveLeft);
     new JoystickButton(buttonBox, 6).onTrue(driveTopLeft);
-    //new JoystickButton(buttonBox, 7).onTrue(driveLeftPeg);
-    //new JoystickButton(buttonBox, 8).onTrue(driveRightPeg);
+  
 
     if (OperatorConstants.XBOX_DRIVE) {
       new JoystickButton(driverXbox, 7).onTrue((new InstantCommand(drivebase::zeroGyro))); // Back Button
-      new JoystickButton(driverXbox, 2).onTrue(AdriveLocalTestRight); // TEST RIGHT (B)
-      new JoystickButton(driverXbox, 1).onTrue(AdriveLocalTestLeft); // TEST RIGHT (A)
-      //new JoystickButton(driverXbox, 4).onTrue(nearestTag); // TEST RIGHT (Y)
+
+      new JoystickButton(driverXbox, 2).onTrue(new DriveLocalCommandAbsolute(drivebase, 6.47, TargetPoints.LEFT.get())); // TEST RIGHT (B)
+      new JoystickButton(driverXbox, 1).onTrue(new DriveLocalCommandAbsolute(drivebase, -6.47, new NearestTag(drivebase, true).nearTag())); // TEST RIGHT (A)
+      if(Constants.OperatorConstants.MATT_MODE){
+        new JoystickButton(driverXbox, 4).onTrue(new NearestTag(drivebase, false)); // TEST RIGHT (Y)
+      }
+      
       new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(() -> {
         CommandScheduler.getInstance().cancelAll();
       })); // X

@@ -39,7 +39,8 @@ public enum TargetPoints {
 
     public Pose2d get() {
         Pose2d newpose = distanceFromTag(pose);
-        if (DriverStation.getAlliance().get() == Alliance.Red) {
+        Alliance alliance = DriverStation.getAlliance().orElse(Alliance.Blue);
+        if (alliance == Alliance.Red) {
             return new Pose2d(newpose.getX() + 8.57, newpose.getY(), newpose.getRotation());
         } else {
             return newpose;

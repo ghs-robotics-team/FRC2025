@@ -54,7 +54,7 @@ public final class Constants {
     // XBOX mode
     public static final boolean XBOX_DRIVE = true;
 
-    public static final boolean MATT_MODE = false;
+    public static final boolean MATT_MODE = true;
   }
 
   public static class EagleEyeConstants {
