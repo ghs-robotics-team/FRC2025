@@ -96,7 +96,7 @@ public class DriveLocalCommandAbsolute extends Command {
 
     yError = Math.abs(pidy.getError());
 
-    if (yError < Units.inchesToMeters(0.2)) {
+    if (yError < Units.inchesToMeters(0.5)) {
       swerve.drive(new Translation2d(0, 0), 0, true); // Stop the robot if within tolerance
     } else {
       if (inches >= 0) { // -6
@@ -114,7 +114,7 @@ public class DriveLocalCommandAbsolute extends Command {
 
   @Override
   public boolean isFinished() {
-    if (yError < Units.inchesToMeters(0.2)) {
+    if (yError < Units.inchesToMeters(0.5)) {
       swerve.drive(new Translation2d(0, 0), 0, true);
       return true;
       // deadzone

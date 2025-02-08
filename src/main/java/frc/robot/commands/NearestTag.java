@@ -18,12 +18,14 @@ public class NearestTag extends Command {
   SwerveSubsystem swerve;
   DriveToPointCommandForPose2d command;
   boolean stat;
+  Pose2d target;
   public NearestTag(SwerveSubsystem swerve, boolean stat) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(swerve);
     this.swerve = swerve;
     this.command = null;
     this.stat = stat;
+    this.target = swerve.getPose();
   }
 
   // Called when the command is initially scheduled.
@@ -34,7 +36,7 @@ public class NearestTag extends Command {
       sides.add(point.get());
     }
 
-    Pose2d target = sides.get(0);
+    target = sides.get(0);
     for (Pose2d side : sides){
       if(swerve.getPose().getTranslation().getDistance(side.getTranslation()) < swerve.getPose().getTranslation().getDistance(target.getTranslation())){
         target = side;
@@ -47,22 +49,7 @@ public class NearestTag extends Command {
     }
 }
 
-public Pose2d nearTag(){
-  List<Pose2d> sides = new ArrayList<Pose2d>();
-  for (TargetPoints point : TargetPoints.values()){
-    sides.add(point.get());
-  }
-
-  Pose2d target = sides.get(0);
-  for (Pose2d side : sides){
-    if(swerve.getPose().getTranslation().getDistance(side.getTranslation()) < swerve.getPose().getTranslation().getDistance(target.getTranslation())){
-      target = side;
-    }
-  }
-  SmartDashboard.putNumber("X", target.getX());
-  SmartDashboard.putNumber("Y", target.getY());
-  SmartDashboard.putNumber("bX", TargetPoints.LEFT.get().getX());
-  SmartDashboard.putNumber("bY", TargetPoints.LEFT.get().getY());
+public Pose2d getTarget(){
   return target;
 }
 

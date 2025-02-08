@@ -9,7 +9,9 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
+import frc.robot.Globals;
 
 public class DriveToPointCommandForPose2d extends Command {
   /** Creates a new DriveToPointCommand. */
@@ -30,7 +32,10 @@ public class DriveToPointCommandForPose2d extends Command {
     Field2d field = new Field2d();
     field.setRobotPose(point);
     SmartDashboard.putData("DTP target point", field);
-    pathfindingCommand.schedule();
+    Globals.inPath = true;
+    pathfindingCommand.andThen(new InstantCommand(() -> {
+        Globals.inPath = false;
+      })).schedule();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -71,9 +71,9 @@ public class RobotContainer {
           () -> MathUtil.applyDeadband(-driverXbox.getRightX(), OperatorConstants.RIGHT_X_DEADBAND));
     } else {
       driveCommand = drivebase.driveCommand(
-          () -> MathUtil.applyDeadband(leftjoystick.getRawAxis(1) * 0.25, OperatorConstants.LEFT_Y_DEADBAND),
-          () -> MathUtil.applyDeadband(leftjoystick.getRawAxis(0) * 0.25, OperatorConstants.LEFT_X_DEADBAND),
-          () -> -rightjoystick.getRawAxis(0) * 0.25);
+          () -> MathUtil.applyDeadband(leftjoystick.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
+          () -> MathUtil.applyDeadband(leftjoystick.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
+          () -> -rightjoystick.getRawAxis(0));
     }
     configureBindings();
     SmartDashboard.putData(CommandScheduler.getInstance());
@@ -89,13 +89,14 @@ public class RobotContainer {
     new JoystickButton(buttonBox, 4).onTrue(driveBottomLeft);
     new JoystickButton(buttonBox, 5).onTrue(driveLeft);
     new JoystickButton(buttonBox, 6).onTrue(driveTopLeft);
-  
+
 
     if (OperatorConstants.XBOX_DRIVE) {
-      new JoystickButton(driverXbox, 7).onTrue((new InstantCommand(drivebase::zeroGyro))); // Back Button
+      new JoystickButton(driverXbox, 8).onTrue((new InstantCommand(drivebase::zeroGyro))); // (Start)
 
-      new JoystickButton(driverXbox, 2).onTrue(new DriveLocalCommandAbsolute(drivebase, 6.47, TargetPoints.LEFT.get())); // TEST RIGHT (B)
-      new JoystickButton(driverXbox, 1).onTrue(new DriveLocalCommandAbsolute(drivebase, -6.47, new NearestTag(drivebase, true).nearTag())); // TEST RIGHT (A)
+      new JoystickButton(driverXbox, 2).onTrue(new DriveLocalCommandAbsolute(drivebase, 8.47, new NearestTag(drivebase, true).getTarget())); // TEST RIGHT (B)
+      new JoystickButton(driverXbox, 1).onTrue(new DriveLocalCommandAbsolute(drivebase, -4.47, new NearestTag(drivebase, true).getTarget())); // TEST RIGHT (A) (6.47 ORIGINAL VAL)
+      //new JoystickButton(rightjoystick, 2).onTrue(new InstantCommand(drivebase::lock));
       if(Constants.OperatorConstants.MATT_MODE){
         new JoystickButton(driverXbox, 4).onTrue(new NearestTag(drivebase, false)); // TEST RIGHT (Y)
       }

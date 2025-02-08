@@ -5,6 +5,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Globals;
 import frc.robot.LimelightHelpers;
 import frc.robot.Constants.EagleEyeConstants;
@@ -17,11 +18,17 @@ public class EagleEye extends SubsystemBase {
   // private final RectanglePoseArea fieldBoundary = new RectanglePoseArea(new
   // Translation2d(0, 0), new Translation2d(16.541, 8.211));
 
+  @SuppressWarnings("unused")
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     if (RobotBase.isSimulation())
       return;
+
+    if(Constants.EagleEyeConstants.IN_PATH_END && Globals.inPath){
+      Globals.LastVisionMeasurement.confidence = 0; 
+      return;
+    }
 
     // If we don't update confidence then we don't send the measurement
     double confidence = 0;
@@ -32,7 +39,7 @@ public class EagleEye extends SubsystemBase {
 
     // Gets predicted location based on Tag
     LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers
-        .getBotPoseEstimate_wpiBlue("limelight-cama");
+        .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-cama");
 
     SmartDashboard.putNumber("EE NumTags", limelightMeasurement.tagCount);
     SmartDashboard.putNumber("EE Avg Tag Dist", limelightMeasurement.avgTagDist);
@@ -51,19 +58,14 @@ public class EagleEye extends SubsystemBase {
           confidence = 0.2;
         } else {
           // High trust level anything less than this we shouldn't bother with
-          double compareDistance = limelightMeasurement.pose.getTranslation()
-              .getDistance(Globals.EagleEye.position.getTranslation());
-          if (compareDistance < 0.5 ||
+          double compareDistance = limelightMeasurement.pose.getTranslation().getDistance(Globals.EagleEye.position.getTranslation());
+            if( compareDistance < 0.5 ||
               (limelightMeasurement.tagCount >= 2 && limelightMeasurement.avgTagDist < Units.feetToMeters(20)) ||
-              (limelightMeasurement.tagCount == 1 && limelightMeasurement.avgTagDist < Units.feetToMeters(10))) {
-            double tagDistance = Units.metersToFeet(limelightMeasurement.avgTagDist);
-            // Double the distance for solo tag
-            if (limelightMeasurement.tagCount == 1) {
-              tagDistance = tagDistance * 2;
+              (limelightMeasurement.tagCount == 1 && limelightMeasurement.avgTagDist < Units.feetToMeters(15))) {
+              double tagDistance = Units.metersToFeet(limelightMeasurement.avgTagDist);
+              // Add up to .2 confidence depending on how far away
+              confidence = 0.5 + (tagDistance / 100);
             }
-            // Add up to .2 confidence depending on how far away
-            confidence = 0.7 + (tagDistance / 100);
-          }
         }
       }
     }
