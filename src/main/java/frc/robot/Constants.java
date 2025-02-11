@@ -24,7 +24,14 @@ public final class Constants {
   public static final double LOOP_TIME = 0.13; // s, 20ms + 110ms sprk max velocity lag
   public static final double MAX_SPEED = 1; // 0.2/2.0 Min/Max
 
-  public static final class SetPointConstants {
+  public static final class SetPointConstants { //Dummy Values until measured
+    public static final double ARM_LEFT = 0.6;
+    public static final double ARM_Right = 0.2;
+
+    public static final double ELEVATOR_HIGH = 50;
+    public static final double ELEVATOR_MIDDLE = 30;
+    public static final double ELEVATOR_LOW = 10;
+    public static final double ELEVATOR_TROUGH = 0;
 
   }
 

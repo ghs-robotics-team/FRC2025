@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 
@@ -17,9 +18,24 @@ public class Arm extends SubsystemBase {
   SparkMax bottomHand = new SparkMax(3, MotorType.kBrushless);
   SparkMax armMover = new SparkMax(4, MotorType.kBrushless);
   PIDController pid;
+
+  AbsoluteEncoder absoluteEncoder = armMover.getAbsoluteEncoder();
   public Arm() {
     // Use addRequirements() here to declare subsystem dependencies.
     this.pid = new PIDController (0.35,0,0.0005); 
+  }
+
+  public void left(){
+    armMover.set(-0.5);
+  }
+
+  public void right(){
+    armMover.set(0.5);
+  }
+
+  public void intake(){
+    topHand.set(0.5);
+    bottomHand.set(-0.5);
   }
 
   @Override

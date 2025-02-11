@@ -20,13 +20,19 @@ import frc.robot.commands.DriveToPointCommand;
 import frc.robot.commands.TargetPoints;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.EagleEyeCommand;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.EagleEye;
+import frc.robot.subsystems.Elevator;
+import frc.robot.commands.ArmLeft;
+import frc.robot.commands.ArmRight;
 import frc.robot.commands.DriveLocalCommandAbsolute;
 import frc.robot.commands.NearestTag;
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem drivebase;
+  private final Arm arm = new Arm();
+  private final Elevator elevator = new Elevator();
 
   private Joystick buttonBox;
   private XboxController driverXbox;
@@ -43,15 +49,15 @@ public class RobotContainer {
   private final DriveToPointCommand driveBottomLeft = new DriveToPointCommand(TargetPoints.BOTTOM_LEFT);
   private final DriveToPointCommand driveLeft = new DriveToPointCommand(TargetPoints.LEFT);
 
-  //private final DriveLocalCommandAbsolute AdriveLocalTestRight;
-  //private final DriveLocalCommandAbsolute AdriveLocalTestLeft;
+  private final ArmLeft armLeft = new ArmLeft(arm);
+  private final ArmRight armRight = new ArmRight(arm);
+
 
 
   public RobotContainer() {
     drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve/neo"));
+    
     eagleye.setDefaultCommand(eagleeyecommand);
-    //AdriveLocalTestRight = new DriveLocalCommandAbsolute(drivebase, 6.47, TargetPoints.LEFT.get());
-    //AdriveLocalTestLeft = new DriveLocalCommandAbsolute(drivebase, -6.47, TargetPoints.LEFT.get());
 
 
     if (Constants.OperatorConstants.XBOX_DRIVE) {
@@ -100,6 +106,9 @@ public class RobotContainer {
       if(Constants.OperatorConstants.MATT_MODE){
         new JoystickButton(driverXbox, 4).onTrue(new NearestTag(drivebase, false)); // TEST RIGHT (Y)
       }
+      new JoystickButton(driverXbox, 5).onTrue(armLeft);
+      new JoystickButton(driverXbox, 6).onTrue(armRight);
+
       
       new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(() -> {
         CommandScheduler.getInstance().cancelAll();

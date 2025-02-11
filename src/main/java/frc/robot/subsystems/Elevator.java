@@ -5,6 +5,8 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -16,9 +18,24 @@ public class Elevator extends SubsystemBase {
   SparkMax Left = new SparkMax(0, MotorType.kBrushless); //Get ID
   SparkMax Right = new SparkMax(1, MotorType.kBrushless);
   PIDController pid;
+  
+  AbsoluteEncoder absoluteEncoder = Left.getAbsoluteEncoder();
+  RelativeEncoder relativeEncoder = Left.getEncoder();
+  double absolutepos = absoluteEncoder.getPosition(); //0 to 1
+  double totalRotations = relativeEncoder.getPosition(); // Total rotations
   public Elevator() {
     // Use addRequirements() here to declare subsystem dependencies.
     this.pid = new PIDController (0.35,0,0.0005); 
+  }
+
+  public void up(){
+    Left.set(0.5);
+    Right.set(0.5);
+  }
+
+  public void down(){
+    Left.set(-0.5);
+    Right.set(-0.5);
   }
 
   @Override
