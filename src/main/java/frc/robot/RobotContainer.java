@@ -23,7 +23,6 @@ import frc.robot.commands.EagleEyeCommand;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.EagleEye;
 import frc.robot.subsystems.Elevator;
-import frc.robot.commands.ArmLeft;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.DriveLocalCommandAbsolute;
 import frc.robot.commands.NearestTag;
@@ -49,8 +48,8 @@ public class RobotContainer {
   private final DriveToPointCommand driveBottomLeft = new DriveToPointCommand(TargetPoints.BOTTOM_LEFT);
   private final DriveToPointCommand driveLeft = new DriveToPointCommand(TargetPoints.LEFT);
 
-  private final ArmLeft armLeft = new ArmLeft(arm);
-  private final MoveArm armRight = new MoveArm(arm);
+  private final MoveArm armRight = new MoveArm(arm, 0.5);
+  private final MoveArm armLeft = new MoveArm(arm, -0.5);
 
 
 

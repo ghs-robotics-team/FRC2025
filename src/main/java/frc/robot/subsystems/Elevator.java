@@ -28,14 +28,9 @@ public class Elevator extends SubsystemBase {
     this.pid = new PIDController (0.35,0,0.0005); 
   }
 
-  public void up(){
-    Left.set(0.5);
-    Right.set(0.5);
-  }
-
-  public void down(){
-    Left.set(-0.5);
-    Right.set(-0.5);
+  public void move(double amt){ // 0 to 1
+    Left.set(amt);
+    Right.set(amt);
   }
 
   public double getAbsPos(){
