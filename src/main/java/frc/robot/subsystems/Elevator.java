@@ -38,6 +38,14 @@ public class Elevator extends SubsystemBase {
     Right.set(-0.5);
   }
 
+  public double getAbsPos(){
+    return absoluteEncoder.getPosition();
+  }
+
+  public double getRelPos(){
+    return relativeEncoder.getPosition();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

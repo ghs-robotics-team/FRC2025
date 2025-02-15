@@ -25,18 +25,19 @@ public class Arm extends SubsystemBase {
     this.pid = new PIDController (0.35,0,0.0005); 
   }
 
-  public void left(){
-    armMover.set(-0.5);
-  }
-
-  public void right(){
-    armMover.set(0.5);
+  public void move(double amt){ // 0 to 1
+    armMover.set(amt);
   }
 
   public void intake(){
     topHand.set(0.5);
     bottomHand.set(-0.5);
   }
+
+  public double getPos(){
+    return absoluteEncoder.getPosition();
+  }
+
 
   @Override
   public void periodic() {

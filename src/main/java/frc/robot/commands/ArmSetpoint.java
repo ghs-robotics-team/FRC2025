@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
 
@@ -12,21 +14,34 @@ public class ArmSetpoint extends Command {
   /** Creates a new ArmSetpoint. */
   Arm arm;
   double setPoint;
+  PIDController pid;
   public ArmSetpoint(Arm arm, double setPoint) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.arm = arm;
     this.setPoint = setPoint;
+    this.pid = new PIDController (0.35,0,0.0005); 
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    double initPos = arm.getPos();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    double P = SmartDashboard.getNumber("Indexer-P", 0.28); 
+    double I = SmartDashboard.getNumber("Indexer-I", 0.0);
+    double D = SmartDashboard.getNumber("Indexer-D", 0.0005);
+    double Speed =SmartDashboard.getNumber("Arm Speed", 6.5);
+
+    // Set PID numbers
+    pid.setP(P);
+    pid.setI(I);
+    pid.setD(D);
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override

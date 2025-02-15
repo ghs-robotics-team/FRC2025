@@ -5,15 +5,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Arm;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ArmLeft extends Command {
-  /** Creates a new ArmLeft. */
-  Arm arm;
-  public ArmLeft(Arm arm) {
+public class MoveElevator extends Command {
+  /** Creates a new moveElevator. */
+  public MoveElevator() {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.arm = arm;
   }
 
   // Called when the command is initially scheduled.
@@ -22,9 +19,7 @@ public class ArmLeft extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    arm.left();
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

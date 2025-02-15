@@ -24,7 +24,7 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.EagleEye;
 import frc.robot.subsystems.Elevator;
 import frc.robot.commands.ArmLeft;
-import frc.robot.commands.ArmRight;
+import frc.robot.commands.MoveArm;
 import frc.robot.commands.DriveLocalCommandAbsolute;
 import frc.robot.commands.NearestTag;
 
@@ -50,7 +50,7 @@ public class RobotContainer {
   private final DriveToPointCommand driveLeft = new DriveToPointCommand(TargetPoints.LEFT);
 
   private final ArmLeft armLeft = new ArmLeft(arm);
-  private final ArmRight armRight = new ArmRight(arm);
+  private final MoveArm armRight = new MoveArm(arm);
 
 
 
@@ -89,15 +89,16 @@ public class RobotContainer {
 
   private void configureBindings() {
     // Binding commands
-    new JoystickButton(buttonBox, 1).onTrue(driveTopRight);
-    new JoystickButton(buttonBox, 2).onTrue(driveRight);
-    new JoystickButton(buttonBox, 3).onTrue(driveBottomRight);
-    new JoystickButton(buttonBox, 4).onTrue(driveBottomLeft);
-    new JoystickButton(buttonBox, 5).onTrue(driveLeft);
-    new JoystickButton(buttonBox, 6).onTrue(driveTopLeft);
-
+    
 
     if (OperatorConstants.XBOX_DRIVE) {
+      new JoystickButton(buttonBox, 1).onTrue(driveTopRight);
+      new JoystickButton(buttonBox, 2).onTrue(driveRight);
+      new JoystickButton(buttonBox, 3).onTrue(driveBottomRight);
+      new JoystickButton(buttonBox, 4).onTrue(driveBottomLeft);
+      new JoystickButton(buttonBox, 5).onTrue(driveLeft);
+      new JoystickButton(buttonBox, 6).onTrue(driveTopLeft);
+
       new JoystickButton(driverXbox, 8).onTrue((new InstantCommand(drivebase::zeroGyro))); // (Start)
 
       new JoystickButton(driverXbox, 2).onTrue(new DriveLocalCommandAbsolute(drivebase, 8.47, new NearestTag(drivebase, true).getTarget())); // TEST RIGHT (B)
@@ -111,6 +112,23 @@ public class RobotContainer {
 
       
       new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(() -> {
+        CommandScheduler.getInstance().cancelAll();
+      })); // X
+    }
+    else{
+      new JoystickButton(buttonBox, 8).onTrue((new InstantCommand(drivebase::zeroGyro))); // (Start)
+
+      new JoystickButton(buttonBox, 2).onTrue(new DriveLocalCommandAbsolute(drivebase, 8.47, new NearestTag(drivebase, true).getTarget())); // TEST RIGHT (B)
+      new JoystickButton(buttonBox, 1).onTrue(new DriveLocalCommandAbsolute(drivebase, -4.47, new NearestTag(drivebase, true).getTarget())); // TEST RIGHT (A) (6.47 ORIGINAL VAL)
+      //new JoystickButton(rightjoystick, 2).onTrue(new InstantCommand(drivebase::lock));
+      if(Constants.OperatorConstants.MATT_MODE){
+        new JoystickButton(buttonBox, 4).onTrue(new NearestTag(drivebase, false)); // TEST RIGHT (Y) FIND ID FOR MATT STICK 
+      }
+      new JoystickButton(buttonBox, 5).onTrue(armLeft); //Left Bumper
+      new JoystickButton(buttonBox, 6).onTrue(armRight); //Right Bumper
+
+      
+      new JoystickButton(buttonBox, 3).onTrue(new InstantCommand(() -> { //X
         CommandScheduler.getInstance().cancelAll();
       })); // X
     }
