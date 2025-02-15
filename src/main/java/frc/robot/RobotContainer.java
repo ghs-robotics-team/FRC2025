@@ -20,13 +20,14 @@ import frc.robot.commands.DriveToPointCommand;
 import frc.robot.commands.TargetPoints;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.EagleEyeCommand;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.EagleEye;
 import frc.robot.subsystems.Elevator;
-import frc.robot.commands.ArmLeft;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.DriveLocalCommandAbsolute;
 import frc.robot.commands.NearestTag;
+import frc.robot.commands.OuttakeCommand;
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
@@ -50,8 +51,11 @@ public class RobotContainer {
   private final DriveToPointCommand driveBottomLeft = new DriveToPointCommand(TargetPoints.BOTTOM_LEFT);
   private final DriveToPointCommand driveLeft = new DriveToPointCommand(TargetPoints.LEFT);
 
-  private final ArmLeft armLeft = new ArmLeft(arm);
-  private final MoveArm armRight = new MoveArm(arm);
+  private final MoveArm movearmleft = new MoveArm(arm,-1);
+  private final MoveArm movearmright = new MoveArm(arm,1);
+
+  private final IntakeCommand intake = new IntakeCommand(arm);
+  private final OuttakeCommand outtake = new OuttakeCommand(arm);
 
 
 
@@ -98,10 +102,12 @@ public class RobotContainer {
     new JoystickButton(buttonBox, 4).onTrue(driveBottomLeft);
     new JoystickButton(buttonBox, 5).onTrue(driveLeft);
     new JoystickButton(buttonBox, 6).onTrue(driveTopLeft);
+    new JoystickButton(buttonBox, 7).onTrue(movearmleft);
+    new JoystickButton(buttonBox, 8).onTrue(movearmright);
     new JoystickButton(buttonBox, 10).onTrue(/* Up */);
     new JoystickButton(buttonBox, 11).onTrue(/* Down */);
-    new JoystickButton(buttonBox_moreButtons, 1).onTrue( /* Intake */);
-    new JoystickButton(buttonBox_moreButtons, 2).onTrue( /* Outtake */);
+    new JoystickButton(buttonBox_moreButtons, 1).onTrue(intake);
+    new JoystickButton(buttonBox_moreButtons, 2).onTrue(outtake);
 
     if (OperatorConstants.XBOX_DRIVE) {
       new JoystickButton(driverXbox, 8).onTrue((new InstantCommand(drivebase::zeroGyro))); // (Start)

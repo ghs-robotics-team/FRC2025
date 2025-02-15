@@ -34,6 +34,10 @@ public class Arm extends SubsystemBase {
     bottomHand.set(-0.5);
   }
 
+  public void outtake() {
+    topHand.set(-0.5);
+    bottomHand.set(0.5);
+  }
   public double getPos(){
     return absoluteEncoder.getPosition();
   }
