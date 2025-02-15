@@ -35,6 +35,7 @@ public class RobotContainer {
   private final Elevator elevator = new Elevator();
 
   private Joystick buttonBox;
+  private Joystick buttonBox_moreButtons;
   private XboxController driverXbox;
   private Joystick rightjoystick;
   private Joystick leftjoystick;
@@ -63,10 +64,12 @@ public class RobotContainer {
     if (Constants.OperatorConstants.XBOX_DRIVE) {
       driverXbox = new XboxController(0);
       buttonBox = new Joystick(1);
+      buttonBox_moreButtons = new Joystick(2);
     } else {
       rightjoystick = new Joystick(0);
       leftjoystick = new Joystick(1);
       buttonBox = new Joystick(2);
+      buttonBox_moreButtons = new Joystick(3);
     }
 
     Command driveCommand = null;
@@ -89,16 +92,18 @@ public class RobotContainer {
 
   private void configureBindings() {
     // Binding commands
-    
+    new JoystickButton(buttonBox, 1).onTrue(driveTopRight);
+    new JoystickButton(buttonBox, 2).onTrue(driveRight);
+    new JoystickButton(buttonBox, 3).onTrue(driveBottomRight);
+    new JoystickButton(buttonBox, 4).onTrue(driveBottomLeft);
+    new JoystickButton(buttonBox, 5).onTrue(driveLeft);
+    new JoystickButton(buttonBox, 6).onTrue(driveTopLeft);
+    new JoystickButton(buttonBox, 10).onTrue(/* Up */);
+    new JoystickButton(buttonBox, 11).onTrue(/* Down */);
+    new JoystickButton(buttonBox_moreButtons, 1).onTrue( /* Intake */);
+    new JoystickButton(buttonBox_moreButtons, 2).onTrue( /* Outtake */);
 
     if (OperatorConstants.XBOX_DRIVE) {
-      new JoystickButton(buttonBox, 1).onTrue(driveTopRight);
-      new JoystickButton(buttonBox, 2).onTrue(driveRight);
-      new JoystickButton(buttonBox, 3).onTrue(driveBottomRight);
-      new JoystickButton(buttonBox, 4).onTrue(driveBottomLeft);
-      new JoystickButton(buttonBox, 5).onTrue(driveLeft);
-      new JoystickButton(buttonBox, 6).onTrue(driveTopLeft);
-
       new JoystickButton(driverXbox, 8).onTrue((new InstantCommand(drivebase::zeroGyro))); // (Start)
 
       new JoystickButton(driverXbox, 2).onTrue(new DriveLocalCommandAbsolute(drivebase, 8.47, new NearestTag(drivebase, true).getTarget())); // TEST RIGHT (B)
