@@ -117,8 +117,8 @@ public class RobotContainer {
     new JoystickButton(buttonBox, 5).onTrue(driveLeft);
     new JoystickButton(buttonBox, 6).onTrue(driveTopLeft);
 
-    //new JoystickButton(buttonBox, 999).onTrue(topStation); (FIND IDs FOR THESE)
-    //new JoystickButton(buttonBox, 888).onTrue(bottomStation);
+    new JoystickButton(buttonBox, 9).onTrue(topStation); 
+    new JoystickButton(buttonBox_moreButtons, 3).onTrue(bottomStation);
 
     // Buttonbox Arm and Elevator Commands
     new JoystickButton(buttonBox, 7).onTrue(armLeft);
