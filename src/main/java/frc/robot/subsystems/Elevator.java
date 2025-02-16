@@ -7,35 +7,25 @@ package frc.robot.subsystems;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkMax;
-
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.revrobotics.spark.SparkFlex;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Elevator extends SubsystemBase {
   /** Creates a new Elevator. */
-  SparkMax Left = new SparkMax(0, MotorType.kBrushless); //Get ID
-  SparkMax Right = new SparkMax(1, MotorType.kBrushless);
-  PIDController pid;
+  SparkFlex Left = new SparkFlex(0, MotorType.kBrushless); //Get ID
+  SparkFlex Right = new SparkFlex(1, MotorType.kBrushless);
   
   AbsoluteEncoder absoluteEncoder = Left.getAbsoluteEncoder();
   RelativeEncoder relativeEncoder = Left.getEncoder();
-  double absolutepos = absoluteEncoder.getPosition(); //0 to 1
+  double absolutepos = absoluteEncoder.getPosition(); // 0 to 1
   double totalRotations = relativeEncoder.getPosition(); // Total rotations
   public Elevator() {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.pid = new PIDController (0.35,0,0.0005); 
   }
 
-  public void up(){
-    Left.set(0.5);
-    Right.set(0.5);
-  }
-
-  public void down(){
-    Left.set(-0.5);
-    Right.set(-0.5);
+  public void move(double amt){
+    Left.set(amt);
+    Right.set(amt);
   }
 
   public double getAbsPos(){
@@ -49,14 +39,5 @@ public class Elevator extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    double P = SmartDashboard.getNumber("Indexer-P", 0.28); 
-    double I = SmartDashboard.getNumber("Indexer-I", 0.0);
-    double D = SmartDashboard.getNumber("Indexer-D", 0.0005);
-    double Speed =SmartDashboard.getNumber("Arm Speed", 6.5);
-
-    // Set PID numbers
-    pid.setP(P);
-    pid.setI(I);
-    pid.setD(D);
   }
 }

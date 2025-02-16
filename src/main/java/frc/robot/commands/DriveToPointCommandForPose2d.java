@@ -1,10 +1,7 @@
 package frc.robot.commands;
 
-import java.lang.annotation.Target;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,10 +25,15 @@ public class DriveToPointCommandForPose2d extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    // Build Command based on Point and Constraints.
     pathfindingCommand = AutoBuilder.pathfindToPose(point, new PathConstraints(Constants.MAX_SPEED, 0.5 /* 3 */, 2*Math.PI, 4*Math.PI), 0.0);
+    
+    // Setup Variables for Field and Robotpose.
     Field2d field = new Field2d();
     field.setRobotPose(point);
     SmartDashboard.putData("DTP target point", field);
+
+    // Sends data to Globals to indicate that the robot is currently in a command.
     Globals.inPath = true;
     pathfindingCommand.andThen(new InstantCommand(() -> {
         Globals.inPath = false;
@@ -45,10 +47,6 @@ public class DriveToPointCommandForPose2d extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if(interrupted){
-      System.out.println("Canceled");
-      //pathfindingCommand.cancel();
-    }
   }
 
   // Returns true when the command should end.

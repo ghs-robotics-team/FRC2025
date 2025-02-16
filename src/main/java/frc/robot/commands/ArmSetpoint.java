@@ -15,6 +15,7 @@ public class ArmSetpoint extends Command {
   Arm arm;
   double setPoint;
   PIDController pid;
+
   public ArmSetpoint(Arm arm, double setPoint) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.arm = arm;
@@ -25,27 +26,40 @@ public class ArmSetpoint extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    double initPos = arm.getPos();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // Get PID Numbers
     double P = SmartDashboard.getNumber("Indexer-P", 0.28); 
     double I = SmartDashboard.getNumber("Indexer-I", 0.0);
     double D = SmartDashboard.getNumber("Indexer-D", 0.0005);
-    double Speed =SmartDashboard.getNumber("Arm Speed", 6.5);
+    //double Speed = SmartDashboard.getNumber("Arm Speed", 6.5);
 
     // Set PID numbers
     pid.setP(P);
     pid.setI(I);
     pid.setD(D);
+    
+    // Get PID Controller direction for arm to go, find current error from position.
+    double direction = pid.calculate(arm.getPos(), setPoint);
+    double error = pid.getPositionError();
+
+    // If error is within 1 unit, stop moving arm.
+    if (error > -1 && error < 1) {
+      arm.move(0); // deadzone
+    } else {
+      arm.move(direction); // Move Arm
+    }
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    arm.move(0);
+  }
 
   // Returns true when the command should end.
   @Override

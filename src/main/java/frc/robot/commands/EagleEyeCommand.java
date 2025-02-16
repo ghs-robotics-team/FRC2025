@@ -22,7 +22,7 @@ public class EagleEyeCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      SmartDashboard.putBoolean("inpath", Globals.inPath);
+    SmartDashboard.putBoolean("inpath", Globals.inPath);
   }
 
   // Called once the command ends or is interrupted.

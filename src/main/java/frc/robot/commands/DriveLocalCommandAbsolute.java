@@ -11,8 +11,10 @@ import frc.robot.subsystems.SwerveSubsystem;
 public class DriveLocalCommandAbsolute extends Command {
 
   SwerveSubsystem swerve;
+  
   PIDController pidx;
   PIDController pidy;
+
   Pose2d target;
   double toX;
   double toY;
@@ -28,35 +30,41 @@ public class DriveLocalCommandAbsolute extends Command {
     this.inches = inches;
     this.target = target;
 
+    // Put PID Values.
     SmartDashboard.putNumber("DLCA YLocal PID P", pidy.getP());
     SmartDashboard.putNumber("DLCA YLocal PID I", pidy.getI());
     SmartDashboard.putNumber("DLCA YLocal PID D", pidy.getD());
   }
 
   public Pose2d distanceToPos(Pose2d pose) {
+    // Current X and Y Position of the Robot.
     double x = pose.getX();
     double y = pose.getY();
     double angle_degree;
 
+    // Correcting for Weird WPILib Angle Measurements.
     if (inches >= 0) {
       angle_degree = pose.getRotation().getDegrees() - 90;
     } else {
       angle_degree = pose.getRotation().getDegrees() + 90;
     }
-
     double angle = Units.degreesToRadians(angle_degree);
 
+    // Calculate new X position based on Trigonometry
     x += Units.inchesToMeters(inches) * Math.cos(angle);
 
+    // Calculate new Y based on if the robot is moving right or left.
     if (inches >= 0) {
       y += Units.inchesToMeters(inches) * Math.sin(angle);
     } else {
       y -= Units.inchesToMeters(inches) * Math.sin(angle);
     }
 
+    // Put the new X and Y on the SmartDashboard.
     SmartDashboard.putNumber("DLCA NewX", x);
     SmartDashboard.putNumber("DLCA NewY", y);
 
+    // Return the new Pose2d.
     return new Pose2d(x, y, pose.getRotation());
   }
 
@@ -64,21 +72,27 @@ public class DriveLocalCommandAbsolute extends Command {
   public void initialize() {
     swerve.drive(new Translation2d(0, 0), 0, true);
 
+    // Get PID Values from SmartDashboard.
     double Py = SmartDashboard.getNumber("DLCA YLocal PID P", 3);
     double Iy = SmartDashboard.getNumber("DLCA YLocal PID I", 0.0);
     double Dy = SmartDashboard.getNumber("DLCA YLocal PID D", 0);
+
+    // Set PID Values.
     pidy.setP(Py);
     pidy.setI(Iy);
     pidy.setD(Dy);
 
+    // Get new Position.
     newPos = distanceToPos(target);
 
+    // Get Y Error.
     yError = Math.abs(pidy.getError());
   }
 
   @Override
   public void execute() {
 
+    // Calculate to Y Value based on weird WPIlib angle measurements.
     if (Math.abs(newPos.getRotation().getDegrees()) <= 90) {
       toY = pidy.calculate(swerve.getPose().getY(), newPos.getY());
     } else {
@@ -94,16 +108,15 @@ public class DriveLocalCommandAbsolute extends Command {
     SmartDashboard.putNumber("DLCA XPos", swerve.getPose().getX());
     SmartDashboard.putNumber("DLCA YPos", swerve.getPose().getY());
 
+    // Update Y Error
     yError = Math.abs(pidy.getError());
 
+
     if (yError < Units.inchesToMeters(0.5)) {
-      swerve.drive(new Translation2d(0, 0), 0, true); // Stop the robot if within tolerance
+      // Deadzone
+      swerve.drive(new Translation2d(0, 0), 0, true); 
     } else {
-      if (inches >= 0) { // -6
-        swerve.drive(new Translation2d(0, toY * swerve.getSwerveDrive().getMaximumChassisVelocity()), 0, false);
-      } else {
-        swerve.drive(new Translation2d(0, toY * swerve.getSwerveDrive().getMaximumChassisVelocity()), 0, false);
-      }
+      swerve.drive(new Translation2d(0, toY * swerve.getSwerveDrive().getMaximumChassisVelocity()), 0, false);
     }
 
   }
@@ -115,9 +128,9 @@ public class DriveLocalCommandAbsolute extends Command {
   @Override
   public boolean isFinished() {
     if (yError < Units.inchesToMeters(0.5)) {
+      // deadzone
       swerve.drive(new Translation2d(0, 0), 0, true);
       return true;
-      // deadzone
     } else {
       return false;
     }

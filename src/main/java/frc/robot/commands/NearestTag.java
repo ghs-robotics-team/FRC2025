@@ -7,8 +7,6 @@ package frc.robot.commands;
 import java.util.ArrayList;
 import java.util.List;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveSubsystem;
 
@@ -19,6 +17,7 @@ public class NearestTag extends Command {
   DriveToPointCommandForPose2d command;
   boolean stat;
   Pose2d target;
+
   public NearestTag(SwerveSubsystem swerve, boolean stat) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(swerve);
@@ -31,11 +30,15 @@ public class NearestTag extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    // Create list for targetpoint Pose2d Values.
     List<Pose2d> sides = new ArrayList<Pose2d>();
+
+    // Add each target point to sides list as Pose2d.
     for (TargetPoints point : TargetPoints.values()){
       sides.add(point.get());
     }
 
+    // Loop Finds the closest target point to the robot.
     target = sides.get(0);
     for (Pose2d side : sides){
       if(swerve.getPose().getTranslation().getDistance(side.getTranslation()) < swerve.getPose().getTranslation().getDistance(target.getTranslation())){
@@ -43,15 +46,16 @@ public class NearestTag extends Command {
       }
     }
 
+    // Create DriveToPointCommand for the closest target point.
     command = new DriveToPointCommandForPose2d(target);
     if(!stat){
       command.schedule();
     }
-}
+  }
 
-public Pose2d getTarget(){
-  return target;
-}
+  public Pose2d getTarget(){
+    return target;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
