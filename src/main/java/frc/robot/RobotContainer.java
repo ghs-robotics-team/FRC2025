@@ -153,24 +153,30 @@ public class RobotContainer {
 
     }
     else{
-      new JoystickButton(buttonBox, 8).onTrue((new InstantCommand(drivebase::zeroGyro))); // (Start)
+      new JoystickButton(buttonBox_moreButtons, 3).onTrue((new InstantCommand(drivebase::zeroGyro))); // (Button 3)
       //new JoystickButton(rightjoystick, 2).onTrue(new InstantCommand(drivebase::lock));
 
       // Drive Commands
-      new JoystickButton(buttonBox, 2).onTrue(new DriveLocalCommandAbsolute(drivebase, 8.47, new NearestTag(drivebase, true).getTarget())); // TEST RIGHT (B)
-      new JoystickButton(buttonBox, 1).onTrue(new DriveLocalCommandAbsolute(drivebase, -4.47, new NearestTag(drivebase, true).getTarget())); // TEST RIGHT (A) (6.47 ORIGINAL VAL)
+      new JoystickButton(leftjoystick, 5).onTrue(new DriveLocalCommandAbsolute(drivebase, 8.47, new NearestTag(drivebase, true).getTarget())); // Left Closest Thumb Button
+      new JoystickButton(rightjoystick, 6).onTrue(new DriveLocalCommandAbsolute(drivebase, -4.47, new NearestTag(drivebase, true).getTarget())); // Right Closest Thumb Button (6.47 ORIGINAL VAL)
       
       // Enable Drive To Nearest Target (for Matt)
       if(Constants.OperatorConstants.MATT_MODE){
-        new JoystickButton(buttonBox, 4).onTrue(new NearestTag(drivebase, false)); // TEST RIGHT (Y) FIND ID FOR MATT STICK 
+        new JoystickButton(leftjoystick, 1).onTrue(new NearestTag(drivebase, false)); // Left Trigger
       }
 
       // Arm and Elevator Commands
-      new JoystickButton(buttonBox, 5).onTrue(armLeft); //Left Bumper
-      new JoystickButton(buttonBox, 6).onTrue(armRight); //Right Bumper
+      new JoystickButton(buttonBox, 7).whileTrue(armLeft); // Top Right
+      new JoystickButton(buttonBox, 8).whileTrue(armRight); // Top Right
+
+      new JoystickButton(buttonBox, 10).whileTrue(upElevator); // Bottom Right
+      new JoystickButton(buttonBox, 11).whileTrue(downElevator); // Bottom Right
+
+      new JoystickButton(buttonBox_moreButtons, 1).whileTrue(intake); // Bottom Left
+      new JoystickButton(buttonBox_moreButtons, 2).whileTrue(outtake); // Bottom Left
 
       
-      new JoystickButton(buttonBox, 3).onTrue(new InstantCommand(() -> { //CHANGE TO DRIVER BUTTON!!!
+      new JoystickButton(rightjoystick, 2).onTrue(new InstantCommand(() -> { // Right Thumb Button
         CommandScheduler.getInstance().cancelAll();
       })); // (X)
 
