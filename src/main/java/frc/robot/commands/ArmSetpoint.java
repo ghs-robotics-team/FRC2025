@@ -43,7 +43,7 @@ public class ArmSetpoint extends Command {
     pid.setD(D);
     
     // Get PID Controller direction for arm to go, find current error from position.
-    double direction = pid.calculate(arm.getPos(), setPoint);
+    double direction = pid.calculate(arm.getPos().magnitude(), setPoint);
     double error = pid.getPositionError();
 
     // If error is within 1 unit, stop moving arm.

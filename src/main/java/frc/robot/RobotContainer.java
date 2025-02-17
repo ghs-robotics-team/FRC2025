@@ -69,7 +69,7 @@ public class RobotContainer {
 
   public RobotContainer() {
     //Create some Subsystems
-    drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve/neo"));
+    drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
     
     //Set Controller Ids
     if (Constants.OperatorConstants.XBOX_DRIVE) {

@@ -4,17 +4,20 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkFlex;
+
+import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Arm extends SubsystemBase {
   /** Creates a new Elevator. */
-  SparkFlex hand = new SparkFlex(2, MotorType.kBrushless); //Get ID
-  SparkFlex armMover = new SparkFlex(4, MotorType.kBrushless);
+  SparkFlex hand = new SparkFlex(16, MotorType.kBrushless); //Get ID
+  TalonFX armMover = new TalonFX(18);
 
-  AbsoluteEncoder absoluteEncoder = armMover.getAbsoluteEncoder();
+  Angle absoluteEncoder = armMover.getPosition().getValue();
   public Arm() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -31,8 +34,8 @@ public class Arm extends SubsystemBase {
     hand.set(-0.5);
   }
   
-  public double getPos(){
-    return absoluteEncoder.getPosition();
+  public Angle getPos(){
+    return absoluteEncoder;
   }
 
 

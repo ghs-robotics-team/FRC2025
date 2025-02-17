@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Elevator extends SubsystemBase {
   /** Creates a new Elevator. */
-  SparkFlex Left = new SparkFlex(0, MotorType.kBrushless); //Get ID
-  SparkFlex Right = new SparkFlex(1, MotorType.kBrushless);
+  SparkFlex Left = new SparkFlex(13, MotorType.kBrushless); //Get ID
+  SparkFlex Right = new SparkFlex(15, MotorType.kBrushless);
   
   AbsoluteEncoder absoluteEncoder = Left.getAbsoluteEncoder();
   RelativeEncoder relativeEncoder = Left.getEncoder();
