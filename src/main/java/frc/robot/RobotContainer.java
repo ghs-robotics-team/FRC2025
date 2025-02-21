@@ -18,7 +18,7 @@ import frc.robot.commands.DriveToPointCommand;
 import frc.robot.commands.TargetPoints;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.EagleEyeCommand;
-import frc.robot.commands.IntakeCommand;
+//import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.EagleEye;
 import frc.robot.subsystems.Elevator;
@@ -26,13 +26,13 @@ import frc.robot.commands.MoveArm;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.DriveLocalCommandAbsolute;
 import frc.robot.commands.NearestTag;
-import frc.robot.commands.OuttakeCommand;
+//import frc.robot.commands.OuttakeCommand;
 
 public class RobotContainer {
   // Subsystems
   private final SwerveSubsystem drivebase;
   private final Arm arm = new Arm();
-  private final Elevator elevator = new Elevator();
+  private final Elevator elevator = new Elevator(); // ALWAYS SET AT BOTTOM FOR CORRECT ENCODER POS
   private final EagleEye eagleye = new EagleEye();
   private final EagleEyeCommand eagleeyecommand = new EagleEyeCommand(eagleye);
 
@@ -55,13 +55,14 @@ public class RobotContainer {
   private final DriveToPointCommand bottomStation = new DriveToPointCommand(TargetPoints.BOTTOM_STATION);
 
   // Commands
-  private final MoveArm armLeft = new MoveArm(arm,-0.5);
-  private final MoveArm armRight = new MoveArm(arm,0.5);
-  private final IntakeCommand intake = new IntakeCommand(arm);
-  private final OuttakeCommand outtake = new OuttakeCommand(arm);
+  private final MoveArm armLeft = new MoveArm(arm,-0.1);
+  private final MoveArm armRight = new MoveArm(arm,0.1);
 
-  private final MoveElevator upElevator = new MoveElevator(elevator, 0.5);
-  private final MoveElevator downElevator = new MoveElevator(elevator, -0.5);
+  //private final IntakeCommand intake = new IntakeCommand(arm);
+  //private final OuttakeCommand outtake = new OuttakeCommand(arm);
+
+  private final MoveElevator upElevator = new MoveElevator(elevator, 0.1);
+  private final MoveElevator downElevator = new MoveElevator(elevator, -0.1);
 
   // Misc/Auto
   private final SendableChooser<Command> auto;
@@ -121,12 +122,14 @@ public class RobotContainer {
     new JoystickButton(buttonBox_moreButtons, 3).onTrue(bottomStation);
 
     // Buttonbox Arm and Elevator Commands
-    new JoystickButton(buttonBox, 7).onTrue(armLeft);
-    new JoystickButton(buttonBox, 8).onTrue(armRight);
-    new JoystickButton(buttonBox, 10).onTrue(upElevator);
-    new JoystickButton(buttonBox, 11).onTrue(downElevator);
-    new JoystickButton(buttonBox_moreButtons, 1).onTrue(intake);
-    new JoystickButton(buttonBox_moreButtons, 2).onTrue(outtake);
+    new JoystickButton(buttonBox, 7).whileTrue(armLeft);
+    new JoystickButton(buttonBox, 8).whileTrue(armRight);
+
+    new JoystickButton(buttonBox, 10).whileTrue(upElevator);
+    new JoystickButton(buttonBox, 11).whileTrue(downElevator);
+    
+    //new JoystickButton(buttonBox_moreButtons, 1).onTrue(intake);
+    //new JoystickButton(buttonBox_moreButtons, 2).onTrue(outtake);
     
 
     if (OperatorConstants.XBOX_DRIVE) {
@@ -141,10 +144,6 @@ public class RobotContainer {
       if(Constants.OperatorConstants.MATT_MODE){
         new JoystickButton(driverXbox, 4).onTrue(new NearestTag(drivebase, false)); // TEST RIGHT (Y)
       }
-
-      // Arm and Elevator Commands
-      new JoystickButton(driverXbox, 5).onTrue(armLeft);
-      new JoystickButton(driverXbox, 6).onTrue(armRight);
 
       // Cancel All Command
       new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(() -> {
@@ -165,17 +164,6 @@ public class RobotContainer {
         new JoystickButton(leftjoystick, 1).onTrue(new NearestTag(drivebase, false)); // Left Trigger
       }
 
-      // Arm and Elevator Commands
-      new JoystickButton(buttonBox, 7).whileTrue(armLeft); // Top Right
-      new JoystickButton(buttonBox, 8).whileTrue(armRight); // Top Right
-
-      new JoystickButton(buttonBox, 10).whileTrue(upElevator); // Bottom Right
-      new JoystickButton(buttonBox, 11).whileTrue(downElevator); // Bottom Right
-
-      new JoystickButton(buttonBox_moreButtons, 1).whileTrue(intake); // Bottom Left
-      new JoystickButton(buttonBox_moreButtons, 2).whileTrue(outtake); // Bottom Left
-
-      
       new JoystickButton(rightjoystick, 2).onTrue(new InstantCommand(() -> { // Right Thumb Button
         CommandScheduler.getInstance().cancelAll();
       })); // (X)

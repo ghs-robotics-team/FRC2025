@@ -19,7 +19,7 @@ public class IntakeCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    arm.intake();
+    //arm.intake();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

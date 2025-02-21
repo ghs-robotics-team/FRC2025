@@ -27,7 +27,24 @@ public class MoveElevator extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elevator.move(amt);
+    double pos = elevator.getRelPos();
+    if(amt<=0){
+      if(pos <= 0){
+        elevator.move(amt);
+      }
+      else{
+        elevator.move(0);
+      }
+      
+    }
+    else{
+      if(pos > -36.6){
+        elevator.move(amt);
+      }
+      else{
+        elevator.move(0);
+      }
+    }
   }
 
   // Called once the command ends or is interrupted.
