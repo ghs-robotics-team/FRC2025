@@ -25,8 +25,12 @@ public final class Constants {
   public static final double MAX_SPEED = 1; // 0.2/2.0 Min/Max
 
   public static final class SetPointConstants { //Dummy Values until measured
-    public static final double ARM_LEFT = 0.6;
-    public static final double ARM_Right = 0.2;
+    public static final double ARM_LEFT_65 = 0.6;
+    public static final double ARM_LEFT_90 = 1.0;
+    public static final double ARM_LEFT_INTAKE = 0.5;
+    public static final double ARM_RIGHT_65 = -0.6;
+    public static final double ARM_RIGHT_90 = -1.0;
+    public static final double ARM_RIGHT_INTAKE = -0.5;
 
     public static final double ELEVATOR_HIGH = 50;
     public static final double ELEVATOR_MIDDLE = 30;
