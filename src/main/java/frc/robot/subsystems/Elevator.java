@@ -8,24 +8,30 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Elevator extends SubsystemBase {
   /** Creates a new Elevator. */
-  SparkFlex Left = new SparkFlex(0, MotorType.kBrushless); //Get ID
-  SparkFlex Right = new SparkFlex(1, MotorType.kBrushless);
+  SparkFlex Left = new SparkFlex(13, MotorType.kBrushless); //Get ID
+  SparkFlex Right = new SparkFlex(15, MotorType.kBrushless);
   
   AbsoluteEncoder absoluteEncoder = Left.getAbsoluteEncoder();
-  RelativeEncoder relativeEncoder = Left.getEncoder();
+  RelativeEncoder LrelativeEncoder = Left.getEncoder();
+  RelativeEncoder RrelativeEncoder = Right.getEncoder();
   double absolutepos = absoluteEncoder.getPosition(); // 0 to 1
-  double totalRotations = relativeEncoder.getPosition(); // Total rotations
+  double totalRotations = LrelativeEncoder.getPosition(); // Total rotations
   public Elevator() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  public void move(double amt){
-    Left.set(amt);
+  public void move(double amt){ //Bottom for both at 0, Top at -36.706 for 13, 37.828 for 15
+    Left.set(-amt);
     Right.set(amt);
+
+    SmartDashboard.putNumber("ES AbsPos", getAbsPos()); // Doesn't show up
+    SmartDashboard.putNumber("ES RelPos", getRelPos());
   }
 
   public double getAbsPos(){
@@ -33,7 +39,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public double getRelPos(){
-    return relativeEncoder.getPosition();
+    return LrelativeEncoder.getPosition();
   }
 
   @Override
