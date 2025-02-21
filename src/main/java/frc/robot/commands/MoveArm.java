@@ -20,14 +20,31 @@ public class MoveArm extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
+  public void initialize() { // 7300 left, -7300 right
     arm.move(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    arm.move(amt);
+    double pos = arm.getPos();
+    if(amt<=0){ //left
+      if(pos <= 7300){
+        arm.move(amt);
+      }
+      else{
+        arm.move(0);
+      }
+      
+    }
+    else{
+      if(pos > -7300){
+        arm.move(amt);
+      }
+      else{
+        arm.move(0);
+      }
+    }
   }
 
   // Called once the command ends or is interrupted.

@@ -18,6 +18,7 @@ import frc.robot.commands.DriveToPointCommand;
 import frc.robot.commands.TargetPoints;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.EagleEyeCommand;
+import frc.robot.commands.IntakeCommand;
 //import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.EagleEye;
@@ -27,6 +28,7 @@ import frc.robot.commands.MoveElevator;
 import frc.robot.commands.DriveLocalCommandAbsolute;
 import frc.robot.commands.NearestTag;
 //import frc.robot.commands.OuttakeCommand;
+import frc.robot.commands.OuttakeCommand;
 
 public class RobotContainer {
   // Subsystems
@@ -58,8 +60,8 @@ public class RobotContainer {
   private final MoveArm armLeft = new MoveArm(arm,-0.1);
   private final MoveArm armRight = new MoveArm(arm,0.1);
 
-  //private final IntakeCommand intake = new IntakeCommand(arm);
-  //private final OuttakeCommand outtake = new OuttakeCommand(arm);
+  private final IntakeCommand intake = new IntakeCommand(arm, -0.15);
+  private final OuttakeCommand outtake = new OuttakeCommand(arm, 0.15);
 
   private final MoveElevator upElevator = new MoveElevator(elevator, 0.1);
   private final MoveElevator downElevator = new MoveElevator(elevator, -0.1);
@@ -128,8 +130,8 @@ public class RobotContainer {
     new JoystickButton(buttonBox, 10).whileTrue(upElevator);
     new JoystickButton(buttonBox, 11).whileTrue(downElevator);
     
-    //new JoystickButton(buttonBox_moreButtons, 1).onTrue(intake);
-    //new JoystickButton(buttonBox_moreButtons, 2).onTrue(outtake);
+    new JoystickButton(buttonBox_moreButtons, 1).whileTrue(intake);
+    new JoystickButton(buttonBox_moreButtons, 2).whileTrue(outtake);
     
 
     if (OperatorConstants.XBOX_DRIVE) {
