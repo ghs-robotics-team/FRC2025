@@ -25,10 +25,11 @@ import frc.robot.subsystems.EagleEye;
 import frc.robot.subsystems.Elevator;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.MoveElevator;
+import frc.robot.commands.ArmSetpoint;
 import frc.robot.commands.DriveLocalCommandAbsolute;
 import frc.robot.commands.NearestTag;
-//import frc.robot.commands.OuttakeCommand;
 import frc.robot.commands.OuttakeCommand;
+import frc.robot.commands.ArmSetpoint;import frc.robot.commands.OuttakeCommand;
 
 public class RobotContainer {
   // Subsystems
@@ -66,6 +67,12 @@ public class RobotContainer {
   private final MoveElevator upElevator = new MoveElevator(elevator, 0.1);
   private final MoveElevator downElevator = new MoveElevator(elevator, -0.1);
 
+  private final ArmSetpoint armLeft65 = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_65);
+  private final ArmSetpoint armLeft90 = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_90);
+  private final ArmSetpoint armLeftIntake = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_INTAKE);
+  private final ArmSetpoint armRight65 = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_65);
+  private final ArmSetpoint armRight90 = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_90);
+  private final ArmSetpoint armRightIntake = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_INTAKE);
   // Misc/Auto
   private final SendableChooser<Command> auto;
 
@@ -132,6 +139,22 @@ public class RobotContainer {
     
     new JoystickButton(buttonBox_moreButtons, 1).whileTrue(intake);
     new JoystickButton(buttonBox_moreButtons, 2).whileTrue(outtake);
+    
+    new JoystickButton(buttonBox_moreButtons, 200).onTrue(armLeft65); /* Fake ID */
+    new JoystickButton(buttonBox_moreButtons, 201).onTrue(armRight65); /* Fake ID */
+    new JoystickButton(buttonBox_moreButtons, 202).onTrue(armLeft90); /* Fake ID */
+    new JoystickButton(buttonBox_moreButtons, 203).onTrue(armRight90); /* Fake ID */
+    new JoystickButton(buttonBox_moreButtons, 204).onTrue(armLeftIntake); /* Fake ID */
+    new JoystickButton(buttonBox_moreButtons, 205).onTrue(armRightIntake); /* Fake ID */
+
+    
+    new JoystickButton(buttonBox_moreButtons, 200).onTrue(armLeft65); /* Fake ID */
+    new JoystickButton(buttonBox_moreButtons, 201).onTrue(armRight65); /* Fake ID */
+    new JoystickButton(buttonBox_moreButtons, 202).onTrue(armLeft90); /* Fake ID */
+    new JoystickButton(buttonBox_moreButtons, 203).onTrue(armRight90); /* Fake ID */
+    new JoystickButton(buttonBox_moreButtons, 204).onTrue(armLeftIntake); /* Fake ID */
+    new JoystickButton(buttonBox_moreButtons, 205).onTrue(armRightIntake); /* Fake ID */
+
     
 
     if (OperatorConstants.XBOX_DRIVE) {
