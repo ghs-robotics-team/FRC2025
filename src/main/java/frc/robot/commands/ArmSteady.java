@@ -4,61 +4,57 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Globals;
 import frc.robot.subsystems.Arm;
+import edu.wpi.first.math.controller.PIDController;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class MoveArm extends Command {
-  /** Creates a new ArmLeft. */
+public class ArmSteady extends Command {
+  /** Creates a new ArmSteady. */
   Arm arm;
-  double amt;
-  public MoveArm(Arm arm, double amt) {
+  PIDController pid;
+  public ArmSteady(Arm arm) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(arm);
     this.arm = arm;
-    this.amt = amt;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() { // 7300 left, -7300 right
-    arm.move(0);
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double pos = arm.getPos();
-    if(amt<=0){ //left
-      if(pos <= 7300){
-        arm.move(amt);
-      }
-      else{
-        arm.move(0);
-      }
-      
-    }
-    else{
-      if(pos > -7300){
-        arm.move(amt);
-      }
-      else{
-        arm.move(0);
-      }
+    double P = SmartDashboard.getNumber("Indexer-P", 0.28); 
+    double I = SmartDashboard.getNumber("Indexer-I", 0.0);
+    double D = SmartDashboard.getNumber("Indexer-D", 0.0005);
+
+    // Set PID numbers
+    pid.setP(P);
+    pid.setI(I);
+    pid.setD(D);
+    
+    // Get PID Controller direction for elevator to go, find current error from position.
+    double direction = pid.calculate(arm.getPos(), Globals.targetPos.armTarget);
+    double error = pid.getPositionError();
+
+    if (error > -1 && error < 1) {
+      arm.move(0); // deadzone
+    } else {
+      arm.move(direction); // Move Arm
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    arm.move(0);
-    Globals.targetPos.armTarget = arm.getPos();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-
     return false;
   }
 }

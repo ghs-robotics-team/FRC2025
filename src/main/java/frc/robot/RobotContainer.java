@@ -31,6 +31,7 @@ import frc.robot.commands.NearestTag;
 import frc.robot.commands.OuttakeCommand;
 import frc.robot.commands.ArmSetpoint;
 import frc.robot.commands.OuttakeCommand;
+import frc.robot.commands.ArmSteady;
 
 public class RobotContainer {
   // Subsystems
@@ -74,6 +75,8 @@ public class RobotContainer {
   private final ArmSetpoint armRight65 = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_65);
   private final ArmSetpoint armRight90 = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_90);
   private final ArmSetpoint armRightIntake = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_INTAKE);
+  
+  private final ArmSteady armSteady = new ArmSteady(arm);
   // Misc/Auto
   private final SendableChooser<Command> auto;
 
@@ -113,6 +116,7 @@ public class RobotContainer {
 
     eagleye.setDefaultCommand(eagleeyecommand);
     drivebase.setDefaultCommand(driveCommand);
+    arm.setDefaultCommand(armSteady);
 
     auto = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("chooseAuto", auto);
