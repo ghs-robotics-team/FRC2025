@@ -141,20 +141,20 @@ public class RobotContainer {
     new JoystickButton(buttonBox_moreButtons, 1).whileTrue(intake);
     new JoystickButton(buttonBox_moreButtons, 2).whileTrue(outtake);
     
-    new JoystickButton(buttonBox_moreButtons, 200).onTrue(armLeft65); /* Fake ID */
-    new JoystickButton(buttonBox_moreButtons, 201).onTrue(armRight65); /* Fake ID */
-    new JoystickButton(buttonBox_moreButtons, 202).onTrue(armLeft90); /* Fake ID */
-    new JoystickButton(buttonBox_moreButtons, 203).onTrue(armRight90); /* Fake ID */
-    new JoystickButton(buttonBox_moreButtons, 204).onTrue(armLeftIntake); /* Fake ID */
-    new JoystickButton(buttonBox_moreButtons, 205).onTrue(armRightIntake); /* Fake ID */
+    //new JoystickButton(buttonBox_moreButtons, 200).onTrue(armLeft65); /* Fake ID */
+    //new JoystickButton(buttonBox_moreButtons, 201).onTrue(armRight65); /* Fake ID */
+    //new JoystickButton(buttonBox_moreButtons, 202).onTrue(armLeft90); /* Fake ID */
+    //new JoystickButton(buttonBox_moreButtons, 203).onTrue(armRight90); /* Fake ID */
+    //new JoystickButton(buttonBox_moreButtons, 204).onTrue(armLeftIntake); /* Fake ID */
+    //new JoystickButton(buttonBox_moreButtons, 205).onTrue(armRightIntake); /* Fake ID */
 
     
-    new JoystickButton(buttonBox_moreButtons, 200).onTrue(armLeft65); /* Fake ID */
-    new JoystickButton(buttonBox_moreButtons, 201).onTrue(armRight65); /* Fake ID */
-    new JoystickButton(buttonBox_moreButtons, 202).onTrue(armLeft90); /* Fake ID */
-    new JoystickButton(buttonBox_moreButtons, 203).onTrue(armRight90); /* Fake ID */
-    new JoystickButton(buttonBox_moreButtons, 204).onTrue(armLeftIntake); /* Fake ID */
-    new JoystickButton(buttonBox_moreButtons, 205).onTrue(armRightIntake); /* Fake ID */
+    //new JoystickButton(buttonBox_moreButtons, 200).onTrue(armLeft65); /* Fake ID */
+    //new JoystickButton(buttonBox_moreButtons, 201).onTrue(armRight65); /* Fake ID */
+    //new JoystickButton(buttonBox_moreButtons, 202).onTrue(armLeft90); /* Fake ID */
+    //new JoystickButton(buttonBox_moreButtons, 203).onTrue(armRight90); /* Fake ID */
+    //new JoystickButton(buttonBox_moreButtons, 204).onTrue(armLeftIntake); /* Fake ID */
+    //new JoystickButton(buttonBox_moreButtons, 205).onTrue(armRightIntake); /* Fake ID */
 
     
 

@@ -17,6 +17,8 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.DriveFeedforwards;
 import com.pathplanner.lib.util.swerve.SwerveSetpoint;
 import com.pathplanner.lib.util.swerve.SwerveSetpointGenerator;
+
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -26,12 +28,16 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 import frc.robot.Constants;
+import frc.robot.Globals;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -107,6 +113,38 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void periodic()
   {
+    // When vision is enabled we must manually update odometry in SwerveDrive
+    /*if (visionDriveTest)
+    {
+      swerveDrive.updateOdometry();
+      vision.updatePoseEstimation(swerveDrive);
+    }*/
+    if (RobotBase.isSimulation())
+    {
+      //addFakeVisionReading();
+    }
+    else
+    {
+      if(!DriverStation.isAutonomous()){
+        if(Globals.LastVisionMeasurement.confidence > 0){
+          swerveDrive.addVisionMeasurement(Globals.LastVisionMeasurement.position, Globals.LastVisionMeasurement.timeStamp, VecBuilder.fill(Globals.LastVisionMeasurement.confidence, Globals.LastVisionMeasurement.confidence, 99));
+          SmartDashboard.putBoolean("SS Eagleeye Read", true);
+        }else{
+          SmartDashboard.putBoolean("SS Eagleeye Read", false);
+        }
+        Globals.LastVisionMeasurement.notRead = false;
+      }
+      SmartDashboard.putNumber("SS VisionRotation", Globals.LastVisionMeasurement.position.getRotation().getDegrees());
+      SmartDashboard.putNumber("SS Confidence", Globals.LastVisionMeasurement.confidence);
+      SmartDashboard.putNumber("SS BotRotation", swerveDrive.getPose().getRotation().getDegrees());
+      SmartDashboard.putNumber("SS Swerve-Botpose-x",Units.metersToInches(swerveDrive.getPose().getX()));
+      SmartDashboard.putNumber("SS Swerve-Botpose-y",Units.metersToInches(swerveDrive.getPose().getY()));
+    }
+    
+    Globals.EagleEye.position = swerveDrive.getPose();
+    Globals.EagleEye.xVel = swerveDrive.getFieldVelocity().vxMetersPerSecond;
+    Globals.EagleEye.yVel = swerveDrive.getFieldVelocity().vyMetersPerSecond;
+    Globals.EagleEye.rotVel = swerveDrive.getFieldVelocity().omegaRadiansPerSecond;
   }
 
   @Override
