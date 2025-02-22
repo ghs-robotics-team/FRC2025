@@ -32,7 +32,7 @@ public class Arm extends SubsystemBase {
     armMover.getConfigurator().apply(slot);
 
     PositionVoltage request = new PositionVoltage(0).withSlot(0);
-    armMover.setControl(request);
+    armMover.setControl(request.withPosition(absoluteEncoder));
   }
 
   public void move(double amt){ 

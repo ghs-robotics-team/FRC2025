@@ -11,10 +11,12 @@ public final class Globals {
   }
 
   public static class LastVisionMeasurement {
-    public static Pose2d position = new Pose2d();
+    public static Pose2d positiona = new Pose2d();
+    public static Pose2d positionb = new Pose2d();
     public static double timeStamp = 0;
     public static boolean notRead = false;
-    public static double confidence = 0;
+    public static double confidencea = 0;
+    public static double confidenceb = 0;
   }
 
   public static class LastTempMeasurement {

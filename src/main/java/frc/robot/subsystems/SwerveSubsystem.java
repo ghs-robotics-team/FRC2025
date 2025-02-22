@@ -126,16 +126,23 @@ public class SwerveSubsystem extends SubsystemBase
     else
     {
       if(!DriverStation.isAutonomous()){
-        if(Globals.LastVisionMeasurement.confidence > 0){
-          swerveDrive.addVisionMeasurement(Globals.LastVisionMeasurement.position, Globals.LastVisionMeasurement.timeStamp, VecBuilder.fill(Globals.LastVisionMeasurement.confidence, Globals.LastVisionMeasurement.confidence, 99));
+        if(Globals.LastVisionMeasurement.confidencea > 0){
+          swerveDrive.addVisionMeasurement(Globals.LastVisionMeasurement.positiona, Globals.LastVisionMeasurement.timeStamp, VecBuilder.fill(Globals.LastVisionMeasurement.confidencea, Globals.LastVisionMeasurement.confidencea, 99));
           SmartDashboard.putBoolean("SS Eagleeye Read", true);
-        }else{
+        }
+        if (Globals.LastVisionMeasurement.confidenceb > 0) {
+          swerveDrive.addVisionMeasurement(Globals.LastVisionMeasurement.positionb, Globals.LastVisionMeasurement.timeStamp, VecBuilder.fill(Globals.LastVisionMeasurement.confidenceb, Globals.LastVisionMeasurement.confidenceb, 99));
+          SmartDashboard.putBoolean("SS Eagleeye Read", true);
+        }
+        if (Globals.LastVisionMeasurement.confidenceb == 0 && Globals.LastVisionMeasurement.confidencea == 0) {
           SmartDashboard.putBoolean("SS Eagleeye Read", false);
         }
         Globals.LastVisionMeasurement.notRead = false;
       }
-      SmartDashboard.putNumber("SS VisionRotation", Globals.LastVisionMeasurement.position.getRotation().getDegrees());
-      SmartDashboard.putNumber("SS Confidence", Globals.LastVisionMeasurement.confidence);
+      SmartDashboard.putNumber("SS AVisionRotation", Globals.LastVisionMeasurement.positiona.getRotation().getDegrees());
+      SmartDashboard.putNumber("SS BVisionRotation", Globals.LastVisionMeasurement.positionb.getRotation().getDegrees());
+      SmartDashboard.putNumber("SS AConfidence", Globals.LastVisionMeasurement.confidencea);
+      SmartDashboard.putNumber("SS BConfidence", Globals.LastVisionMeasurement.confidenceb);
       SmartDashboard.putNumber("SS BotRotation", swerveDrive.getPose().getRotation().getDegrees());
       SmartDashboard.putNumber("SS Swerve-Botpose-x",Units.metersToInches(swerveDrive.getPose().getX()));
       SmartDashboard.putNumber("SS Swerve-Botpose-y",Units.metersToInches(swerveDrive.getPose().getY()));
