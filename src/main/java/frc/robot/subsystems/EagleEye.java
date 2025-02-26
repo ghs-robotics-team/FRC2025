@@ -32,8 +32,12 @@ public class EagleEye extends SubsystemBase {
               (limelight.tagCount >= 2 && limelight.avgTagDist < Units.feetToMeters(20)) ||
               (limelight.tagCount == 1 && limelight.avgTagDist < Units.feetToMeters(15))) {
               double tagDistance = Units.metersToFeet(limelight.avgTagDist);
+              // Double the distance for solo tag
+              if (limelight.tagCount == 1) {
+                tagDistance = tagDistance * 2;
+              }
               // Add up to .2 confidence depending on how far away
-              confidence = 0.5 + (tagDistance / 100);
+              confidence = 0.7 + (tagDistance / 100);
             }
         }
       }
@@ -61,19 +65,21 @@ public class EagleEye extends SubsystemBase {
     double confidenceb = 0;
 
     // Gets robot orientation from Gyro
-    LimelightHelpers.SetRobotOrientation("limelight-cama", Globals.EagleEye.position.getRotation().getDegrees(), 0, 0,
+    if(SmartDashboard.getBoolean("SS EagleeyeB Read", false)){
+      LimelightHelpers.SetRobotOrientation("limelight-camb", Globals.EagleEye.position.getRotation().getDegrees(), 0, 0,
         0, 0, 0);
+    }
+    else{
+      LimelightHelpers.SetRobotOrientation("limelight-cama", Globals.EagleEye.position.getRotation().getDegrees(), 0, 0,
+        0, 0, 0);
+    }
     
-
     // Gets predicted location based on Tag
     LimelightHelpers.PoseEstimate limelightMeasurementa = LimelightHelpers
-        .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-cama");
+        .getBotPoseEstimate_wpiBlue("limelight-cama");
 
     LimelightHelpers.PoseEstimate limelightMeasurementb = LimelightHelpers
-        .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-camb");
-
-    confidencea = limelightMeasurement(limelightMeasurementa);
-    confidenceb = limelightMeasurement(limelightMeasurementb);
+        .getBotPoseEstimate_wpiBlue("limelight-camb");
 
     SmartDashboard.putNumber("EEA NumTags", limelightMeasurementa.tagCount);
     SmartDashboard.putNumber("EEA Avg Tag Dist", limelightMeasurementa.avgTagDist);
@@ -81,6 +87,9 @@ public class EagleEye extends SubsystemBase {
     SmartDashboard.putNumber("EEB Avg Tag Dist", limelightMeasurementb.avgTagDist);
     SmartDashboard.putNumber("EE Rotation Vel", Globals.EagleEye.rotVel);
     SmartDashboard.putNumber("EE Total Vel", Math.hypot(Globals.EagleEye.xVel, Globals.EagleEye.yVel));
+
+    confidencea = limelightMeasurement(limelightMeasurementa);
+    confidenceb = limelightMeasurement(limelightMeasurementb);
 
     // No tag found so check no further or pose not within field boundary
     //if confidencea >= confidenceb (

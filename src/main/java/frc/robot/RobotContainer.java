@@ -19,7 +19,7 @@ import frc.robot.commands.TargetPoints;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.EagleEyeCommand;
 import frc.robot.commands.IntakeCommand;
-//import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.EagleEye;
 import frc.robot.subsystems.Elevator;
@@ -76,7 +76,8 @@ public class RobotContainer {
   private final ArmSetpoint armRight90 = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_90);
   private final ArmSetpoint armRightIntake = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_INTAKE);
   
-  private final ArmSteady armSteady = new ArmSteady(arm);
+  //private final ArmSteady armSteady = new ArmSteady(arm);
+
   // Misc/Auto
   private final SendableChooser<Command> auto;
 
@@ -116,7 +117,7 @@ public class RobotContainer {
 
     eagleye.setDefaultCommand(eagleeyecommand);
     drivebase.setDefaultCommand(driveCommand);
-    arm.setDefaultCommand(armSteady);
+    //arm.setDefaultCommand(armSteady);
 
     auto = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("chooseAuto", auto);

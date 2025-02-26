@@ -18,6 +18,7 @@ public class ArmSteady extends Command {
   public ArmSteady(Arm arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(arm);
+    this.pid = new PIDController(0.0028, 0, 0.0005);
     this.arm = arm;
   }
 
@@ -28,14 +29,14 @@ public class ArmSteady extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double P = SmartDashboard.getNumber("Indexer-P", 0.28); 
+    /*double P = SmartDashboard.getNumber("Indexer-P", 0.28); 
     double I = SmartDashboard.getNumber("Indexer-I", 0.0);
     double D = SmartDashboard.getNumber("Indexer-D", 0.0005);
 
-    // Set PID numbers
+    Set PID numbers
     pid.setP(P);
     pid.setI(I);
-    pid.setD(D);
+    pid.setD(D);*/
     
     // Get PID Controller direction for elevator to go, find current error from position.
     double direction = pid.calculate(arm.getPos(), Globals.targetPos.armTarget);

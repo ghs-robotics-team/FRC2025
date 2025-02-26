@@ -129,10 +129,12 @@ public class SwerveSubsystem extends SubsystemBase
         if(Globals.LastVisionMeasurement.confidencea > 0){
           swerveDrive.addVisionMeasurement(Globals.LastVisionMeasurement.positiona, Globals.LastVisionMeasurement.timeStamp, VecBuilder.fill(Globals.LastVisionMeasurement.confidencea, Globals.LastVisionMeasurement.confidencea, 99));
           SmartDashboard.putBoolean("SS Eagleeye Read", true);
+          SmartDashboard.putBoolean("SS EagleeyeA Read", true);
         }
         if (Globals.LastVisionMeasurement.confidenceb > 0) {
           swerveDrive.addVisionMeasurement(Globals.LastVisionMeasurement.positionb, Globals.LastVisionMeasurement.timeStamp, VecBuilder.fill(Globals.LastVisionMeasurement.confidenceb, Globals.LastVisionMeasurement.confidenceb, 99));
           SmartDashboard.putBoolean("SS Eagleeye Read", true);
+          SmartDashboard.putBoolean("SS EagleeyeB Read", true);
         }
         if (Globals.LastVisionMeasurement.confidenceb == 0 && Globals.LastVisionMeasurement.confidencea == 0) {
           SmartDashboard.putBoolean("SS Eagleeye Read", false);
