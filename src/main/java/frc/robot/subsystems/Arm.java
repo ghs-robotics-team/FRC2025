@@ -7,38 +7,53 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkFlex;
-import edu.wpi.first.math.MathUtil;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+
 import edu.wpi.first.units.Units;
-import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Globals;
 
 public class Arm extends SubsystemBase {
   /** Creates a new Elevator. */
   SparkFlex hand = new SparkFlex(16, MotorType.kBrushless); 
-  TalonFX armMover = new TalonFX(18);
+  TalonFX armMotor = new TalonFX(18);
 
-  double absoluteEncoder = armMover.getPosition().getValue().magnitude();
+  double absoluteEncoder = armMotor.getPosition().getValue().magnitude();
   public Arm() {
     // Use addRequirements() here to declare subsystem dependencies.\
     var slot = new  Slot0Configs();
     slot.kP = 2.4;
     slot.kI = 0;
     slot.kD = 0.1;
-    armMover.getConfigurator().apply(slot);
+   armMotor.getConfigurator().apply(slot);
 
     PositionVoltage request = new PositionVoltage(0).withSlot(0);
-    armMover.setControl(request.withPosition(absoluteEncoder));
+   armMotor.setControl(request.withPosition(absoluteEncoder));
   }
 
   public void move(double amt){ 
-    armMover.set(-amt); // 0 to 1
-    absoluteEncoder = armMover.getRotorPosition().getValue().in(Units.Degree);// 21 Left, -21 Right for limits
-    SmartDashboard.putNumber("AR Angle", absoluteEncoder);
+    absoluteEncoder = armMotor.getRotorPosition().getValue().in(Units.Degree);// 21 Left, -21 Right for limits
+    if (amt>0) {
+      if (absoluteEncoder < 4000 /* 7200 at top */)   {
+       armMotor.set(amt); // 0 to 1
+      }
+      else {
+       armMotor.set(0);
+      }
+    }
+    else if (amt<0) {
+      if (absoluteEncoder > -4000 /* -7200 at top */)   {
+       armMotor.set(amt); // 0 to 1
+      }
+      else {
+       armMotor.set(0);
+      }
+    }
+    else {
+     armMotor.set(0);
+    }
   }
 
   public void intake(double amt){
@@ -57,5 +72,7 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("AS Current Pos", absoluteEncoder);
+    SmartDashboard.putNumber("AS Target Pos", Globals.targetPos.armTarget);
   }
 }

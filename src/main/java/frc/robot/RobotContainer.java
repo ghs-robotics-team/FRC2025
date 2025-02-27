@@ -75,8 +75,9 @@ public class RobotContainer {
   private final ArmSetpoint armRight65 = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_65);
   private final ArmSetpoint armRight90 = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_90);
   private final ArmSetpoint armRightIntake = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_INTAKE);
+  private final ArmSetpoint armHome = new ArmSetpoint(arm, 0);
   
-  //private final ArmSteady armSteady = new ArmSteady(arm);
+  private final ArmSteady armSteady = new ArmSteady(arm);
 
   // Misc/Auto
   private final SendableChooser<Command> auto;
@@ -117,7 +118,7 @@ public class RobotContainer {
 
     eagleye.setDefaultCommand(eagleeyecommand);
     drivebase.setDefaultCommand(driveCommand);
-    //arm.setDefaultCommand(armSteady);
+    arm.setDefaultCommand(armSteady);
 
     auto = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("chooseAuto", auto);
@@ -126,7 +127,7 @@ public class RobotContainer {
 
   private void configureBindings() {
     // Setpoint Commands
-    new JoystickButton(buttonBox, 1).onTrue(driveTopRight);
+    /*new JoystickButton(buttonBox, 1).onTrue(driveTopRight);
     new JoystickButton(buttonBox, 2).onTrue(driveRight);
     new JoystickButton(buttonBox, 3).onTrue(driveBottomRight);
     new JoystickButton(buttonBox, 4).onTrue(driveBottomLeft);
@@ -134,7 +135,7 @@ public class RobotContainer {
     new JoystickButton(buttonBox, 6).onTrue(driveTopLeft);
 
     new JoystickButton(buttonBox, 9).onTrue(topStation); 
-    new JoystickButton(buttonBox_moreButtons, 3).onTrue(bottomStation);
+    new JoystickButton(buttonBox_moreButtons, 3).onTrue(bottomStation); */
 
     // Buttonbox Arm and Elevator Commands
     new JoystickButton(buttonBox, 7).whileTrue(armLeft);
@@ -146,8 +147,9 @@ public class RobotContainer {
     new JoystickButton(buttonBox_moreButtons, 1).whileTrue(intake);
     new JoystickButton(buttonBox_moreButtons, 2).whileTrue(outtake);
     
-    //new JoystickButton(buttonBox_moreButtons, 200).onTrue(armLeft65); /* Fake ID */
-    //new JoystickButton(buttonBox_moreButtons, 201).onTrue(armRight65); /* Fake ID */
+    new JoystickButton(buttonBox, 5).onTrue(armLeft65); /* Fake ID */
+    new JoystickButton(buttonBox, 2).onTrue(armRight65); /* Fake ID */
+    new JoystickButton(buttonBox, 12).onTrue(armHome);
     //new JoystickButton(buttonBox_moreButtons, 202).onTrue(armLeft90); /* Fake ID */
     //new JoystickButton(buttonBox_moreButtons, 203).onTrue(armRight90); /* Fake ID */
     //new JoystickButton(buttonBox_moreButtons, 204).onTrue(armLeftIntake); /* Fake ID */

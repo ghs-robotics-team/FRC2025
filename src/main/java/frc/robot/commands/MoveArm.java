@@ -16,6 +16,7 @@ public class MoveArm extends Command {
   public MoveArm(Arm arm, double amt) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.arm = arm;
+    addRequirements(arm);
     this.amt = amt;
   }
 
@@ -28,24 +29,7 @@ public class MoveArm extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double pos = arm.getPos();
-    if(amt<=0){ //left
-      if(pos <= 7300){
-        arm.move(amt);
-      }
-      else{
-        arm.move(0);
-      }
-      
-    }
-    else{
-      if(pos > -7300){
-        arm.move(amt);
-      }
-      else{
-        arm.move(0);
-      }
-    }
+    arm.move(amt);
   }
 
   // Called once the command ends or is interrupted.

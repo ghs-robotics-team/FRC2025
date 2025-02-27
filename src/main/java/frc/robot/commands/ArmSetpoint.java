@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Globals;
 import frc.robot.subsystems.Arm;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
@@ -11,23 +12,27 @@ public class ArmSetpoint extends Command {
   Arm arm;
   double setPoint;
   PIDController pid;
+  double error;
 
   public ArmSetpoint(Arm arm, double setPoint) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.arm = arm;
+    addRequirements(arm);
     this.setPoint = setPoint;
-    this.pid = new PIDController (0.35,0,0.0005); 
+    this.pid = new PIDController (0.00005,0,0); 
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    double direction = pid.calculate(arm.getPos(), setPoint);
+    error = pid.getPositionError();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Get PID Numbers
+    /*// Get PID Numbers
     double P = SmartDashboard.getNumber("Indexer-P", 0.28); 
     double I = SmartDashboard.getNumber("Indexer-I", 0.0);
     double D = SmartDashboard.getNumber("Indexer-D", 0.0005);
@@ -36,14 +41,14 @@ public class ArmSetpoint extends Command {
     // Set PID numbers
     pid.setP(P);
     pid.setI(I);
-    pid.setD(D);
+    pid.setD(D); */
     
     // Get PID Controller direction for arm to go, find current error from position.
     double direction = pid.calculate(arm.getPos(), setPoint);
-    double error = pid.getPositionError();
+    error = pid.getPositionError();
 
     // If error is within 1 unit, stop moving arm.
-    if (error > -1 && error < 1) {
+    if (error > -50 && error < 50 /* goal 50 */) {
       arm.move(0); // deadzone
     } else {
       arm.move(direction); // Move Arm
@@ -55,11 +60,12 @@ public class ArmSetpoint extends Command {
   @Override
   public void end(boolean interrupted) {
     arm.move(0);
+    Globals.targetPos.armTarget = arm.getPos();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return error > -200 && error < 200;
   }
 }
