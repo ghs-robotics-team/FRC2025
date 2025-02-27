@@ -53,7 +53,7 @@ public class ArmSetpoint extends Command {
     } else {
       arm.move(direction); // Move Arm
     }
-
+    Globals.targetPos.armTarget = arm.getPos();
   }
 
   // Called once the command ends or is interrupted.
@@ -61,6 +61,7 @@ public class ArmSetpoint extends Command {
   public void end(boolean interrupted) {
     arm.move(0);
     Globals.targetPos.armTarget = arm.getPos();
+    SmartDashboard.putNumber("AS Target Pos", Globals.targetPos.armTarget);
   }
 
   // Returns true when the command should end.

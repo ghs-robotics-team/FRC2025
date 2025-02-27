@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Globals;
 import frc.robot.subsystems.Arm;
@@ -30,6 +31,7 @@ public class MoveArm extends Command {
   @Override
   public void execute() {
     arm.move(amt);
+    Globals.targetPos.armTarget = arm.getPos();
   }
 
   // Called once the command ends or is interrupted.
@@ -37,6 +39,7 @@ public class MoveArm extends Command {
   public void end(boolean interrupted) {
     arm.move(0);
     Globals.targetPos.armTarget = arm.getPos();
+    SmartDashboard.putNumber("AS Target Pos", Globals.targetPos.armTarget);
   }
 
   // Returns true when the command should end.

@@ -18,7 +18,7 @@ public class ArmSteady extends Command {
   public ArmSteady(Arm arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(arm);
-    this.pid = new PIDController(0.00002, 0, 0);
+    this.pid = new PIDController(0.0001, 0, 0);
     this.arm = arm;
   }
 
@@ -43,9 +43,9 @@ public class ArmSteady extends Command {
     double error = pid.getPositionError();
 
     if (error > -25 && error < 25) {
-      //arm.move(0); // deadzone
+      arm.move(0); // deadzone
     } else {
-      //arm.move(direction); // Move Arm
+      arm.move(direction); // Move Arm
     }
   }
 

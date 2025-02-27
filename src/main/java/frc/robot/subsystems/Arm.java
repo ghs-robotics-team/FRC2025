@@ -72,7 +72,7 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("AS Current Pos", absoluteEncoder);
+    SmartDashboard.putNumber("AS Current Pos", armMotor.getRotorPosition().getValue().in(Units.Degree));
     SmartDashboard.putNumber("AS Target Pos", Globals.targetPos.armTarget);
   }
 }
