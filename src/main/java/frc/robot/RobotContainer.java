@@ -18,6 +18,7 @@ import frc.robot.commands.DriveToPointCommand;
 import frc.robot.commands.TargetPoints;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.EagleEyeCommand;
+import frc.robot.commands.ElevatorSetpoint;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.Arm;
@@ -32,6 +33,8 @@ import frc.robot.commands.OuttakeCommand;
 import frc.robot.commands.ArmSetpoint;
 import frc.robot.commands.OuttakeCommand;
 import frc.robot.commands.ArmSteady;
+import frc.robot.commands.ElevatorSteady;
+
 
 public class RobotContainer {
   // Subsystems
@@ -60,24 +63,36 @@ public class RobotContainer {
   private final DriveToPointCommand bottomStation = new DriveToPointCommand(TargetPoints.BOTTOM_STATION);
 
   // Commands
-  private final MoveArm armLeft = new MoveArm(arm,-0.1);
-  private final MoveArm armRight = new MoveArm(arm,0.1);
+  private final MoveArm armLeft = new MoveArm(arm,0.1);
+  private final MoveArm armRight = new MoveArm(arm,-0.1);
 
   private final IntakeCommand intake = new IntakeCommand(arm, -0.15);
-  private final OuttakeCommand outtake = new OuttakeCommand(arm, 0.15);
+  private final OuttakeCommand outtake = new OuttakeCommand(arm, 0.5);
 
   private final MoveElevator upElevator = new MoveElevator(elevator, 0.1);
   private final MoveElevator downElevator = new MoveElevator(elevator, -0.1);
 
-  private final ArmSetpoint armLeft65 = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_65);
-  private final ArmSetpoint armLeft90 = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_90);
-  private final ArmSetpoint armLeftIntake = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_INTAKE);
-  private final ArmSetpoint armRight65 = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_65);
-  private final ArmSetpoint armRight90 = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_90);
-  private final ArmSetpoint armRightIntake = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_INTAKE);
+  private final ElevatorSetpoint elevatorZero = new ElevatorSetpoint(elevator, 0);
+  private final ElevatorSetpoint elevatorIntake = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
+  private final ElevatorSetpoint elevatorLow = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_LOW);
+  private final ElevatorSetpoint elevatorMiddle = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_MIDDLE);
+  private final ElevatorSetpoint elevatorHigh = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_HIGH);
+  private final ElevatorSetpoint elevatorTrough = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_TROUGH);
+
+  private final ArmSetpoint armLeftLow = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_LOW);
+  private final ArmSetpoint armLeftMiddle = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_MIDDLE);
+  private final ArmSetpoint armLeftHigh = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_HIGH);
+  private final ArmSetpoint armLeftTrough = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_TROUGH);
+  private final ArmSetpoint armRightLow = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_LOW);
+  private final ArmSetpoint armRightMiddle = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_MIDDLE);
+  private final ArmSetpoint armRightHigh = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_HIGH);
+  private final ArmSetpoint armRightTrough = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_TROUGH);
+  //private final ArmSetpoint armRightIntake = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_INTAKE);
   private final ArmSetpoint armHome = new ArmSetpoint(arm, 0);
   
   private final ArmSteady armSteady = new ArmSteady(arm);
+  private final ElevatorSteady elevatorSteady = new ElevatorSteady(elevator);
+
 
   // Misc/Auto
   private final SendableChooser<Command> auto;
@@ -119,6 +134,7 @@ public class RobotContainer {
     eagleye.setDefaultCommand(eagleeyecommand);
     drivebase.setDefaultCommand(driveCommand);
     arm.setDefaultCommand(armSteady);
+    elevator.setDefaultCommand(elevatorSteady);
 
     auto = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("chooseAuto", auto);
@@ -138,17 +154,31 @@ public class RobotContainer {
     new JoystickButton(buttonBox_moreButtons, 3).onTrue(bottomStation); */
 
     // Buttonbox Arm and Elevator Commands
-    new JoystickButton(buttonBox, 7).whileTrue(armLeft);
-    new JoystickButton(buttonBox, 8).whileTrue(armRight);
+    //new JoystickButton(buttonBox, 7).whileTrue(armLeft);
+    //new JoystickButton(buttonBox, 8).whileTrue(armRight);
 
-    new JoystickButton(buttonBox, 10).whileTrue(upElevator);
-    new JoystickButton(buttonBox, 11).whileTrue(downElevator);
+    new JoystickButton(buttonBox, 5).whileTrue(armLeft);
+    new JoystickButton(buttonBox, 2).whileTrue(armRight);
+
+    //new JoystickButton(buttonBox, 10).whileTrue(upElevator);
+    //new JoystickButton(buttonBox, 11).whileTrue(downElevator);
+
+    new JoystickButton(buttonBox, 1).whileTrue(upElevator);
+    new JoystickButton(buttonBox, 6).whileTrue(downElevator);
+
+    new JoystickButton(buttonBox, 4).onTrue(elevatorZero);
+    new JoystickButton(buttonBox, 3).onTrue(elevatorIntake);
+    new JoystickButton(buttonBox_moreButtons, 3).onTrue(elevatorTrough);    
+    new JoystickButton(buttonBox, 9).onTrue(elevatorHigh); 
+    new JoystickButton(buttonBox, 10).onTrue(elevatorMiddle); 
+    new JoystickButton(buttonBox, 11).onTrue(elevatorLow);
+
     
     new JoystickButton(buttonBox_moreButtons, 1).whileTrue(intake);
     new JoystickButton(buttonBox_moreButtons, 2).whileTrue(outtake);
     
-    new JoystickButton(buttonBox, 5).onTrue(armLeft65); /* Fake ID */
-    new JoystickButton(buttonBox, 2).onTrue(armRight65); /* Fake ID */
+    new JoystickButton(buttonBox, 7).onTrue(armLeftMiddle);
+    new JoystickButton(buttonBox, 8).onTrue(armRightMiddle);
     new JoystickButton(buttonBox, 12).onTrue(armHome);
     //new JoystickButton(buttonBox_moreButtons, 202).onTrue(armLeft90); /* Fake ID */
     //new JoystickButton(buttonBox_moreButtons, 203).onTrue(armRight90); /* Fake ID */

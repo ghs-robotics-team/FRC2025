@@ -22,20 +22,24 @@ public final class Constants {
   public static final double ROBOT_MASS = (89.8) * 0.453592; // 32lbs * kg per pound
   public static final Matter CHASSIS = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);
   public static final double LOOP_TIME = 0.13; // s, 20ms + 110ms sprk max velocity lag
-  public static final double MAX_SPEED = 2.5; // 0.2/2.0 Min/Max
+  public static final double MAX_SPEED = 5; // 0.2/2.0 Min/Max
 
   public static final class SetPointConstants { //Dummy Values until measured
-    public static final double ARM_LEFT_65 = 2000;
-    public static final double ARM_LEFT_90 = 1.0;
-    public static final double ARM_LEFT_INTAKE = 0.5;
-    public static final double ARM_RIGHT_65 = -2000;
-    public static final double ARM_RIGHT_90 = -1.0;
-    public static final double ARM_RIGHT_INTAKE = -0.5;
+    public static final double ARM_LEFT_LOW = 3984.258;
+    public static final double ARM_LEFT_MIDDLE = 3520.898;
+    public static final double ARM_LEFT_HIGH = 3978.633;
+    public static final double ARM_LEFT_TROUGH = 2330.332;
 
-    public static final double ELEVATOR_HIGH = 50;
-    public static final double ELEVATOR_MIDDLE = 30;
-    public static final double ELEVATOR_LOW = 10;
-    public static final double ELEVATOR_TROUGH = 0;
+    public static final double ARM_RIGHT_LOW = -3984.258;
+    public static final double ARM_RIGHT_MIDDLE = -3520.898;
+    public static final double ARM_RIGHT_HIGH = -3978.633;
+    public static final double ARM_RIGHT_TROUGH = -2330.332;
+
+    public static final double ELEVATOR_HIGH = -33.066;
+    public static final double ELEVATOR_MIDDLE = -17.256;
+    public static final double ELEVATOR_LOW = -8.302;
+    public static final double ELEVATOR_TROUGH = -2.158;
+    public static final double ELEVATOR_INTAKE = -4.801;
 
   }
 
@@ -60,7 +64,7 @@ public final class Constants {
     public static final boolean SHOOTING_DATA_COLLECTION_MODE = false;
 
     // XBOX mode
-    public static final boolean XBOX_DRIVE = true;
+    public static final boolean XBOX_DRIVE = false;
 
     public static final boolean MATT_MODE = true;
   }

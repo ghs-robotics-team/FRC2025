@@ -25,6 +25,7 @@ public final class Globals {
   }
   public static class targetPos {
     public static double armTarget = 0;
+    public static double elevatorTarget = 0;
   }
 
   public static boolean inPath = false;

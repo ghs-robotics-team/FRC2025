@@ -11,6 +11,7 @@ import com.revrobotics.spark.SparkFlex;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Globals;
 
 public class Elevator extends SubsystemBase {
   /** Creates a new Elevator. */
@@ -26,9 +27,27 @@ public class Elevator extends SubsystemBase {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  public void move(double amt){ //Bottom for both at 0, Top at -36.706 for 13, 37.828 for 15
-    Left.set(-amt);
-    Right.set(amt);
+  public void move(double amt, double pos){ //Bottom for both at 0, Top at -36.706 for 13, 37.828 for 15
+    if(amt<=0){
+      if(pos <= 0){
+        Left.set(-amt);
+        Right.set(amt);
+      }
+      else{
+        Left.set(0);
+        Right.set(0);
+      }
+    }
+    else{
+      if(pos > -36.6){
+        Left.set(-amt);
+        Right.set(amt);
+      }
+      else{
+        Left.set(0);
+        Right.set(0);
+      }
+    }
 
     SmartDashboard.putNumber("ES AbsPos", getAbsPos()); // Doesn't show up
     SmartDashboard.putNumber("ES RelPos", getRelPos());
@@ -45,5 +64,7 @@ public class Elevator extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
+    SmartDashboard.putNumber("EE Target Pos", Globals.targetPos.elevatorTarget);
   }
 }

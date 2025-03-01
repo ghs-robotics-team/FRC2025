@@ -4,7 +4,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Globals;
 import frc.robot.subsystems.Elevator;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
@@ -21,36 +23,23 @@ public class MoveElevator extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    elevator.move(0);
+    elevator.move(0, elevator.getRelPos());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     double pos = elevator.getRelPos();
-    if(amt<=0){
-      if(pos <= 0){
-        elevator.move(amt);
-      }
-      else{
-        elevator.move(0);
-      }
-      
-    }
-    else{
-      if(pos > -36.6){
-        elevator.move(amt);
-      }
-      else{
-        elevator.move(0);
-      }
-    }
+    elevator.move(amt, pos);
+    Globals.targetPos.elevatorTarget = elevator.getRelPos();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    elevator.move(0);
+    elevator.move(0, elevator.getRelPos());
+    Globals.targetPos.elevatorTarget = elevator.getRelPos();
+    SmartDashboard.putNumber("ES Target Pos", Globals.targetPos.elevatorTarget);
   }
 
   // Returns true when the command should end.

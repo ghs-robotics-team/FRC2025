@@ -1,63 +1,60 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 package frc.robot.commands;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Globals;
 import frc.robot.subsystems.Elevator;
+import edu.wpi.first.math.controller.PIDController;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ElevatorSetpoint extends Command {
-  /** Creates a new ArmSetpoint. */
+public class ElevatorSteady extends Command {
+  /** Creates a new ArmSteady. */
   Elevator elevator;
-  double setPoint;
   PIDController pid;
-
-  public ElevatorSetpoint(Elevator elevator, double setPoint) {
+  public ElevatorSteady(Elevator elevator) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(elevator);
+    this.pid = new PIDController(0.05, 0, 0.00005);
     this.elevator = elevator;
-    this.setPoint = setPoint;
-    this.pid = new PIDController (0.025,0,0.005); 
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    /* Get PID Numbers
-    double P = SmartDashboard.getNumber("Indexer-P", 0.28); 
+    /*double P = SmartDashboard.getNumber("Indexer-P", 0.28); 
     double I = SmartDashboard.getNumber("Indexer-I", 0.0);
     double D = SmartDashboard.getNumber("Indexer-D", 0.0005);
 
-    // Set PID numbers
+    Set PID numbers
     pid.setP(P);
     pid.setI(I);
     pid.setD(D);*/
     
     // Get PID Controller direction for elevator to go, find current error from position.
-    double direction = pid.calculate(elevator.getRelPos(), setPoint);
+    double direction = pid.calculate(elevator.getRelPos(), Globals.targetPos.elevatorTarget);
     double error = pid.getPositionError();
 
-    // If error is within 1 unit, stop moving arm.
+    SmartDashboard.putNumber("ES Direction", direction);
+    SmartDashboard.putNumber("ES Error", error);
+
     if (error > -0.25 && error < 0.25) {
       elevator.move(0, elevator.getRelPos()); // deadzone
     } else {
       elevator.move(-direction, elevator.getRelPos()); // Move Arm
     }
-    Globals.targetPos.elevatorTarget = elevator.getRelPos();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    elevator.move(0, elevator.getRelPos());
-    Globals.targetPos.elevatorTarget = elevator.getRelPos();
-    SmartDashboard.putNumber("ES Target Pos", Globals.targetPos.elevatorTarget);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
