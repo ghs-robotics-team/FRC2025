@@ -12,6 +12,7 @@ public class ElevatorSetpoint extends Command {
   Elevator elevator;
   double setPoint;
   PIDController pid;
+  double error;
 
   public ElevatorSetpoint(Elevator elevator, double setPoint) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -23,6 +24,8 @@ public class ElevatorSetpoint extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    double direction = pid.calculate(elevator.getRelPos(), setPoint);
+    error = pid.getPositionError();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -40,7 +43,7 @@ public class ElevatorSetpoint extends Command {
     
     // Get PID Controller direction for elevator to go, find current error from position.
     double direction = pid.calculate(elevator.getRelPos(), setPoint);
-    double error = pid.getPositionError();
+    error = pid.getPositionError();
 
     // If error is within 1 unit, stop moving arm.
     if (error > -0.25 && error < 0.25) {
@@ -62,6 +65,6 @@ public class ElevatorSetpoint extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return error > -0.25 && error < 0.25;
   }
 }

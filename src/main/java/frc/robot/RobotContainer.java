@@ -215,7 +215,7 @@ public class RobotContainer {
 
     }
     else{
-      new JoystickButton(buttonBox_moreButtons, 3).onTrue((new InstantCommand(drivebase::zeroGyro))); // (Button 3)
+      new JoystickButton(rightjoystick, 3).onTrue((new InstantCommand(drivebase::zeroGyro))); // (Button 3) (Left Thumb Button)
       //new JoystickButton(rightjoystick, 2).onTrue(new InstantCommand(drivebase::lock));
 
       // Drive Commands
