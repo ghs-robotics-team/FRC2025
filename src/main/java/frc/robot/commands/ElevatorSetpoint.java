@@ -16,15 +16,15 @@ public class ElevatorSetpoint extends Command {
 
   public ElevatorSetpoint(Elevator elevator, double setPoint) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(elevator);
     this.elevator = elevator;
     this.setPoint = setPoint;
-    this.pid = new PIDController (0.025,0,0.005); 
+    this.pid = new PIDController (0.10,0,0.005); 
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    double direction = pid.calculate(elevator.getRelPos(), setPoint);
     error = pid.getPositionError();
   }
 
@@ -46,12 +46,13 @@ public class ElevatorSetpoint extends Command {
     error = pid.getPositionError();
 
     // If error is within 1 unit, stop moving arm.
-    if (error > -0.25 && error < 0.25) {
+    if (error > -0.3 && error < 0.3) {
       elevator.move(0, elevator.getRelPos()); // deadzone
     } else {
       elevator.move(-direction, elevator.getRelPos()); // Move Arm
     }
     Globals.targetPos.elevatorTarget = elevator.getRelPos();
+    SmartDashboard.putNumber("ES Setpoint Error", error);
   }
 
   // Called once the command ends or is interrupted.
@@ -65,6 +66,6 @@ public class ElevatorSetpoint extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return error > -0.25 && error < 0.25;
+    return error > -0.3 && error < 0.3;
   }
 }

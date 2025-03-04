@@ -43,7 +43,7 @@ public class ElevatorSteady extends Command {
     double error = pid.getPositionError();
 
     SmartDashboard.putNumber("ES Direction", direction);
-    SmartDashboard.putNumber("ES Error", error);
+    SmartDashboard.putNumber("ES Steady Error", error);
 
     if (error > -0.25 && error < 0.25) {
       elevator.move(0, elevator.getRelPos()); // deadzone
