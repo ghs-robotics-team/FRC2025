@@ -34,6 +34,8 @@ import frc.robot.commands.ArmSetpoint;
 import frc.robot.commands.OuttakeCommand;
 import frc.robot.commands.ArmSteady;
 import frc.robot.commands.ElevatorSteady;
+import frc.robot.subsystems.Climber;
+import frc.robot.commands.MoveClimber;
 
 
 public class RobotContainer {
@@ -43,6 +45,7 @@ public class RobotContainer {
   private final Elevator elevator = new Elevator(); // ALWAYS SET AT BOTTOM FOR CORRECT ENCODER POS
   private final EagleEye eagleye = new EagleEye();
   private final EagleEyeCommand eagleeyecommand = new EagleEyeCommand(eagleye);
+  private final Climber climber = new Climber();
 
   // Controllers
   private Joystick buttonBox;
@@ -71,6 +74,9 @@ public class RobotContainer {
 
   private final MoveElevator upElevator = new MoveElevator(elevator, 0.1);
   private final MoveElevator downElevator = new MoveElevator(elevator, -0.1);
+
+  private final MoveClimber upClimber = new MoveClimber(climber, 0.75);
+  private final MoveClimber downClimber = new MoveClimber(climber, -0.75);
 
   private final ElevatorSetpoint elevatorZero = new ElevatorSetpoint(elevator, 0.17);
   private final ElevatorSetpoint elevatorIntake = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
@@ -213,6 +219,8 @@ public class RobotContainer {
         CommandScheduler.getInstance().cancelAll();
       })); // (X)
 
+      new JoystickButton(driverXbox, 6).whileTrue(upClimber);// Right High Trigger
+      new JoystickButton(driverXbox, 5).whileTrue(downClimber);// Left High Trigger
     }
     else{
       new JoystickButton(rightjoystick, 3).onTrue((new InstantCommand(drivebase::zeroGyro))); // (Button 3) (Left Thumb Button)
