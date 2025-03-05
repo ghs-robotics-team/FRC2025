@@ -72,7 +72,7 @@ public class RobotContainer {
   private final MoveElevator upElevator = new MoveElevator(elevator, 0.1);
   private final MoveElevator downElevator = new MoveElevator(elevator, -0.1);
 
-  private final ElevatorSetpoint elevatorZero = new ElevatorSetpoint(elevator, 0.25);
+  private final ElevatorSetpoint elevatorZero = new ElevatorSetpoint(elevator, 0.17);
   private final ElevatorSetpoint elevatorIntake = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
   private final ElevatorSetpoint elevatorLow = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_LOW);
   private final ElevatorSetpoint elevatorMiddle = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_MIDDLE);
