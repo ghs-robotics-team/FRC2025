@@ -19,7 +19,7 @@ public class ArmSetpoint extends Command {
     this.arm = arm;
     addRequirements(arm);
     this.setPoint = setPoint;
-    this.pid = new PIDController (0.00005,0,0); 
+    this.pid = new PIDController (0.00005,0,0.0005); 
   }
 
   // Called when the command is initially scheduled.

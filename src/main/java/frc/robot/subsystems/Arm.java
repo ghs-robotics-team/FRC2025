@@ -23,14 +23,6 @@ public class Arm extends SubsystemBase {
   double absoluteEncoder = armMotor.getPosition().getValue().magnitude();
   public Arm() {
     // Use addRequirements() here to declare subsystem dependencies.\
-    var slot = new  Slot0Configs();
-    slot.kP = 2.4;
-    slot.kI = 0;
-    slot.kD = 0.1;
-   armMotor.getConfigurator().apply(slot);
-
-    PositionVoltage request = new PositionVoltage(0).withSlot(0);
-   armMotor.setControl(request.withPosition(absoluteEncoder));
   }
 
   public void move(double amt){ 

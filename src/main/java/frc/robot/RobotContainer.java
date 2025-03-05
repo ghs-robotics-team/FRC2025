@@ -99,6 +99,15 @@ public class RobotContainer {
   private final ArmSteady armSteady = new ArmSteady(arm);
   private final ElevatorSteady elevatorSteady = new ElevatorSteady(elevator);
 
+  // For Test Combine Command
+  private final ArmSetpoint armHomePlace = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint armRightPlaceFinal = new ArmSetpoint(arm, -1000);
+  private final ArmSetpoint armHomePlaceFinal = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint armLeftHighPlace = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_HIGH);
+  private final ElevatorSetpoint elevatorHighPlace = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_HIGH);
+  private final ElevatorSetpoint elevatorZeroPlace = new ElevatorSetpoint(elevator, 0.17);
+
+
 
   // Misc/Auto
   private final SendableChooser<Command> auto;
@@ -221,6 +230,14 @@ public class RobotContainer {
 
       new JoystickButton(driverXbox, 6).whileTrue(upClimber);// Right High Trigger
       new JoystickButton(driverXbox, 5).whileTrue(downClimber);// Left High Trigger
+
+      /*new JoystickButton(driverXbox, 6).onTrue(
+        armHomePlace.andThen(
+        elevatorHighPlace).andThen(
+        armLeftHighPlace).andThen(
+          elevatorZeroPlace.alongWith(armRightPlaceFinal)).andThen(
+        armHomePlaceFinal)
+        );*/
     }
     else{
       new JoystickButton(rightjoystick, 3).onTrue((new InstantCommand(drivebase::zeroGyro))); // (Button 3) (Left Thumb Button)
