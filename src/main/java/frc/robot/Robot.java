@@ -69,10 +69,13 @@ public class Robot extends TimedRobot {
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
-    // this line or comment it out.
+    // this line or comment it out
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    // Set all robot positions to zero
+    Globals.targetPos.armTarget = 0;
+    Globals.targetPos.elevatorTarget = 0.3;
   }
 
   /** This function is called periodically during operator control. */

@@ -19,7 +19,7 @@ public class ElevatorSetpoint extends Command {
     addRequirements(elevator);
     this.elevator = elevator;
     this.setPoint = setPoint;
-    this.pid = new PIDController (0.10,0,0.005); 
+    this.pid = new PIDController (0.15,0,0.005); 
   }
 
   // Called when the command is initially scheduled.
@@ -59,7 +59,6 @@ public class ElevatorSetpoint extends Command {
     } else {
       elevator.move(-direction, elevator.getRelPos()); // Move Arm
     }
-    Globals.targetPos.elevatorTarget = elevator.getRelPos();
     SmartDashboard.putNumber("ES Setpoint Error", error);
   }
 

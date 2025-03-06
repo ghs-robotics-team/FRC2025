@@ -19,7 +19,7 @@ public class ArmSetpoint extends Command {
     this.arm = arm;
     addRequirements(arm);
     this.setPoint = setPoint;
-    this.pid = new PIDController (0.00005,0,0.0005); 
+    this.pid = new PIDController (0.0001,0,0.0000); 
   }
 
   // Called when the command is initially scheduled.
@@ -48,12 +48,13 @@ public class ArmSetpoint extends Command {
     error = pid.getPositionError();
 
     // If error is within 1 unit, stop moving arm.
-    if (error > -50 && error < 50 /* goal 50 */) {
+    if (error > -75 && error < 75 /* goal 50 */) {
       arm.move(0); // deadzone
     } else {
       arm.move(direction); // Move Arm
     }
     Globals.targetPos.armTarget = arm.getPos();
+    SmartDashboard.putNumber("AS Setpoint Error", error);
   }
 
   // Called once the command ends or is interrupted.

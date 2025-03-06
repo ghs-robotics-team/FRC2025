@@ -28,7 +28,7 @@ public class Arm extends SubsystemBase {
   public void move(double amt){ 
     absoluteEncoder = armMotor.getRotorPosition().getValue().in(Units.Degree);// 21 Left, -21 Right for limits
     if (amt>0) {
-      if (absoluteEncoder < 4000 /* 7200 at top */)   {
+      if (absoluteEncoder < 4500 /* 7200 at top */)   {
        armMotor.set(amt); // 0 to 1
       }
       else {
@@ -36,7 +36,7 @@ public class Arm extends SubsystemBase {
       }
     }
     else if (amt<0) {
-      if (absoluteEncoder > -4000 /* -7200 at top */)   {
+      if (absoluteEncoder > -4500 /* -7200 at top */)   {
        armMotor.set(amt); // 0 to 1
       }
       else {
