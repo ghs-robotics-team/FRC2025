@@ -36,7 +36,7 @@ public final class Constants {
     public static final double ARM_RIGHT_TROUGH = -2330.332;
 
     public static final double ELEVATOR_HIGH = -33.066;
-    public static final double ELEVATOR_MIDDLE = -17.256;
+    public static final double ELEVATOR_MIDDLE = -17.756;
     public static final double ELEVATOR_LOW = -8.302;
     public static final double ELEVATOR_TROUGH = -2.158;
     public static final double ELEVATOR_INTAKE = -4.801;

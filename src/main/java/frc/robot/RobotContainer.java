@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveToPointCommand;
@@ -69,7 +70,7 @@ public class RobotContainer {
   private final MoveArm armLeft = new MoveArm(arm,0.1);
   private final MoveArm armRight = new MoveArm(arm,-0.1);
 
-  private final IntakeCommand intake = new IntakeCommand(arm, -0.15);
+  private final IntakeCommand intake = new IntakeCommand(arm, -0.5);
   private final OuttakeCommand outtake = new OuttakeCommand(arm, 0.5);
 
   private final MoveElevator upElevator = new MoveElevator(elevator, 0.1);
@@ -93,19 +94,26 @@ public class RobotContainer {
   private final ArmSetpoint armRightMiddle = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_MIDDLE);
   private final ArmSetpoint armRightHigh = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_HIGH);
   private final ArmSetpoint armRightTrough = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_TROUGH);
-  //private final ArmSetpoint armRightIntake = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_INTAKE);
   private final ArmSetpoint armHome = new ArmSetpoint(arm, 0);
   
   private final ArmSteady armSteady = new ArmSteady(arm);
   private final ElevatorSteady elevatorSteady = new ElevatorSteady(elevator);
 
-  // For Test Combine Command
-  private final ArmSetpoint armHomePlace = new ArmSetpoint(arm, 0);
-  private final ArmSetpoint armRightPlaceFinal = new ArmSetpoint(arm, -1000);
-  private final ArmSetpoint armHomePlaceFinal = new ArmSetpoint(arm, 0);
-  private final ArmSetpoint armLeftHighPlace = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_HIGH);
-  private final ElevatorSetpoint elevatorHighPlace = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_HIGH);
-  private final ElevatorSetpoint elevatorZeroPlace = new ElevatorSetpoint(elevator, 0.3);
+  // For Left Top Combine Command
+  private final ArmSetpoint armHomeLeftTop = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint armRightLeftTopFinal = new ArmSetpoint(arm, -1000);
+  private final ArmSetpoint armHomeLeftTopFinal = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint armLeftHighLeftTop = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_HIGH);
+  private final ElevatorSetpoint elevatorHighLeftTop = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_HIGH);
+  private final ElevatorSetpoint elevatorZeroLeftTop = new ElevatorSetpoint(elevator, 0.3);
+
+  // For Left Mid Combine Command
+  private final ArmSetpoint armHomeLeftMid = new ArmSetpoint(arm, 0);  
+  private final ArmSetpoint armRightLeftMidFinal = new ArmSetpoint(arm, -1000);
+  private final ArmSetpoint armHomeLeftMidFinal = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint armLeftHighLeftMid = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_MIDDLE);
+  private final ElevatorSetpoint elevatorHighLeftMid = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_MIDDLE);
+  private final ElevatorSetpoint elevatorZeroLeftMid = new ElevatorSetpoint(elevator, 0.3);
 
 
 
@@ -169,14 +177,8 @@ public class RobotContainer {
     new JoystickButton(buttonBox_moreButtons, 3).onTrue(bottomStation); */
 
     // Buttonbox Arm and Elevator Commands
-    //new JoystickButton(buttonBox, 7).whileTrue(armLeft);
-    //new JoystickButton(buttonBox, 8).whileTrue(armRight);
-
-    new JoystickButton(buttonBox, 5).whileTrue(armLeft);
+    new JoystickButton(buttonBox, 5).whileTrue(armLeft); 
     new JoystickButton(buttonBox, 2).whileTrue(armRight);
-
-    //new JoystickButton(buttonBox, 10).whileTrue(upElevator);
-    //new JoystickButton(buttonBox, 11).whileTrue(downElevator);
 
     new JoystickButton(buttonBox, 1).whileTrue(upElevator);
     new JoystickButton(buttonBox, 6).whileTrue(downElevator);
@@ -192,7 +194,7 @@ public class RobotContainer {
     new JoystickButton(buttonBox_moreButtons, 1).whileTrue(intake);
     new JoystickButton(buttonBox_moreButtons, 2).whileTrue(outtake);
     
-    new JoystickButton(buttonBox, 7).onTrue(armLeftMiddle);
+    new JoystickButton(buttonBox, 7).onTrue(armLeftMiddle); 
     new JoystickButton(buttonBox, 8).onTrue(armRightMiddle);
     new JoystickButton(buttonBox, 12).onTrue(armHome);
     //new JoystickButton(buttonBox_moreButtons, 202).onTrue(armLeft90); /* Fake ID */
@@ -232,12 +234,20 @@ public class RobotContainer {
       //new JoystickButton(driverXbox, 5).whileTrue(downClimber);// Left High Trigger
 
       new JoystickButton(driverXbox, 6).onTrue(
-        armHomePlace.andThen(
-        elevatorHighPlace).andThen(
-        armLeftHighPlace).andThen(
-          elevatorZeroPlace.alongWith(armRightPlaceFinal)).andThen(
-        armHomePlaceFinal) 
+        armHomeLeftTop.andThen(
+        elevatorHighLeftTop).andThen(
+        armLeftHighLeftTop).andThen(
+          elevatorZeroLeftTop.alongWith(armRightLeftTopFinal)).andThen(
+        armHomeLeftTopFinal) 
         ); 
+
+      new JoystickButton(driverXbox, 5).onTrue(
+        armHomeLeftMid.andThen(
+        elevatorHighLeftMid).andThen(
+        armLeftHighLeftMid).andThen(
+          elevatorZeroLeftMid.alongWith(armRightLeftMidFinal)).andThen(
+        armHomeLeftMidFinal) 
+        );
     }
     else{
       new JoystickButton(rightjoystick, 3).onTrue((new InstantCommand(drivebase::zeroGyro))); // (Button 3) (Left Thumb Button)

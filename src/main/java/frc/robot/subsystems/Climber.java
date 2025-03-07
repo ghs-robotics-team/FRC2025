@@ -29,7 +29,7 @@ public class Climber extends SubsystemBase {
       }
     }
     else if (amt<0) {
-      if (encoder > 0.37367)   {
+      if (encoder > -0.8197)   { //0.37367
         motor.set(amt); // 0 to 1
       }
       else {

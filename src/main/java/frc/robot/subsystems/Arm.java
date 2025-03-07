@@ -49,11 +49,11 @@ public class Arm extends SubsystemBase {
   }
 
   public void intake(double amt){
-    hand.set(amt);
+    hand.set(-amt);
   }
 
   public void outtake(double amt) {
-    hand.set(amt);
+    hand.set(-amt);
   }
   
   public double getPos(){
