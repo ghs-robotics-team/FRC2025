@@ -7,13 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Bottom"
+            "pathName": "1CoralTop1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Left Top Place"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "1Coral",
   "choreoAuto": false
 }

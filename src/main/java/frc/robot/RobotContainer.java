@@ -228,7 +228,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Intake",
       autoArmHomeIntake.andThen(
         autoElevatorSetIntake).andThen(
-        autoIntakeSet.withTimeout(5)).andThen( //Change Time to limit switch?
+        autoIntakeSet.withTimeout(3)).andThen( //Change Time to limit switch?
         autoArmHomeIntakeFinal) 
     );
 
@@ -366,7 +366,7 @@ public class RobotContainer {
       new JoystickButton(driverXbox, 5).onTrue(
         armHomeIntake.andThen(
         elevatorSetIntake).andThen(
-        intakeSet.withTimeout(5)).andThen( //Change Time to limit switch?
+        intakeSet.withTimeout(2)).andThen( //Change Time to limit switch?
         armHomeIntakeFinal) 
         );*/
     }
