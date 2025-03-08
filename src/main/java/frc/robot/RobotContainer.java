@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveToPointCommand;
 import frc.robot.commands.TargetPoints;
@@ -48,6 +49,7 @@ public class RobotContainer {
   // Controllers
   private Joystick buttonBox;
   private Joystick buttonBox_moreButtons;
+  private XboxController buttonsXbox;
   private XboxController driverXbox;
   private Joystick rightjoystick;
   private Joystick leftjoystick;
@@ -187,13 +189,15 @@ public class RobotContainer {
     // Set Controller Ids
     if (Constants.OperatorConstants.XBOX_DRIVE) {
       driverXbox = new XboxController(0);
-      buttonBox = new Joystick(1);
-      buttonBox_moreButtons = new Joystick(2);
+      buttonsXbox = new XboxController(1);
+      buttonBox = new Joystick(2);
+      buttonBox_moreButtons = new Joystick(3);
     } else {
       rightjoystick = new Joystick(0);
       leftjoystick = new Joystick(1);
-      buttonBox = new Joystick(2);
-      buttonBox_moreButtons = new Joystick(3);
+      buttonsXbox = new XboxController(2);
+      buttonBox = new Joystick(3);
+      buttonBox_moreButtons = new Joystick(4);
     }
 
     // Configure DriveCommand
@@ -283,26 +287,72 @@ public class RobotContainer {
     new JoystickButton(buttonBox_moreButtons, 3).onTrue(bottomStation); */
 
     // Buttonbox Arm and Elevator Commands
-    new JoystickButton(buttonBox, 5).whileTrue(armLeft); 
-    new JoystickButton(buttonBox, 2).whileTrue(armRight);
-
-    new JoystickButton(buttonBox, 1).whileTrue(upElevator);
-    new JoystickButton(buttonBox, 6).whileTrue(downElevator);
-
-    new JoystickButton(buttonBox, 4).onTrue(elevatorZero);
-    new JoystickButton(buttonBox, 3).onTrue(elevatorIntake);
-    new JoystickButton(buttonBox_moreButtons, 3).onTrue(elevatorTrough);    
-    new JoystickButton(buttonBox, 9).onTrue(elevatorHigh); 
-    new JoystickButton(buttonBox, 10).onTrue(elevatorMiddle); 
-    new JoystickButton(buttonBox, 11).onTrue(elevatorLow);
-
+    //new JoystickButton(buttonBox, 5).whileTrue(armLeft); 
+    //new JoystickButton(buttonBox, 2).whileTrue(armRight);
     
-    new JoystickButton(buttonBox_moreButtons, 1).whileTrue(intake);
-    new JoystickButton(buttonBox_moreButtons, 2).whileTrue(outtake);
+    new POVButton(buttonsXbox, 90).whileTrue(armRight);
+    new POVButton(buttonsXbox, 270).whileTrue(armLeft);
+
+    //new JoystickButton(buttonBox, 1).whileTrue(upElevator);
+    //new JoystickButton(buttonBox, 6).whileTrue(downElevator);
+
+    new POVButton(buttonsXbox, 0).whileTrue(upElevator);
+    new POVButton(buttonsXbox, 180).whileTrue(downElevator);
+
+    //new JoystickButton(buttonBox, 4).onTrue(elevatorZero);
+    new JoystickButton(buttonsXbox, 8).onTrue(elevatorZero);
+    //new JoystickButton(buttonBox, 3).onTrue(elevatorIntake);
+    //new JoystickButton(buttonBox_moreButtons, 3).onTrue(elevatorTrough);    
+    //new JoystickButton(buttonBox, 9).onTrue(elevatorHigh); 
+    //new JoystickButton(buttonBox, 10).onTrue(elevatorMiddle); 
+    //new JoystickButton(buttonBox, 11).onTrue(elevatorLow);
+
+    //new JoystickButton(buttonBox_moreButtons, 1).whileTrue(intake);
+    //new JoystickButton(buttonBox_moreButtons, 2).whileTrue(outtake);
+
+    new JoystickButton(buttonsXbox, 6).whileTrue(intake);
+    new JoystickButton(buttonsXbox, 5).whileTrue(outtake);
     
-    new JoystickButton(buttonBox, 7).onTrue(armLeftMiddle); 
-    new JoystickButton(buttonBox, 8).onTrue(armRightMiddle);
-    new JoystickButton(buttonBox, 12).onTrue(armHome);
+    //new JoystickButton(buttonBox, 7).onTrue(armLeftMiddle); 
+    //new JoystickButton(buttonBox, 8).onTrue(armRightMiddle);
+    //new JoystickButton(buttonBox, 12).onTrue(armHome);
+    new JoystickButton(buttonsXbox, 7).onTrue(armHome);
+    
+    //Place Left High
+    new JoystickButton(buttonsXbox, 3).onTrue(
+      armHomeLeftTop.andThen(
+      elevatorHighLeftTop).andThen(
+      armLeftHighLeftTop).andThen(
+        elevatorZeroLeftTop.alongWith(new WaitCommand(0.5).andThen(armRightLeftTopFinal))).andThen(
+      armHomeLeftTopFinal) 
+      ); 
+
+    //Place Left Middle
+    new JoystickButton(buttonsXbox, 2).onTrue(
+      armHomeLeftMid.andThen(
+      elevatorHighLeftMid).andThen(
+      armLeftHighLeftMid).andThen(
+        elevatorZeroLeftMid.alongWith(new WaitCommand(0.5).andThen(armRightLeftMidFinal))).andThen(
+      armHomeLeftMidFinal) 
+      );
+
+    //Place Left Low
+    new JoystickButton(buttonsXbox, 1).onTrue(
+      armHomeLeftLow.andThen(
+      elevatorHighLeftLow).andThen(
+      armLeftHighLeftLow).andThen(
+        elevatorZeroLeftLow.alongWith(new WaitCommand(0.5).andThen(armRightLeftLowFinal))).andThen(
+      armHomeLeftLowFinal) 
+      );
+
+    //Place Left Trough
+    new JoystickButton(buttonsXbox, 3).onTrue(
+      armHomeLeftTrough.andThen(
+      elevatorHighLeftTrough).andThen(
+      armLeftHighLeftTrough).andThen(
+        elevatorZeroLeftTrough.alongWith(new WaitCommand(0.5).andThen(armRightLeftTroughFinal))).andThen(
+      armHomeLeftTroughFinal) 
+      );
 
     
     if (OperatorConstants.XBOX_DRIVE) {
@@ -326,49 +376,6 @@ public class RobotContainer {
       //new JoystickButton(driverXbox, 6).whileTrue(upClimber);// Right High Trigger
       //new JoystickButton(driverXbox, 5).whileTrue(downClimber);// Left High Trigger
 
-      //Place Left High
-      new JoystickButton(driverXbox, 6).onTrue(
-        armHomeLeftTop.andThen(
-        elevatorHighLeftTop).andThen(
-        armLeftHighLeftTop).andThen(
-          elevatorZeroLeftTop.alongWith(new WaitCommand(0.5).andThen(armRightLeftTopFinal))).andThen(
-        armHomeLeftTopFinal) 
-        ); 
-
-      //Place Left Middle
-      new JoystickButton(driverXbox, 5).onTrue(
-        armHomeLeftMid.andThen(
-        elevatorHighLeftMid).andThen(
-        armLeftHighLeftMid).andThen(
-          elevatorZeroLeftMid.alongWith(new WaitCommand(0.5).andThen(armRightLeftMidFinal))).andThen(
-        armHomeLeftMidFinal) 
-        );
-
-      /*//Place Left Low
-      new JoystickButton(driverXbox, 5).onTrue(
-        armHomeLeftLow.andThen(
-        elevatorHighLeftLow).andThen(
-        armLeftHighLeftLow).andThen(
-          elevatorZeroLeftLow.alongWith(new WaitCommand(0.5).andThen(armRightLeftLowFinal))).andThen(
-        armHomeLeftLowFinal) 
-        );
-
-      //Place Left Trough
-      new JoystickButton(driverXbox, 5).onTrue(
-        armHomeLeftTrough.andThen(
-        elevatorHighLeftTrough).andThen(
-        armLeftHighLeftTrough).andThen(
-          elevatorZeroLeftTrough.alongWith(new WaitCommand(0.5).andThen(armRightLeftTroughFinal))).andThen(
-        armHomeLeftTroughFinal) 
-        );
-
-      // Intake
-      new JoystickButton(driverXbox, 5).onTrue(
-        armHomeIntake.andThen(
-        elevatorSetIntake).andThen(
-        intakeSet.withTimeout(2)).andThen( //Change Time to limit switch?
-        armHomeIntakeFinal) 
-        );*/
     }
     else{
       new JoystickButton(rightjoystick, 3).onTrue((new InstantCommand(drivebase::zeroGyro))); // (Button 3) (Left Thumb Button)
