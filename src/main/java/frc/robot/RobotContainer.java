@@ -215,8 +215,8 @@ public class RobotContainer {
 
     eagleye.setDefaultCommand(eagleeyecommand);
     drivebase.setDefaultCommand(driveCommand);
-    arm.setDefaultCommand(armSteady);
-    elevator.setDefaultCommand(elevatorSteady);
+    //arm.setDefaultCommand(armSteady);
+    //elevator.setDefaultCommand(elevatorSteady);
 
     auto = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("chooseAuto", auto); 
