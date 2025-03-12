@@ -130,13 +130,14 @@ public class RobotContainer {
   private final ElevatorSetpoint elevatorHighLeftLow = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_LOW);
   private final ElevatorSetpoint elevatorZeroLeftLow = new ElevatorSetpoint(elevator, 0.3);
 
-  // Left Low Combine Command
+  // Left Trough Combine Command
   private final ArmSetpoint armHomeLeftTrough = new ArmSetpoint(arm, 0);
   private final ArmSetpoint armRightLeftTroughFinal = new ArmSetpoint(arm, -1000);
   private final ArmSetpoint armHomeLeftTroughFinal = new ArmSetpoint(arm, 0);
   private final ArmSetpoint armLeftHighLeftTrough = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_TROUGH);
   private final ElevatorSetpoint elevatorHighLeftTrough = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_TROUGH);
   private final ElevatorSetpoint elevatorZeroLeftTrough = new ElevatorSetpoint(elevator, 0.3);
+  private final OuttakeCommand armLeftTroughOuttake = new OuttakeCommand(arm, 0.3);
 
   //  Auto Chooser
   private final SendableChooser<Command> auto;
@@ -219,8 +220,8 @@ public class RobotContainer {
 
     eagleye.setDefaultCommand(eagleeyecommand);
     drivebase.setDefaultCommand(driveCommand);
-    //arm.setDefaultCommand(armSteady);
-    //elevator.setDefaultCommand(elevatorSteady);
+    arm.setDefaultCommand(armSteady);
+    elevator.setDefaultCommand(elevatorSteady);
 
     auto = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("chooseAuto", auto); 
@@ -241,7 +242,7 @@ public class RobotContainer {
       autoArmHomeLeftTop.andThen(
       autoElevatorHighLeftTop).andThen(
       autoArmLeftHighLeftTop).andThen(
-        autoElevatorZeroLeftTop.alongWith(new WaitCommand(0.5).andThen(autoArmRightLeftTopFinal))).andThen(
+        autoElevatorZeroLeftTop.alongWith(new WaitCommand(0.13).andThen(autoArmRightLeftTopFinal))).andThen(
       autoArmHomeLeftTopFinal) 
     );
 
@@ -250,7 +251,7 @@ public class RobotContainer {
       autoArmHomeLeftMid.andThen(
       autoElevatorHighLeftMid).andThen(
       autoArmLeftHighLeftMid).andThen(
-        autoElevatorZeroLeftMid.alongWith(new WaitCommand(0.5).andThen(autoArmRightLeftMidFinal))).andThen(
+        autoElevatorZeroLeftMid.alongWith(new WaitCommand(0.13).andThen(autoArmRightLeftMidFinal))).andThen(
       autoArmHomeLeftMidFinal) 
     );
 
@@ -259,7 +260,7 @@ public class RobotContainer {
       autoArmHomeLeftLow.andThen(
       autoElevatorHighLeftLow).andThen(
       autoArmLeftHighLeftLow).andThen(
-        autoElevatorZeroLeftLow.alongWith(new WaitCommand(0.5).andThen(autoArmRightLeftLowFinal))).andThen(
+        autoElevatorZeroLeftLow.alongWith(new WaitCommand(0.13).andThen(autoArmRightLeftLowFinal))).andThen(
       autoArmHomeLeftLowFinal) 
     );
 
@@ -268,7 +269,7 @@ public class RobotContainer {
       autoArmHomeLeftTrough.andThen(
       autoElevatorHighLeftTrough).andThen(
       autoArmLeftHighLeftTrough).andThen(
-        autoElevatorZeroLeftTrough.alongWith(new WaitCommand(0.5).andThen(autoArmRightLeftTroughFinal))).andThen(
+        autoElevatorZeroLeftTrough.alongWith(new WaitCommand(0.13).andThen(autoArmRightLeftTroughFinal))).andThen(
       autoArmHomeLeftTroughFinal) 
     );
   }
@@ -319,38 +320,40 @@ public class RobotContainer {
     new JoystickButton(buttonsXbox, 7).onTrue(armHome);
     
     //Place Left High
-    new JoystickButton(buttonsXbox, 3).onTrue(
+    new JoystickButton(buttonsXbox, 4).onTrue( // Y
       armHomeLeftTop.andThen(
       elevatorHighLeftTop).andThen(
       armLeftHighLeftTop).andThen(
-        elevatorZeroLeftTop.alongWith(new WaitCommand(0.5).andThen(armRightLeftTopFinal))).andThen(
+        elevatorZeroLeftTop.alongWith(new WaitCommand(0.13).andThen(armRightLeftTopFinal))).andThen(
       armHomeLeftTopFinal) 
       ); 
 
     //Place Left Middle
-    new JoystickButton(buttonsXbox, 2).onTrue(
+    new JoystickButton(buttonsXbox, 2).onTrue( // B
       armHomeLeftMid.andThen(
       elevatorHighLeftMid).andThen(
       armLeftHighLeftMid).andThen(
-        elevatorZeroLeftMid.alongWith(new WaitCommand(0.5).andThen(armRightLeftMidFinal))).andThen(
+        elevatorZeroLeftMid.alongWith(new WaitCommand(0.13).andThen(armRightLeftMidFinal))).andThen(
       armHomeLeftMidFinal) 
       );
 
     //Place Left Low
-    new JoystickButton(buttonsXbox, 1).onTrue(
+    new JoystickButton(buttonsXbox, 1).onTrue( // A
       armHomeLeftLow.andThen(
       elevatorHighLeftLow).andThen(
       armLeftHighLeftLow).andThen(
-        elevatorZeroLeftLow.alongWith(new WaitCommand(0.5).andThen(armRightLeftLowFinal))).andThen(
+        elevatorZeroLeftLow.alongWith(new WaitCommand(0.13).andThen(armRightLeftLowFinal))).andThen(
       armHomeLeftLowFinal) 
       );
 
     //Place Left Trough
-    new JoystickButton(buttonsXbox, 3).onTrue(
+    new JoystickButton(buttonsXbox, 3).onTrue( // X
       armHomeLeftTrough.andThen(
       elevatorHighLeftTrough).andThen(
-      armLeftHighLeftTrough).andThen(
-        elevatorZeroLeftTrough.alongWith(new WaitCommand(0.5).andThen(armRightLeftTroughFinal))).andThen(
+      armLeftHighLeftTrough.withTimeout(0.5)).andThen(
+        new WaitCommand(0.1)).andThen(
+        armLeftTroughOuttake.withTimeout(0.2)).andThen(new WaitCommand(0.5)).andThen(
+        elevatorZeroLeftTrough.alongWith(armRightLeftTroughFinal)).andThen(
       armHomeLeftTroughFinal) 
       );
 

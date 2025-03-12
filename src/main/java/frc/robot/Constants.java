@@ -26,19 +26,19 @@ public final class Constants {
 
   public static final class SetPointConstants { 
     public static final double ARM_LEFT_LOW = 3984.258;
-    public static final double ARM_LEFT_MIDDLE = 3520.898;
+    public static final double ARM_LEFT_MIDDLE = 4000.898;
     public static final double ARM_LEFT_HIGH = 3978.633;
-    public static final double ARM_LEFT_TROUGH = 2330.332;
+    public static final double ARM_LEFT_TROUGH = 7100.332;
 
-    public static final double ARM_RIGHT_LOW = -3984.258;
-    public static final double ARM_RIGHT_MIDDLE = -3520.898;
-    public static final double ARM_RIGHT_HIGH = -3978.633;
-    public static final double ARM_RIGHT_TROUGH = -2330.332;
+    public static final double ARM_RIGHT_LOW = -ARM_LEFT_LOW;
+    public static final double ARM_RIGHT_MIDDLE = -ARM_LEFT_MIDDLE;
+    public static final double ARM_RIGHT_HIGH = -ARM_LEFT_HIGH;
+    public static final double ARM_RIGHT_TROUGH = -ARM_LEFT_TROUGH;
 
     public static final double ELEVATOR_HIGH = -33.066;
-    public static final double ELEVATOR_MIDDLE = -17.756;
-    public static final double ELEVATOR_LOW = -8.302;
-    public static final double ELEVATOR_TROUGH = -2.158;
+    public static final double ELEVATOR_MIDDLE = -19.03;
+    public static final double ELEVATOR_LOW = -9.03;
+    public static final double ELEVATOR_TROUGH = -18.03;
     public static final double ELEVATOR_INTAKE = -4.801;
 
   }
