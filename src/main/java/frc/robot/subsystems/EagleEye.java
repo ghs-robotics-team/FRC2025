@@ -1,6 +1,9 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import com.ctre.phoenix6.hardware.Pigeon2;
+
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -11,9 +14,13 @@ import frc.robot.LimelightHelpers;
 import frc.robot.Constants.EagleEyeConstants;
 
 public class EagleEye extends SubsystemBase {
+
+  Pigeon2 pigeon = new Pigeon2(14);
+
   /** Creates a new EagleEye. */
   public EagleEye() {
   }
+
   public double limelightMeasurement (LimelightHelpers.PoseEstimate limelight) {
     double confidence = 0;
     if (limelight.tagCount >= 1/* && fieldBoundary.isPoseWithinArea(limelightMeasurementa.pose) */) {
@@ -66,20 +73,20 @@ public class EagleEye extends SubsystemBase {
 
     // Gets robot orientation from Gyro
     if(SmartDashboard.getBoolean("SS EagleeyeB Read", false)){
-      LimelightHelpers.SetRobotOrientation("limelight-camb", Globals.EagleEye.position.getRotation().getDegrees(), 0, 0,
+      LimelightHelpers.SetRobotOrientation("limelight-camb", pigeon.getAngle(), 0, 0,
         0, 0, 0);
     }
     else{
-      LimelightHelpers.SetRobotOrientation("limelight-cama", Globals.EagleEye.position.getRotation().getDegrees(), 0, 0,
+      LimelightHelpers.SetRobotOrientation("limelight-cama", pigeon.getAngle(), 0, 0,
         0, 0, 0);
     }
     
     // Gets predicted location based on Tag
     LimelightHelpers.PoseEstimate limelightMeasurementa = LimelightHelpers
-        .getBotPoseEstimate_wpiBlue("limelight-cama");
+        .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-cama");
 
     LimelightHelpers.PoseEstimate limelightMeasurementb = LimelightHelpers
-        .getBotPoseEstimate_wpiBlue("limelight-camb");
+        .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-camb");
 
     SmartDashboard.putNumber("EEA NumTags", limelightMeasurementa.tagCount);
     SmartDashboard.putNumber("EEA Avg Tag Dist", limelightMeasurementa.avgTagDist);
