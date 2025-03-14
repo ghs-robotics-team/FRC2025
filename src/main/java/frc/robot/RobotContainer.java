@@ -302,7 +302,7 @@ public class RobotContainer {
 
     //new JoystickButton(buttonBox, 4).onTrue(elevatorZero);
     new JoystickButton(buttonsXbox, 8).onTrue(elevatorZero);
-    //new JoystickButton(buttonBox, 3).onTrue(elevatorIntake);
+    new JoystickButton(buttonsXbox, 9).onTrue(elevatorIntake);
     //new JoystickButton(buttonBox_moreButtons, 3).onTrue(elevatorTrough);    
     //new JoystickButton(buttonBox, 9).onTrue(elevatorHigh); 
     //new JoystickButton(buttonBox, 10).onTrue(elevatorMiddle); 

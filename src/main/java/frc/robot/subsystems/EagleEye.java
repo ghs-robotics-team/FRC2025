@@ -72,14 +72,12 @@ public class EagleEye extends SubsystemBase {
     double confidenceb = 0;
 
     // Gets robot orientation from Gyro
-    if(SmartDashboard.getBoolean("SS EagleeyeB Read", false)){
-      LimelightHelpers.SetRobotOrientation("limelight-camb", pigeon.getAngle(), 0, 0,
+    LimelightHelpers.SetRobotOrientation("limelight-camb", pigeon.getYaw().getValueAsDouble(), 0, 0,
         0, 0, 0);
-    }
-    else{
-      LimelightHelpers.SetRobotOrientation("limelight-cama", pigeon.getAngle(), 0, 0,
+    
+    LimelightHelpers.SetRobotOrientation("limelight-cama", pigeon.getYaw().getValueAsDouble(), 0, 0,
         0, 0, 0);
-    }
+    
     
     // Gets predicted location based on Tag
     LimelightHelpers.PoseEstimate limelightMeasurementa = LimelightHelpers
