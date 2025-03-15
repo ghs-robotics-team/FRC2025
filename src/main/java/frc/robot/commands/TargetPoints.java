@@ -34,10 +34,20 @@ public enum TargetPoints {
         double y = pose.getY();
         x += Units.inchesToMeters(18) * Math.cos(pose.getRotation().getRadians()); // Used to be 24 inches
         y += Units.inchesToMeters(18) * Math.sin(pose.getRotation().getRadians()); // Used to be 24 inches
-        return new Pose2d(x, y, Rotation2d.fromDegrees(180).plus(pose.getRotation()));
+        return new Pose2d(x, y, Rotation2d.fromDegrees(270).plus(pose.getRotation()));
     }
 
     public Pose2d get() {
+        Pose2d newpose = distanceFromTag(pose);
+        Alliance alliance = DriverStation.getAlliance().orElse(Alliance.Blue);
+        if (alliance == Alliance.Red) {
+            return new Pose2d(newpose.getX() + 8.57, newpose.getY(), newpose.getRotation());
+        } else {
+            return newpose;
+        }
+    }
+
+    public Pose2d getForward() {
         Pose2d newpose = distanceFromTag(pose);
         Alliance alliance = DriverStation.getAlliance().orElse(Alliance.Blue);
         if (alliance == Alliance.Red) {
