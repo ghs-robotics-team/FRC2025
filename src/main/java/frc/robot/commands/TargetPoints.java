@@ -56,4 +56,10 @@ public enum TargetPoints {
             return newpose;
         }
     }
+
+    public static void printPlaces(){
+        for(TargetPoints point: TargetPoints.values()){
+            System.out.println(point.name() + " :" + point.get());
+        }
+    }
 }
