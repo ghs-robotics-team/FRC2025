@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 3.93,
-        "y": 5.0
+        "x": 3.76,
+        "y": 5.28
       },
       "prevControl": {
-        "x": 3.6477968650510775,
-        "y": 4.837069944071083
+        "x": 3.477796865051077,
+        "y": 5.117069944071083
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "CoralTop1"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -150.74915418576595
+    "rotation": -150.0
   },
   "reversed": false,
   "folder": "1Coral",

@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.12,
-        "y": 7.03
+        "x": 1.2400183758961125,
+        "y": 6.765016709646693
       },
       "isLocked": false,
-      "linkedName": "Coraltop2"
+      "linkedName": "CoralMid4"
     },
     {
       "anchor": {
-        "x": 3.36,
+        "x": 3.04,
         "y": 4.03
       },
       "prevControl": {
-        "x": 2.36,
-        "y": 4.03
+        "x": 2.208662838601192,
+        "y": 4.224079785739164
       },
       "nextControl": null,
       "isLocked": false,

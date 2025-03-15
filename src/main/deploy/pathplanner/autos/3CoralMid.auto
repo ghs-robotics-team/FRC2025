@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "1CoralTop1"
+            "pathName": "1CoralMid1"
           }
         },
         {
@@ -19,7 +19,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "2CoralTop2"
+            "pathName": "2CoralMid2"
           }
         },
         {
@@ -31,7 +31,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "3CoralTop3"
+            "pathName": "2CoralMid3"
           }
         },
         {
@@ -43,25 +43,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "3CoralTop4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Intake"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "3CoralMid5"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Left Top Place"
+            "pathName": "2CoralMid4"
           }
         }
       ]
