@@ -12,11 +12,13 @@ import frc.robot.Globals;
 public class DriveToPointCommand extends Command {
   /** Creates a new DriveToPointCommand. */
   TargetPoints point;
+  String heading;
   //Command pathfindingCommand;
 
-  public DriveToPointCommand(TargetPoints point) {
+  public DriveToPointCommand(TargetPoints point, String heading) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.point = point;
+    this.heading = heading;
     //this.pathfindingCommand = null;
   }
   
@@ -24,7 +26,14 @@ public class DriveToPointCommand extends Command {
   @Override
   public void initialize() {
     // Build Command based on Point and Constraints.
-    Command pathfindingCommand = AutoBuilder.pathfindToPose(point.get(), new PathConstraints(Constants.MAX_SPEED, 2, 2*Math.PI, 4*Math.PI), 0.0);
+    Command pathfindingCommand;
+    if(heading.equals("Forward")){
+      pathfindingCommand = AutoBuilder.pathfindToPose(point.getForward(), new PathConstraints(Constants.MAX_SPEED, 2, 2*Math.PI, 4*Math.PI), 0.0);
+
+    }
+    else{
+      pathfindingCommand = AutoBuilder.pathfindToPose(point.get(), new PathConstraints(Constants.MAX_SPEED, 2, 2*Math.PI, 4*Math.PI), 0.0);
+    }
     
     // Setup Variables for Field and Robotpose.
     Field2d field = new Field2d();

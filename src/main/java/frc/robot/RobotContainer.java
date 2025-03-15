@@ -57,15 +57,15 @@ public class RobotContainer {
   // Defining Teleop commands
 
   // Drive Setpoints
-  private final DriveToPointCommand driveTopLeft = new DriveToPointCommand(TargetPoints.TOP_LEFT);
-  private final DriveToPointCommand driveTopRight = new DriveToPointCommand(TargetPoints.TOP_RIGHT);
-  private final DriveToPointCommand driveRight = new DriveToPointCommand(TargetPoints.RIGHT);
-  private final DriveToPointCommand driveBottomRight = new DriveToPointCommand(TargetPoints.BOTTOM_RIGHT);
-  private final DriveToPointCommand driveBottomLeft = new DriveToPointCommand(TargetPoints.BOTTOM_LEFT);
-  private final DriveToPointCommand driveLeft = new DriveToPointCommand(TargetPoints.LEFT);
+  private final DriveToPointCommand driveTopLeft = new DriveToPointCommand(TargetPoints.TOP_LEFT, "Left");
+  private final DriveToPointCommand driveTopRight = new DriveToPointCommand(TargetPoints.TOP_RIGHT, "Left");
+  private final DriveToPointCommand driveRight = new DriveToPointCommand(TargetPoints.RIGHT, "Left");
+  private final DriveToPointCommand driveBottomRight = new DriveToPointCommand(TargetPoints.BOTTOM_RIGHT, "Left");
+  private final DriveToPointCommand driveBottomLeft = new DriveToPointCommand(TargetPoints.BOTTOM_LEFT, "Left");
+  private final DriveToPointCommand driveLeft = new DriveToPointCommand(TargetPoints.LEFT, "Left");
 
-  private final DriveToPointCommand topStation = new DriveToPointCommand(TargetPoints.TOP_STATION);
-  private final DriveToPointCommand bottomStation = new DriveToPointCommand(TargetPoints.BOTTOM_STATION);
+  private final DriveToPointCommand topStation = new DriveToPointCommand(TargetPoints.TOP_STATION, "Forward");
+  private final DriveToPointCommand bottomStation = new DriveToPointCommand(TargetPoints.BOTTOM_STATION, "Forward");
 
   // General Commands
   private final MoveArm armLeft = new MoveArm(arm,0.1);
