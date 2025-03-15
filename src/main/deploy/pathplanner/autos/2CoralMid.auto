@@ -7,7 +7,43 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Mid"
+            "pathName": "1CoralMid1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Left Top Place"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "2CoralMid2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Intake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "2CoralMid3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Left Top Place"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "2CoralMid4"
           }
         }
       ]

@@ -7,7 +7,61 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Top"
+            "pathName": "2CoralTop1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Left Top Place"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "2CoralTop2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Intake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3CoralTop3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Left Top Place"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3CoralTop4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Intake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3CoralTop5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Left Top Place"
           }
         }
       ]
