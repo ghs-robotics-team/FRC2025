@@ -17,7 +17,7 @@ import frc.robot.Globals;
 
 public class Arm extends SubsystemBase {
   /** Creates a new Elevator. */
-  SparkFlex hand = new SparkFlex(16, MotorType.kBrushless); 
+  //SparkFlex hand = new SparkFlex(16, MotorType.kBrushless); 
   TalonFX armMotor = new TalonFX(18);
 
   double absoluteEncoder = armMotor.getPosition().getValue().magnitude();
@@ -49,11 +49,11 @@ public class Arm extends SubsystemBase {
   }
 
   public void intake(double amt){
-    hand.set(-amt);
+    //hand.set(-amt);
   }
 
   public void outtake(double amt) {
-    hand.set(-amt);
+    //hand.set(-amt);
   }
   
   public double getPos(){

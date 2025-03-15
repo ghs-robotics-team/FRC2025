@@ -35,7 +35,7 @@ public enum TargetPoints {
         double y = pose.getY();
         x += Units.inchesToMeters(18) * Math.cos(pose.getRotation().getRadians()); // Used to be 24 inches
         y += Units.inchesToMeters(18) * Math.sin(pose.getRotation().getRadians()); // Used to be 24 inches
-        return new Pose2d(x, y, Rotation2d.fromDegrees(270).plus(pose.getRotation()));
+        return new Pose2d(x, y, Rotation2d.fromDegrees(90).plus(pose.getRotation()));
     }
 
     public static Pose2d tagPos(Pose2d pose, double inches){ // 6.47 Inches
@@ -80,7 +80,7 @@ public enum TargetPoints {
         Pose2d newpose = distanceFromTag(pose);
         Alliance alliance = DriverStation.getAlliance().orElse(Alliance.Blue);
         if (alliance == Alliance.Red) {
-            return new Pose2d(newpose.getX() + 8.57, newpose.getY(), newpose.getRotation());
+            return new Pose2d(newpose.getX() + 8.57, newpose.getY(), newpose.getRotation().plus(new Rotation2d(Units.degreesToRadians(90))));
         } else {
             return newpose;
         }
@@ -88,7 +88,7 @@ public enum TargetPoints {
 
     public static void printPlaces(){
         for(TargetPoints point: TargetPoints.values()){
-            //System.out.println(point.name() + " :" + tagPos(point.get(), 6.47));
+            System.out.println(point.name() + " :" + tagPos(point.get(), 6.47));
             System.out.println(point.name() + " :" + point.getForward());
         }
     }

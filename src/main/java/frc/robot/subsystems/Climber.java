@@ -20,7 +20,8 @@ public class Climber extends SubsystemBase {
   public void move(double amt){
     encoder = motor.getEncoder().getPosition();
     amt = -amt;
-    if (amt>0) { // Going Down
+    motor.set(amt);
+    /*if (amt>0) { // Going Down
       if (encoder < 1.6973)   { //2.1 for physical limit
        motor.set(amt); // 0 to 1
       }
@@ -38,7 +39,7 @@ public class Climber extends SubsystemBase {
     }
     else {
       motor.set(0);
-    }
+    }*/
   }
 
   public double getPos(){

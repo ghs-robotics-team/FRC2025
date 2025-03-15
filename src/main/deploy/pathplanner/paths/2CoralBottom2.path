@@ -20,8 +20,8 @@
         "y": 1.03
       },
       "prevControl": {
-        "x": 0.6208127083692876,
-        "y": 1.3926807968095272
+        "x": 2.7016109785202866,
+        "y": 0.4228520286396177
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -126.02737338510366
+    "rotation": -126.0
   },
   "reversed": false,
   "folder": "2Coral",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 29.054604099077153
+    "rotation": 29.999999999999996
   },
   "useDefaultConstraints": true
 }

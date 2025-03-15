@@ -48,7 +48,7 @@
   "folder": "2Coral",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -126.02737338510366
+    "rotation": -126.0
   },
   "useDefaultConstraints": true
 }

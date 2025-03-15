@@ -288,40 +288,26 @@ public class RobotContainer {
     new JoystickButton(buttonBox, 9).onTrue(topStation); 
     new JoystickButton(buttonBox_moreButtons, 3).onTrue(bottomStation); */
 
-    // Buttonbox Arm and Elevator Commands
-    //new JoystickButton(buttonBox, 5).whileTrue(armLeft); 
-    //new JoystickButton(buttonBox, 2).whileTrue(armRight);
+    // ButtonXbox Arm and Elevator Commands
     
     new POVButton(buttonsXbox, 90).whileTrue(armRight);
     new POVButton(buttonsXbox, 270).whileTrue(armLeft);
 
-    //new JoystickButton(buttonBox, 1).whileTrue(upElevator);
-    //new JoystickButton(buttonBox, 6).whileTrue(downElevator);
-
     new POVButton(buttonsXbox, 0).whileTrue(upElevator);
     new POVButton(buttonsXbox, 180).whileTrue(downElevator);
 
-    //new JoystickButton(buttonBox, 4).onTrue(elevatorZero);
     new JoystickButton(buttonsXbox, 8).onTrue(elevatorZero);
     new JoystickButton(buttonsXbox, 9).onTrue(elevatorIntake);
-    //new JoystickButton(buttonBox_moreButtons, 3).onTrue(elevatorTrough);    
-    //new JoystickButton(buttonBox, 9).onTrue(elevatorHigh); 
-    //new JoystickButton(buttonBox, 10).onTrue(elevatorMiddle); 
-    //new JoystickButton(buttonBox, 11).onTrue(elevatorLow);
 
-    //new JoystickButton(buttonBox_moreButtons, 1).whileTrue(intake);
-    //new JoystickButton(buttonBox_moreButtons, 2).whileTrue(outtake);
+    new JoystickButton(buttonsXbox, 10).whileTrue(upClimber);
 
     new JoystickButton(buttonsXbox, 6).whileTrue(intake);
     new JoystickButton(buttonsXbox, 5).whileTrue(outtake);
     
-    //new JoystickButton(buttonBox, 7).onTrue(armLeftMiddle); 
-    //new JoystickButton(buttonBox, 8).onTrue(armRightMiddle);
-    //new JoystickButton(buttonBox, 12).onTrue(armHome);
     new JoystickButton(buttonsXbox, 7).onTrue(armHome);
     
     //Place Left High
-    new JoystickButton(buttonsXbox, 4).onTrue( // Y
+   /*  new JoystickButton(buttonsXbox, 4).onTrue( // Y
       armHomeLeftTop.andThen(
       elevatorHighLeftTop)
       );
@@ -351,7 +337,7 @@ public class RobotContainer {
     new JoystickButton(buttonsXbox, 1).onFalse(elevatorHighLeftLow.andThen(armLeftHighLeftLow.andThen(
       elevatorZeroLeftLow.alongWith(new WaitCommand(0.13).andThen(armRightLeftLowFinal))).andThen(
       armHomeLeftLowFinal))
-      );
+      );*/
 
     //Place Left Trough
     new JoystickButton(buttonsXbox, 3).onTrue( // X
@@ -395,6 +381,8 @@ public class RobotContainer {
       //new JoystickButton(leftjoystick, 5).onTrue(new DriveLocalCommandAbsolute(drivebase, 8.47, new NearestTag(drivebase, true).getTarget())); // Left Closest Thumb Button
       //new JoystickButton(rightjoystick, 6).onTrue(new DriveLocalCommandAbsolute(drivebase, -4.47, new NearestTag(drivebase, true).getTarget())); // Right Closest Thumb Button (6.47 ORIGINAL VAL)
       
+      new JoystickButton(leftjoystick, 12).whileTrue(downClimber); // Right Top Base Button
+
       // Enable Drive To Nearest Target (for Matt)
       if(Constants.OperatorConstants.MATT_MODE){
         //new JoystickButton(leftjoystick, 1).onTrue(new NearestTag(drivebase, false)); // Left Trigger
