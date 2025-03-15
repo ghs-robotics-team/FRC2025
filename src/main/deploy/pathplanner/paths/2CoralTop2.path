@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.76,
-        "y": 5.28
+        "x": 3.92,
+        "y": 5.02
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.9947540983606546,
-        "y": 5.797469262295082
+        "x": 3.154754098360655,
+        "y": 5.537469262295081
       },
       "isLocked": false,
       "linkedName": "CoralTop1"
     },
     {
       "anchor": {
-        "x": 1.12,
-        "y": 7.03
+        "x": 1.04,
+        "y": 7.14
       },
       "prevControl": {
-        "x": 1.3010038610038608,
-        "y": 6.748976833976834
+        "x": 1.2210038610038607,
+        "y": 6.8589768339768336
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 36.0
+    "rotation": 126.0
   },
   "reversed": false,
   "folder": "2Coral",

@@ -51,8 +51,6 @@ public class EagleEye extends SubsystemBase {
     }
     return confidence;
   }
-  // private final RectanglePoseArea fieldBoundary = new RectanglePoseArea(new
-  // Translation2d(0, 0), new Translation2d(16.541, 8.211));
 
   @SuppressWarnings("unused")
   @Override
@@ -97,13 +95,11 @@ public class EagleEye extends SubsystemBase {
     confidenceb = limelightMeasurement(limelightMeasurementb);
 
     // No tag found so check no further or pose not within field boundary
-    //if confidencea >= confidenceb (
     Globals.LastVisionMeasurement.positiona = limelightMeasurementa.pose;
     Globals.LastVisionMeasurement.positionb = limelightMeasurementb.pose;
     Globals.LastVisionMeasurement.timeStamp = limelightMeasurementa.timestampSeconds;
     Globals.LastVisionMeasurement.notRead = true;
     Globals.LastVisionMeasurement.confidencea = confidencea;
     Globals.LastVisionMeasurement.confidenceb = confidenceb;
-    //)
   }
 }

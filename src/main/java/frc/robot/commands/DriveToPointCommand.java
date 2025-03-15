@@ -13,13 +13,11 @@ public class DriveToPointCommand extends Command {
   /** Creates a new DriveToPointCommand. */
   TargetPoints point;
   String heading;
-  //Command pathfindingCommand;
 
   public DriveToPointCommand(TargetPoints point, String heading) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.point = point;
     this.heading = heading;
-    //this.pathfindingCommand = null;
   }
   
   // Called when the command is initially scheduled.

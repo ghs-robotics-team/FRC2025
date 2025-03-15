@@ -48,7 +48,6 @@ public class Elevator extends SubsystemBase {
         Right.set(0);
       }
     }
-
     SmartDashboard.putNumber("ES AbsPos", getAbsPos()); // Doesn't show up
     SmartDashboard.putNumber("ES RelPos", getRelPos());
   }

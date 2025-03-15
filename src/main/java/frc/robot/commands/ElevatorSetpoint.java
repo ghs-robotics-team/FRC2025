@@ -26,7 +26,7 @@ public class ElevatorSetpoint extends Command {
   @Override
   public void initialize() {
     error = pid.getPositionError();
-    if(elevator.getRelPos() <= setPoint){// If going down
+    if(elevator.getRelPos() <= setPoint){ // If going down
       this.pid = new PIDController (0.047,0,0.005); 
     } 
     else{
@@ -36,17 +36,7 @@ public class ElevatorSetpoint extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    /* Get PID Numbers
-    double P = SmartDashboard.getNumber("Indexer-P", 0.28); 
-    double I = SmartDashboard.getNumber("Indexer-I", 0.0);
-    double D = SmartDashboard.getNumber("Indexer-D", 0.0005);
-
-    // Set PID numbers
-    pid.setP(P);
-    pid.setI(I);
-    pid.setD(D);*/
-    
+  public void execute() {    
     SmartDashboard.putNumber("Elevator-P", pid.getP());
     
     // Get PID Controller direction for elevator to go, find current error from position.

@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.22,
-        "y": 2.77
+        "x": 5.06,
+        "y": 3.03
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.7075,
-        "y": 1.84375
+        "x": 5.547499999999999,
+        "y": 2.10375
       },
       "isLocked": false,
       "linkedName": "CoralBottom1"
     },
     {
       "anchor": {
-        "x": 1.12,
-        "y": 1.03
+        "x": 1.04,
+        "y": 0.91
       },
       "prevControl": {
-        "x": 2.7016109785202866,
-        "y": 0.4228520286396177
+        "x": 2.6216109785202866,
+        "y": 0.3028520286396177
       },
       "nextControl": null,
       "isLocked": false,

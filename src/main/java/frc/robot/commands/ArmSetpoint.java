@@ -25,24 +25,12 @@ public class ArmSetpoint extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    double direction = pid.calculate(arm.getPos(), setPoint);
     error = pid.getPositionError();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    /*// Get PID Numbers
-    double P = SmartDashboard.getNumber("Indexer-P", 0.28); 
-    double I = SmartDashboard.getNumber("Indexer-I", 0.0);
-    double D = SmartDashboard.getNumber("Indexer-D", 0.0005);
-    //double Speed = SmartDashboard.getNumber("Arm Speed", 6.5);
-
-    // Set PID numbers
-    pid.setP(P);
-    pid.setI(I);
-    pid.setD(D); */
-    
     // Get PID Controller direction for arm to go, find current error from position.
     double direction = pid.calculate(arm.getPos(), setPoint);
     error = pid.getPositionError();

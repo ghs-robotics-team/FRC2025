@@ -47,8 +47,6 @@ public class RobotContainer {
   private final Climber climber = new Climber();
 
   // Controllers
-  private Joystick buttonBox;
-  private Joystick buttonBox_moreButtons;
   private XboxController buttonsXbox;
   private XboxController driverXbox;
   private Joystick rightjoystick;
@@ -82,29 +80,10 @@ public class RobotContainer {
 
   private final ElevatorSetpoint elevatorZero = new ElevatorSetpoint(elevator, 0.3);
   private final ElevatorSetpoint elevatorIntake = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
-  private final ElevatorSetpoint elevatorLow = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_LOW);
-  private final ElevatorSetpoint elevatorMiddle = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_MIDDLE);
-  private final ElevatorSetpoint elevatorHigh = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_HIGH);
-  private final ElevatorSetpoint elevatorTrough = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_TROUGH);
-
-  private final ArmSetpoint armLeftLow = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_LOW);
-  private final ArmSetpoint armLeftMiddle = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_MIDDLE);
-  private final ArmSetpoint armLeftHigh = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_HIGH);
-  private final ArmSetpoint armLeftTrough = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_TROUGH);
-  private final ArmSetpoint armRightLow = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_LOW);
-  private final ArmSetpoint armRightMiddle = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_MIDDLE);
-  private final ArmSetpoint armRightHigh = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_HIGH);
-  private final ArmSetpoint armRightTrough = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_TROUGH);
   private final ArmSetpoint armHome = new ArmSetpoint(arm, 0);
   
   private final ArmSteady armSteady = new ArmSteady(arm);
   private final ElevatorSteady elevatorSteady = new ElevatorSteady(elevator);
-
-  // Intake Command
-  private final ArmSetpoint armHomeIntake = new ArmSetpoint(arm, 0);
-  private final ElevatorSetpoint elevatorSetIntake = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
-  private final IntakeCommand intakeSet = new IntakeCommand(arm, -0.5);
-  private final ArmSetpoint armHomeIntakeFinal = new ArmSetpoint(arm, 0);
 
   // Left Top Combine Command
   private final ArmSetpoint armHomeLeftTop = new ArmSetpoint(arm, 0);
@@ -192,14 +171,10 @@ public class RobotContainer {
     if (Constants.OperatorConstants.XBOX_DRIVE) {
       driverXbox = new XboxController(0);
       buttonsXbox = new XboxController(1);
-      buttonBox = new Joystick(2);
-      buttonBox_moreButtons = new Joystick(3);
     } else {
       rightjoystick = new Joystick(0);
       leftjoystick = new Joystick(1);
       buttonsXbox = new XboxController(2);
-      buttonBox = new Joystick(3);
-      buttonBox_moreButtons = new Joystick(4);
     }
 
     // Configure DriveCommand
@@ -288,6 +263,7 @@ public class RobotContainer {
     new JoystickButton(buttonBox, 9).onTrue(topStation); 
     new JoystickButton(buttonBox_moreButtons, 3).onTrue(bottomStation); */
 
+
     // ButtonXbox Arm and Elevator Commands
     
     new POVButton(buttonsXbox, 90).whileTrue(armRight);
@@ -309,6 +285,7 @@ public class RobotContainer {
     //Place Left High
      new JoystickButton(buttonsXbox, 4).onTrue( // Y
       armHomeLeftTop.andThen(
+      elevatorHighLeftTop).andThen(
       armLeftHighLeftTop).andThen(
       elevatorZeroLeftTop.alongWith(new WaitCommand(0.13).andThen(armRightLeftTopFinal))).andThen(
       armHomeLeftTopFinal) 
@@ -317,6 +294,7 @@ public class RobotContainer {
     //Place Left Middle
     new JoystickButton(buttonsXbox, 2).onTrue( // B
       armHomeLeftMid.andThen(
+      elevatorHighLeftMid).andThen(
       armLeftHighLeftMid).andThen(
       elevatorZeroLeftMid.alongWith(new WaitCommand(0.13).andThen(armRightLeftMidFinal))).andThen(
       armHomeLeftMidFinal) 
@@ -325,6 +303,7 @@ public class RobotContainer {
     //Place Left Low
     new JoystickButton(buttonsXbox, 1).onTrue( // A
       armHomeLeftLow.andThen(
+      elevatorHighLeftLow).andThen(
       armLeftHighLeftLow).andThen(
       elevatorZeroLeftLow.alongWith(new WaitCommand(0.13).andThen(armRightLeftLowFinal))).andThen(
       armHomeLeftLowFinal))
@@ -373,6 +352,8 @@ public class RobotContainer {
       //new JoystickButton(rightjoystick, 6).onTrue(new DriveLocalCommandAbsolute(drivebase, -4.47, new NearestTag(drivebase, true).getTarget())); // Right Closest Thumb Button (6.47 ORIGINAL VAL)
       
       new JoystickButton(leftjoystick, 12).whileTrue(downClimber); // Right Top Base Button
+      
+      new JoystickButton(leftjoystick, 11).onTrue(driveRight);
 
       // Enable Drive To Nearest Target (for Matt)
       if(Constants.OperatorConstants.MATT_MODE){

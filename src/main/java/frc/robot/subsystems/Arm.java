@@ -4,12 +4,9 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.configs.Slot0Configs;
-import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,7 +14,7 @@ import frc.robot.Globals;
 
 public class Arm extends SubsystemBase {
   /** Creates a new Elevator. */
-  //SparkFlex hand = new SparkFlex(16, MotorType.kBrushless); 
+  SparkFlex hand = new SparkFlex(16, MotorType.kBrushless); 
   TalonFX armMotor = new TalonFX(18);
 
   double absoluteEncoder = armMotor.getPosition().getValue().magnitude();
@@ -26,7 +23,7 @@ public class Arm extends SubsystemBase {
   }
 
   public void move(double amt){ 
-    absoluteEncoder = armMotor.getRotorPosition().getValue().in(Units.Degree);// 21 Left, -21 Right for limits
+    absoluteEncoder = armMotor.getRotorPosition().getValue().in(Units.Degree); // 21 Left, -21 Right for limits
     if (amt>0) {
       if (absoluteEncoder < 7200 /* 7200 at top, 4500 at Bottom */)   {
        armMotor.set(amt); // 0 to 1
@@ -49,11 +46,11 @@ public class Arm extends SubsystemBase {
   }
 
   public void intake(double amt){
-    //hand.set(-amt);
+    hand.set(-amt);
   }
 
   public void outtake(double amt) {
-    //hand.set(-amt);
+    hand.set(-amt);
   }
   
   public double getPos(){

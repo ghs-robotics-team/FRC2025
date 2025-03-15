@@ -17,8 +17,8 @@ public class MoveArm extends Command {
   public MoveArm(Arm arm, double amt) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.arm = arm;
-    addRequirements(arm);
     this.amt = amt;
+    addRequirements(arm);
   }
 
   // Called when the command is initially scheduled.
@@ -45,7 +45,6 @@ public class MoveArm extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-
     return false;
   }
 }

@@ -5,12 +5,14 @@
   "pathFolders": [
     "1Coral",
     "2Coral",
-    "3Coral"
+    "3Coral",
+    "4Coral"
   ],
   "autoFolders": [
     "1Coral",
     "2Coral",
-    "3Coral"
+    "3Coral",
+    "4Coral"
   ],
   "defaultMaxVel": 3.001,
   "defaultMaxAccel": 3.0,
@@ -21,8 +23,8 @@
   "robotMOI": 3.55,
   "robotTrackwidth": 0.546,
   "driveWheelRadius": 0.05,
-  "driveGearing": 5.36,
-  "maxDriveSpeed": 7.0,
+  "driveGearing": 6.12,
+  "maxDriveSpeed": 5.9,
   "driveMotorType": "vortex",
   "driveCurrentLimit": 40.0,
   "wheelCOF": 1.2,
