@@ -5,6 +5,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public enum TargetPoints {
     TOP_LEFT(new Pose2d(Units.inchesToMeters(160.39), Units.inchesToMeters(186.83), Rotation2d.fromDegrees(120))),
@@ -37,6 +38,34 @@ public enum TargetPoints {
         return new Pose2d(x, y, Rotation2d.fromDegrees(270).plus(pose.getRotation()));
     }
 
+    public static Pose2d tagPos(Pose2d pose, double inches){ // 6.47 Inches
+        // Current X and Y Position of the Robot.
+        double x = pose.getX();
+        double y = pose.getY();
+        double angle_degree;
+
+        // Correcting for Weird WPILib Angle Measurements.
+        if (inches >= 0) {
+        angle_degree = pose.getRotation().getDegrees() - 90;
+        } else {
+        angle_degree = pose.getRotation().getDegrees() + 90;
+        }
+        double angle = Units.degreesToRadians(angle_degree);
+
+        // Calculate new X position based on Trigonometry
+        x += Units.inchesToMeters(inches) * Math.cos(angle);
+
+        // Calculate new Y based on if the robot is moving right or left.
+        if (inches >= 0) {
+        y += Units.inchesToMeters(inches) * Math.sin(angle);
+        } else {
+        y -= Units.inchesToMeters(inches) * Math.sin(angle);
+        }
+
+        // Return the new Pose2d.
+        return new Pose2d(x, y, pose.getRotation());
+    }
+
     public Pose2d get() {
         Pose2d newpose = distanceFromTag(pose);
         Alliance alliance = DriverStation.getAlliance().orElse(Alliance.Blue);
@@ -59,7 +88,8 @@ public enum TargetPoints {
 
     public static void printPlaces(){
         for(TargetPoints point: TargetPoints.values()){
-            System.out.println(point.name() + " :" + point.get());
+            //System.out.println(point.name() + " :" + tagPos(point.get(), 6.47));
+            System.out.println(point.name() + " :" + point.getForward());
         }
     }
 }

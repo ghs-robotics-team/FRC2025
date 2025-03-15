@@ -186,7 +186,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Create some Subsystems
     drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
-    
+    TargetPoints.printPlaces();
+
     // Set Controller Ids
     if (Constants.OperatorConstants.XBOX_DRIVE) {
       driverXbox = new XboxController(0);
