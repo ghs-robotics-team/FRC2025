@@ -343,12 +343,12 @@ public class RobotContainer {
       //new JoystickButton(rightjoystick, 2).onTrue(new InstantCommand(drivebase::lock));
 
       // Drive Commands
-      new JoystickButton(driverXbox, 2).onTrue(new DriveLocalCommandAbsolute(drivebase, 8.47, new NearestTag(drivebase, true).getTarget())); // TEST RIGHT (B)
-      new JoystickButton(driverXbox, 1).onTrue(new DriveLocalCommandAbsolute(drivebase, -4.47, new NearestTag(drivebase, true).getTarget())); // TEST RIGHT (A) (6.47 ORIGINAL VAL)
+      //new JoystickButton(driverXbox, 2).onTrue(new DriveLocalCommandAbsolute(drivebase, 8.47, new NearestTag(drivebase, true).getTarget())); // TEST RIGHT (B)
+      //new JoystickButton(driverXbox, 1).onTrue(new DriveLocalCommandAbsolute(drivebase, -4.47, new NearestTag(drivebase, true).getTarget())); // TEST RIGHT (A) (6.47 ORIGINAL VAL)
       
       // Enable Drive To Nearest Target (for Matt)
       if(Constants.OperatorConstants.MATT_MODE){
-        new JoystickButton(driverXbox, 4).onTrue(new NearestTag(drivebase, false)); // TEST RIGHT (Y)
+        new JoystickButton(driverXbox, 4).onTrue(new NearestTag(drivebase, false, -2)); // TEST RIGHT (Y)
       }
 
       // Cancel All Command
@@ -361,7 +361,7 @@ public class RobotContainer {
 
     }
     else{
-      new JoystickButton(rightjoystick, 3).onTrue((new InstantCommand(drivebase::zeroGyro))); // (Button 3) (Left Thumb Button)
+      new JoystickButton(leftjoystick, 4).onTrue((new InstantCommand(drivebase::zeroGyro))); // (Button 3) (Left Thumb Button)
       //new JoystickButton(rightjoystick, 2).onTrue(new InstantCommand(drivebase::lock));
 
       // Drive Commands
@@ -370,14 +370,14 @@ public class RobotContainer {
       
       new JoystickButton(leftjoystick, 12).whileTrue(downClimber); // Right Top Base Button
       
-      new JoystickButton(leftjoystick, 11).onTrue(driveRight);
+      //new JoystickButton(leftjoystick, 11).onTrue(driveRight);
 
       // Enable Drive To Nearest Target (for Matt)
-      if(Constants.OperatorConstants.MATT_MODE){
-        //new JoystickButton(leftjoystick, 1).onTrue(new NearestTag(drivebase, false)); // Left Trigger
+      if(Constants.OperatorConstants.MATT_MODE){ //ADD FOR LEFT SIDE!!!
+        new JoystickButton(leftjoystick, 11).onTrue(new NearestTag(drivebase, false, 2)); // Left Trigger
       }
 
-      new JoystickButton(rightjoystick, 2).onTrue(new InstantCommand(() -> { // Right Thumb Button
+      new JoystickButton(rightjoystick, 3).onTrue(new InstantCommand(() -> { // Right Thumb Button
         CommandScheduler.getInstance().cancelAll();
       })); // (X)
     }

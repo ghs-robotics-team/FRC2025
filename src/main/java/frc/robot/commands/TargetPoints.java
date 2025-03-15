@@ -25,9 +25,37 @@ public enum TargetPoints {
     public Pose2d distanceFromTag(Pose2d pose) {
         double x = pose.getX();
         double y = pose.getY();
-        x += Units.inchesToMeters(12.5) * Math.cos(pose.getRotation().getRadians());
-        y += Units.inchesToMeters(12.5) * Math.sin(pose.getRotation().getRadians());
+        x += Units.inchesToMeters(13) * Math.cos(pose.getRotation().getRadians());
+        y += Units.inchesToMeters(13) * Math.sin(pose.getRotation().getRadians());
         return new Pose2d(x, y, Rotation2d.fromDegrees(90).plus(pose.getRotation()));
+    }
+
+    public static Pose2d tagPos(Pose2d pose, double inches){ // 6.47 Inches
+        // Current X and Y Position of the Robot.
+        double x = pose.getX();
+        double y = pose.getY();
+        double angle_degree;
+
+        // Correcting for Weird WPILib Angle Measurements.
+        if (inches >= 0) {
+        angle_degree = pose.getRotation().getDegrees() - 90;
+        } else {
+        angle_degree = pose.getRotation().getDegrees() + 90;
+        }
+        double angle = Units.degreesToRadians(angle_degree);
+
+        // Calculate new X position based on Trigonometry
+        x += Units.inchesToMeters(inches) * Math.cos(angle);
+
+        // Calculate new Y based on if the robot is moving right or left.
+        if (inches >= 0) {
+        y += Units.inchesToMeters(inches) * Math.sin(angle);
+        } else {
+        y -= Units.inchesToMeters(inches) * Math.sin(angle);
+        }
+
+        // Return the new Pose2d.
+        return new Pose2d(x, y, pose.getRotation());
     }
 
     public Pose2d get() {

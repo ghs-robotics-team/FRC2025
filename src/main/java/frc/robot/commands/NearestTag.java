@@ -17,14 +17,16 @@ public class NearestTag extends Command {
   DriveToPointCommandForPose2d command;
   boolean stat;
   Pose2d target;
+  double amt;
 
-  public NearestTag(SwerveSubsystem swerve, boolean stat) {
+  public NearestTag(SwerveSubsystem swerve, boolean stat, double amt) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(swerve);
     this.swerve = swerve;
     this.command = null;
     this.stat = stat;
     this.target = swerve.getPose();
+    this.amt = amt;
   }
 
   // Called when the command is initially scheduled.
@@ -47,7 +49,8 @@ public class NearestTag extends Command {
     }
 
     // Create DriveToPointCommand for the closest target point.
-    command = new DriveToPointCommandForPose2d(target);
+    command = new DriveToPointCommandForPose2d(TargetPoints.tagPos(target, amt));
+    
     if(!stat){
       command.schedule();
     }
