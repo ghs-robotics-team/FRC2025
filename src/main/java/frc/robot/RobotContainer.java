@@ -137,6 +137,14 @@ public class RobotContainer {
   private final ElevatorSetpoint autoElevatorHighLeftTop = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_HIGH);
   private final ElevatorSetpoint autoElevatorZeroLeftTop = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
 
+  // Auto Left Top Combine Command
+  private final ArmSetpoint autoArmHomeRightTop = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint autoArmRightRightTopFinal = new ArmSetpoint(arm, 1000);
+  private final ArmSetpoint autoArmHomeRightTopFinal = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint autoArmLeftHighRightTop = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_HIGH);
+  private final ElevatorSetpoint autoElevatorHighRightTop = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_HIGH);
+  private final ElevatorSetpoint autoElevatorZeroRightTop = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
+
   // Auto Left Mid Combine Command
   private final ArmSetpoint autoArmHomeLeftMid = new ArmSetpoint(arm, 0);  
   private final ArmSetpoint autoArmRightLeftMidFinal = new ArmSetpoint(arm, -1000);
@@ -222,6 +230,15 @@ public class RobotContainer {
       autoArmHomeLeftTopFinal) 
     );
 
+    // Auto Right Top Place
+    NamedCommands.registerCommand("Right Top Place",
+      autoArmHomeRightTop.andThen(
+      autoElevatorHighRightTop).andThen(
+      autoArmLeftHighRightTop).andThen(
+        autoElevatorZeroRightTop.alongWith(new WaitCommand(0.13).andThen(autoArmRightRightTopFinal))).andThen(
+      autoArmHomeRightTopFinal) 
+    );
+
     // Auto Left Middle Place
     NamedCommands.registerCommand("Left Middle Place",
       autoArmHomeLeftMid.andThen(
@@ -283,7 +300,7 @@ public class RobotContainer {
     new JoystickButton(buttonsXbox, 7).onTrue(armHome);
     
     //Place Left High
-     new JoystickButton(buttonsXbox, 4).onTrue( // Y
+    new JoystickButton(buttonsXbox, 4).onTrue( // Y
       armHomeLeftTop.andThen(
       elevatorHighLeftTop).andThen(
       armLeftHighLeftTop).andThen(

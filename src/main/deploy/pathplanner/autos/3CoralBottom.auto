@@ -55,13 +55,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "2CoralBottom3"
+            "pathName": "3CoralBottom5"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Left Top Place"
+            "name": "Right Top Place"
           }
         }
       ]

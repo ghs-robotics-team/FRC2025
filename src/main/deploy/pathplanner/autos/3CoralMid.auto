@@ -45,6 +45,24 @@
           "data": {
             "pathName": "2CoralMid4"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Intake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3CoralMid5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Left Top Place"
+          }
         }
       ]
     }
