@@ -307,23 +307,16 @@ public class RobotContainer {
     new JoystickButton(buttonsXbox, 7).onTrue(armHome);
     
     //Place Left High
-   /*  new JoystickButton(buttonsXbox, 4).onTrue( // Y
+     new JoystickButton(buttonsXbox, 4).onTrue( // Y
       armHomeLeftTop.andThen(
-      elevatorHighLeftTop)
-      );
-    new JoystickButton(buttonsXbox, 4).onFalse( // Y
-      elevatorHighLeftTop.andThen(
       armLeftHighLeftTop).andThen(
       elevatorZeroLeftTop.alongWith(new WaitCommand(0.13).andThen(armRightLeftTopFinal))).andThen(
       armHomeLeftTopFinal) 
       );
+      
     //Place Left Middle
     new JoystickButton(buttonsXbox, 2).onTrue( // B
       armHomeLeftMid.andThen(
-      elevatorHighLeftMid) 
-      );
-    new JoystickButton(buttonsXbox, 2).onFalse( // B
-      elevatorHighLeftMid.andThen(
       armLeftHighLeftMid).andThen(
       elevatorZeroLeftMid.alongWith(new WaitCommand(0.13).andThen(armRightLeftMidFinal))).andThen(
       armHomeLeftMidFinal) 
@@ -332,12 +325,10 @@ public class RobotContainer {
     //Place Left Low
     new JoystickButton(buttonsXbox, 1).onTrue( // A
       armHomeLeftLow.andThen(
-      elevatorHighLeftLow)
-      );
-    new JoystickButton(buttonsXbox, 1).onFalse(elevatorHighLeftLow.andThen(armLeftHighLeftLow.andThen(
+      armLeftHighLeftLow).andThen(
       elevatorZeroLeftLow.alongWith(new WaitCommand(0.13).andThen(armRightLeftLowFinal))).andThen(
       armHomeLeftLowFinal))
-      );*/
+      ;
 
     //Place Left Trough
     new JoystickButton(buttonsXbox, 3).onTrue( // X
