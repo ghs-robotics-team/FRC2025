@@ -60,11 +60,11 @@ public class EagleEye extends SubsystemBase {
       return;
 
     // Read eagle eye for more accuracy?
-    /*if(Constants.EagleEyeConstants.IN_PATH_END && Globals.inPath){ 
+    if(Constants.EagleEyeConstants.IN_PATH_END && Globals.inPath){ 
       Globals.LastVisionMeasurement.confidencea = 0; 
       Globals.LastVisionMeasurement.confidenceb = 0;
       return;
-    }*/
+    }
 
     // If we don't update confidence then we don't send the measurement
     double confidencea = 0;

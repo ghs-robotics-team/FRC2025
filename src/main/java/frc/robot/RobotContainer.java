@@ -289,15 +289,15 @@ public class RobotContainer {
     new POVButton(buttonsXbox, 0).whileTrue(upElevator);
     new POVButton(buttonsXbox, 180).whileTrue(downElevator);
 
-    new JoystickButton(buttonsXbox, 8).onTrue(elevatorZero); // Delete?
-    new JoystickButton(buttonsXbox, 9).onTrue(elevatorIntake);
+    //new JoystickButton(buttonsXbox, 8).onTrue(elevatorZero); // Delete?
+    new JoystickButton(buttonsXbox, 10).onTrue(elevatorIntake);
 
-    new JoystickButton(buttonsXbox, 10).whileTrue(upClimber);
+    new JoystickButton(buttonsXbox, 8).whileTrue(upClimber);
 
     new JoystickButton(buttonsXbox, 6).whileTrue(intake);
     new JoystickButton(buttonsXbox, 5).whileTrue(outtake);
     
-    new JoystickButton(buttonsXbox, 7).onTrue(armHome);
+    new JoystickButton(buttonsXbox, 9).onTrue(armHome);
     
     //Place Left High
     new JoystickButton(buttonsXbox, 4).onTrue( // Y
@@ -374,7 +374,7 @@ public class RobotContainer {
 
       // Enable Drive To Nearest Target (for Matt)
       if(Constants.OperatorConstants.MATT_MODE){ //ADD FOR LEFT SIDE!!!
-        new JoystickButton(leftjoystick, 11).onTrue(new NearestTag(drivebase, false, 2)); // Left Trigger
+        new JoystickButton(leftjoystick, 11).onTrue(new NearestTag(drivebase, false, 0)); // Left Trigger TAG COMMAND BROKEN
       }
 
       new JoystickButton(rightjoystick, 3).onTrue(new InstantCommand(() -> { // Right Thumb Button
