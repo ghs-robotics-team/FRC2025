@@ -90,7 +90,8 @@ public class RobotContainer {
   private final ArmSetpoint armRightLeftTopFinal = new ArmSetpoint(arm, -1000);
   private final ArmSetpoint armHomeLeftTopFinal = new ArmSetpoint(arm, 0);
   private final ArmSetpoint armLeftHighLeftTop = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_HIGH);
-  private final ElevatorSetpoint elevatorHighLeftTop = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_HIGH);
+  private final ElevatorSetpoint elevatorHighLeftTopHold = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_HIGH);
+  private final ElevatorSetpoint elevatorHighLeftTopRelease = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_HIGH);
   private final ElevatorSetpoint elevatorZeroLeftTop = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
 
   // Left Mid Combine Command
@@ -98,7 +99,8 @@ public class RobotContainer {
   private final ArmSetpoint armRightLeftMidFinal = new ArmSetpoint(arm, -1000);
   private final ArmSetpoint armHomeLeftMidFinal = new ArmSetpoint(arm, 0);
   private final ArmSetpoint armLeftHighLeftMid = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_MIDDLE);
-  private final ElevatorSetpoint elevatorHighLeftMid = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_MIDDLE);
+  private final ElevatorSetpoint elevatorHighLeftMidHold = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_MIDDLE);
+  private final ElevatorSetpoint elevatorHighLeftMidRelease = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_MIDDLE);
   private final ElevatorSetpoint elevatorZeroLeftMid = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
 
   // Left Low Combine Command
@@ -106,7 +108,8 @@ public class RobotContainer {
   private final ArmSetpoint armRightLeftLowFinal = new ArmSetpoint(arm, -1000);
   private final ArmSetpoint armHomeLeftLowFinal = new ArmSetpoint(arm, 0);
   private final ArmSetpoint armLeftHighLeftLow = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_LOW);
-  private final ElevatorSetpoint elevatorHighLeftLow = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_LOW);
+  private final ElevatorSetpoint elevatorHighLeftLowHold = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_LOW);
+  private final ElevatorSetpoint elevatorHighLeftLowRelease = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_LOW);
   private final ElevatorSetpoint elevatorZeroLeftLow = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
 
   // Left Trough Combine Command
@@ -302,16 +305,21 @@ public class RobotContainer {
     //Place Left High
     new JoystickButton(buttonsXbox, 4).onTrue( // Y
       armHomeLeftTop.andThen(
-      elevatorHighLeftTop).andThen(
+      elevatorHighLeftTopHold));
+    new JoystickButton(buttonsXbox, 4).onFalse( // Y
+      elevatorHighLeftTopRelease.andThen(
       armLeftHighLeftTop).andThen(
       elevatorZeroLeftTop.alongWith(new WaitCommand(0.13).andThen(armRightLeftTopFinal))).andThen(
       armHomeLeftTopFinal) 
-      );
+    );
       
     //Place Left Middle
     new JoystickButton(buttonsXbox, 2).onTrue( // B
       armHomeLeftMid.andThen(
-      elevatorHighLeftMid).andThen(
+      elevatorHighLeftMidHold)
+      );
+    new JoystickButton(buttonsXbox, 2).onFalse( // B
+      elevatorHighLeftMidRelease.andThen(
       armLeftHighLeftMid).andThen(
       elevatorZeroLeftMid.alongWith(new WaitCommand(0.13).andThen(armRightLeftMidFinal))).andThen(
       armHomeLeftMidFinal) 
@@ -320,7 +328,10 @@ public class RobotContainer {
     //Place Left Low
     new JoystickButton(buttonsXbox, 1).onTrue( // A
       armHomeLeftLow.andThen(
-      elevatorHighLeftLow).andThen(
+      elevatorHighLeftLowHold)
+      );
+    new JoystickButton(buttonsXbox, 1).onFalse( // A
+      elevatorHighLeftLowRelease.andThen(
       armLeftHighLeftLow).andThen(
       elevatorZeroLeftLow.alongWith(new WaitCommand(0.13).andThen(armRightLeftLowFinal))).andThen(
       armHomeLeftLowFinal))
