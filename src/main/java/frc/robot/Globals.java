@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.XboxController;
 
 public final class Globals {
   public static class EagleEye {
@@ -29,4 +30,5 @@ public final class Globals {
   }
 
   public static boolean inPath = false;
+  public static XboxController buttonsXbox;
 }

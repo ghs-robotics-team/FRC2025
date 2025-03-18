@@ -30,7 +30,7 @@ public enum TargetPoints {
         return new Pose2d(x, y, Rotation2d.fromDegrees(90).plus(pose.getRotation()));
     }
 
-    public static Pose2d tagPos(Pose2d pose, double inches){ // 6.47 Inches
+    public static Pose2d tagPos(Pose2d pose, double inches, double axis){ // 6.47 Inches
         // Current X and Y Position of the Robot.
         double x = pose.getX();
         double y = pose.getY();
@@ -59,7 +59,12 @@ public enum TargetPoints {
         }
 
         // Return the new Pose2d.
-        return new Pose2d(x, y, pose.getRotation());
+        if (axis > 0.2){
+            return new Pose2d(x, y, pose.getRotation());
+        }
+        else {
+            return new Pose2d(x, y, pose.getRotation().plus(new Rotation2d(180)));
+        }
     }
 
     public Pose2d get() {

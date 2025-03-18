@@ -7,6 +7,8 @@ package frc.robot.commands;
 import java.util.ArrayList;
 import java.util.List;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveSubsystem;
 
@@ -18,8 +20,9 @@ public class NearestTag extends Command {
   boolean stat;
   Pose2d target;
   double amt;
+  XboxController buttonsXbox;
 
-  public NearestTag(SwerveSubsystem swerve, boolean stat, double amt) {
+  public NearestTag(SwerveSubsystem swerve, boolean stat, double amt, XboxController buttonsXbox) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(swerve);
     this.swerve = swerve;
@@ -27,6 +30,7 @@ public class NearestTag extends Command {
     this.stat = stat;
     this.target = swerve.getPose();
     this.amt = amt;
+    this.buttonsXbox = buttonsXbox;
   }
 
   // Called when the command is initially scheduled.
@@ -49,7 +53,7 @@ public class NearestTag extends Command {
     }
 
     // Create DriveToPointCommand for the closest target point.
-    command = new DriveToPointCommandForPose2d(TargetPoints.tagPos(target, amt));
+    command = new DriveToPointCommandForPose2d(TargetPoints.tagPos(target, amt, buttonsXbox.getRawAxis(3)));
     
     if(!stat){
       command.schedule();
