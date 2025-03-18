@@ -25,7 +25,7 @@ public final class Constants {
   public static final double MAX_SPEED = 6; // 0.2/2.0 Min/Max
 
   public static final class SetPointConstants { 
-    public static final double ARM_LEFT_LOW = 3984.258;
+    public static final double ARM_LEFT_LOW = 5300.258;
     public static final double ARM_LEFT_MIDDLE = 4000.898;
     public static final double ARM_LEFT_HIGH = 3978.633;
     public static final double ARM_LEFT_TROUGH = 7100.332;
@@ -36,16 +36,16 @@ public final class Constants {
     public static final double ARM_RIGHT_TROUGH = -ARM_LEFT_TROUGH;
 
     public static final double ELEVATOR_HIGH = -33.066;
-    public static final double ELEVATOR_MIDDLE = -19.03;
-    public static final double ELEVATOR_LOW = -9.03;
+    public static final double ELEVATOR_MIDDLE = -20.03;
+    public static final double ELEVATOR_LOW = -10.03;
     public static final double ELEVATOR_TROUGH = -18.03;
     public static final double ELEVATOR_INTAKE = -4.801;
 
   }
 
   public static final class AutonConstants {
-    public static final PIDConstants TRANSLATION_PID = new PIDConstants(7.3, 0, 0); // Unused?
-    public static final PIDConstants ANGLE_PID = new PIDConstants(5.0, 0, 0.00);
+    public static final PIDConstants TRANSLATION_PID = new PIDConstants(7.3, 0, 0); 
+    public static final PIDConstants ANGLE_PID = new PIDConstants(5, 0, 0.00);
   }
 
   public static final class DrivebaseConstants {

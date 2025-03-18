@@ -25,8 +25,8 @@ public enum TargetPoints {
     public Pose2d distanceFromTag(Pose2d pose) {
         double x = pose.getX();
         double y = pose.getY();
-        x += Units.inchesToMeters(13) * Math.cos(pose.getRotation().getRadians());
-        y += Units.inchesToMeters(13) * Math.sin(pose.getRotation().getRadians());
+        x += Units.inchesToMeters(13.77) * Math.cos(pose.getRotation().getRadians()); //13.5
+        y += Units.inchesToMeters(13.77) * Math.sin(pose.getRotation().getRadians());
         return new Pose2d(x, y, Rotation2d.fromDegrees(90).plus(pose.getRotation()));
     }
 
@@ -42,11 +42,15 @@ public enum TargetPoints {
         } else {
         angle_degree = pose.getRotation().getDegrees() + 90;
         }
-        double angle = Units.degreesToRadians(angle_degree);
+        double angle = Units.degreesToRadians(angle_degree + 90);
 
         // Calculate new X position based on Trigonometry
-        x += Units.inchesToMeters(inches) * Math.cos(angle);
-
+        if (inches >= 0) {
+            x += Units.inchesToMeters(inches) * Math.cos(angle);
+            } else {
+            x -= Units.inchesToMeters(inches) * Math.cos(angle);
+            }
+        
         // Calculate new Y based on if the robot is moving right or left.
         if (inches >= 0) {
         y += Units.inchesToMeters(inches) * Math.sin(angle);

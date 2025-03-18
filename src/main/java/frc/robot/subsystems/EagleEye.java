@@ -15,7 +15,7 @@ import frc.robot.Constants.EagleEyeConstants;
 
 public class EagleEye extends SubsystemBase {
 
-  Pigeon2 pigeon = new Pigeon2(14);
+  //Pigeon2 pigeon = new Pigeon2(14);
 
   /** Creates a new EagleEye. */
   public EagleEye() {
@@ -59,7 +59,7 @@ public class EagleEye extends SubsystemBase {
     if (RobotBase.isSimulation())
       return;
 
-    // Read eagle eye for more accuracy?
+    // Don't Read Eagleye during Teleop Paths 
     /*if(Constants.EagleEyeConstants.IN_PATH_END && Globals.inPath){ 
       Globals.LastVisionMeasurement.confidencea = 0; 
       Globals.LastVisionMeasurement.confidenceb = 0;
@@ -71,10 +71,10 @@ public class EagleEye extends SubsystemBase {
     double confidenceb = 0;
 
     // Gets robot orientation from Gyro
-    LimelightHelpers.SetRobotOrientation("limelight-camb", pigeon.getYaw().getValueAsDouble(), 0, 0,
+    LimelightHelpers.SetRobotOrientation("limelight-camb", Globals.EagleEye.position.getRotation().getDegrees(), 0, 0,
         0, 0, 0);
     
-    LimelightHelpers.SetRobotOrientation("limelight-cama", pigeon.getYaw().getValueAsDouble(), 0, 0,
+    LimelightHelpers.SetRobotOrientation("limelight-cama", Globals.EagleEye.position.getRotation().getDegrees(), 0, 0,
         0, 0, 0);
     
     

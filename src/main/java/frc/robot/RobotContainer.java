@@ -175,42 +175,6 @@ public class RobotContainer {
     drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
     TargetPoints.printPlaces();
 
-    // Set Controller Ids
-    if (Constants.OperatorConstants.XBOX_DRIVE) {
-      driverXbox = new XboxController(0);
-      buttonsXbox = new XboxController(1);
-    } else {
-      rightjoystick = new Joystick(0);
-      leftjoystick = new Joystick(1);
-      buttonsXbox = new XboxController(2);
-    }
-
-    // Configure DriveCommand
-    Command driveCommand = null;
-    if (OperatorConstants.XBOX_DRIVE) {
-      driveCommand = drivebase.driveCommand(
-          () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-          () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-          () -> MathUtil.applyDeadband(-driverXbox.getRightX(), OperatorConstants.RIGHT_X_DEADBAND));
-    } else {
-      driveCommand = drivebase.driveCommand(
-          () -> MathUtil.applyDeadband(leftjoystick.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
-          () -> MathUtil.applyDeadband(leftjoystick.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
-          () -> -rightjoystick.getRawAxis(0));
-    }
-    configureBindings();
-
-    SmartDashboard.putData(CommandScheduler.getInstance());
-
-    eagleye.setDefaultCommand(eagleeyecommand);
-    drivebase.setDefaultCommand(driveCommand);
-    arm.setDefaultCommand(armSteady);
-    elevator.setDefaultCommand(elevatorSteady);
-
-    auto = AutoBuilder.buildAutoChooser();
-    SmartDashboard.putData("chooseAuto", auto); 
-
-
     // Named Commands
 
     // Auto Intake
@@ -265,6 +229,41 @@ public class RobotContainer {
         autoElevatorZeroLeftTrough.alongWith(new WaitCommand(0.13).andThen(autoArmRightLeftTroughFinal))).andThen(
       autoArmHomeLeftTroughFinal) 
     );
+
+    // Set Controller Ids
+    if (Constants.OperatorConstants.XBOX_DRIVE) {
+      driverXbox = new XboxController(0);
+      buttonsXbox = new XboxController(1);
+    } else {
+      rightjoystick = new Joystick(0);
+      leftjoystick = new Joystick(1);
+      buttonsXbox = new XboxController(2);
+    }
+
+    // Configure DriveCommand
+    Command driveCommand = null;
+    if (OperatorConstants.XBOX_DRIVE) {
+      driveCommand = drivebase.driveCommand(
+          () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+          () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+          () -> MathUtil.applyDeadband(-driverXbox.getRightX(), OperatorConstants.RIGHT_X_DEADBAND));
+    } else {
+      driveCommand = drivebase.driveCommand(
+          () -> MathUtil.applyDeadband(leftjoystick.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
+          () -> MathUtil.applyDeadband(leftjoystick.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
+          () -> -rightjoystick.getRawAxis(0));
+    }
+    configureBindings();
+
+    SmartDashboard.putData(CommandScheduler.getInstance());
+
+    eagleye.setDefaultCommand(eagleeyecommand);
+    drivebase.setDefaultCommand(driveCommand);
+    arm.setDefaultCommand(armSteady);
+    elevator.setDefaultCommand(elevatorSteady);
+
+    auto = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("chooseAuto", auto); 
   }
 
 
@@ -289,15 +288,16 @@ public class RobotContainer {
     new POVButton(buttonsXbox, 0).whileTrue(upElevator);
     new POVButton(buttonsXbox, 180).whileTrue(downElevator);
 
-    new JoystickButton(buttonsXbox, 8).onTrue(elevatorZero); // Delete?
-    new JoystickButton(buttonsXbox, 9).onTrue(elevatorIntake);
+    //new JoystickButton(buttonsXbox, 8).onTrue(elevatorZero);  Delete?
+    new JoystickButton(buttonsXbox, 10).onTrue(elevatorIntake);
 
-    new JoystickButton(buttonsXbox, 10).whileTrue(upClimber);
+    new JoystickButton(buttonsXbox, 8).whileTrue(upClimber);
+    new JoystickButton(buttonsXbox, 7).whileTrue(downClimber);
 
     new JoystickButton(buttonsXbox, 6).whileTrue(intake);
     new JoystickButton(buttonsXbox, 5).whileTrue(outtake);
     
-    new JoystickButton(buttonsXbox, 7).onTrue(armHome);
+    new JoystickButton(buttonsXbox, 9).onTrue(armHome);
     
     //Place Left High
     new JoystickButton(buttonsXbox, 4).onTrue( // Y
@@ -368,13 +368,13 @@ public class RobotContainer {
       //new JoystickButton(leftjoystick, 5).onTrue(new DriveLocalCommandAbsolute(drivebase, 8.47, new NearestTag(drivebase, true).getTarget())); // Left Closest Thumb Button
       //new JoystickButton(rightjoystick, 6).onTrue(new DriveLocalCommandAbsolute(drivebase, -4.47, new NearestTag(drivebase, true).getTarget())); // Right Closest Thumb Button (6.47 ORIGINAL VAL)
       
-      new JoystickButton(leftjoystick, 12).whileTrue(downClimber); // Right Top Base Button
+      //new JoystickButton(leftjoystick, 12).whileTrue(downClimber); // Right Top Base Button
       
       //new JoystickButton(leftjoystick, 11).onTrue(driveRight);
 
       // Enable Drive To Nearest Target (for Matt)
       if(Constants.OperatorConstants.MATT_MODE){ //ADD FOR LEFT SIDE!!!
-        new JoystickButton(leftjoystick, 11).onTrue(new NearestTag(drivebase, false, 2)); // Left Trigger
+        new JoystickButton(leftjoystick, 11).onTrue(new NearestTag(drivebase, false, -3)); // Left Trigger -3
       }
 
       new JoystickButton(rightjoystick, 3).onTrue(new InstantCommand(() -> { // Right Thumb Button
