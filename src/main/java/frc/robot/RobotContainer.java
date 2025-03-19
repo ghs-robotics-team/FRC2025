@@ -121,27 +121,28 @@ public class RobotContainer {
   private final ElevatorSetpoint elevatorZeroLeftTrough = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
   private final OuttakeCommand armLeftTroughOuttake = new OuttakeCommand(arm, Constants.SetPointConstants.ELEVATOR_INTAKE);
 
+
   // Right Top Combine Command
   private final ArmSetpoint armHomeRightTop = new ArmSetpoint(arm, 0);
-  private final ArmSetpoint armRightRightTopFinal = new ArmSetpoint(arm, -1000);
+  private final ArmSetpoint armRightRightTopFinal = new ArmSetpoint(arm, 1000);
   private final ArmSetpoint armHomeRightTopFinal = new ArmSetpoint(arm, 0);
-  private final ArmSetpoint armRightHighLeftTop = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_HIGH);
+  private final ArmSetpoint armRightHighLeftTop = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_HIGH);
   private final ElevatorSetpoint elevatorHighRightTopHold = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_HIGH);
   private final ElevatorSetpoint elevatorHighRightTopRelease = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_HIGH);
   private final ElevatorSetpoint elevatorZeroRightTop = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
 
   // Right Mid Combine Command
   private final ArmSetpoint armHomeRightMid = new ArmSetpoint(arm, 0);  
-  private final ArmSetpoint armRightRightMidFinal = new ArmSetpoint(arm, -1000);
+  private final ArmSetpoint armRightRightMidFinal = new ArmSetpoint(arm, 1000);
   private final ArmSetpoint armHomeRogjtMidFinal = new ArmSetpoint(arm, 0);
-  private final ArmSetpoint armRightHighLeftMid = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_MIDDLE);
+  private final ArmSetpoint armRightHighLeftMid = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_MIDDLE);
   private final ElevatorSetpoint elevatorHighRightMidHold = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_MIDDLE);
   private final ElevatorSetpoint elevatorHighRightMidRelease = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_MIDDLE);
   private final ElevatorSetpoint elevatorZeroRightMid = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
 
   // Right Low Combine Command
   private final ArmSetpoint armHomeRightLow = new ArmSetpoint(arm, 0);
-  private final ArmSetpoint armRightRightLowFinal = new ArmSetpoint(arm, -1000);
+  private final ArmSetpoint armRightRightLowFinal = new ArmSetpoint(arm, 1000);
   private final ArmSetpoint armHomeRightLowFinal = new ArmSetpoint(arm, 0);
   private final ArmSetpoint armRightHighLeftLow = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_RIGHT_LOW);
   private final ElevatorSetpoint elevatorHighRightLowHold = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_LOW);
@@ -335,117 +336,28 @@ public class RobotContainer {
     //new JoystickButton(buttonsXbox, 8).onTrue(elevatorZero); // Delete?
     new JoystickButton(buttonsXbox, 10).onTrue(elevatorIntake);
 
-    new JoystickButton(buttonsXbox, 8).whileTrue(upClimber);
+    new JoystickButton(buttonsXbox, 7).whileTrue(upClimber);
+    new JoystickButton(buttonsXbox, 8).whileTrue(downClimber);
 
     new JoystickButton(buttonsXbox, 6).whileTrue(intake);
     new JoystickButton(buttonsXbox, 5).whileTrue(outtake);
     
     new JoystickButton(buttonsXbox, 9).onTrue(armHome);
     
+
     //Place Left High
-    new JoystickButton(buttonsXbox, 4).and(buttonsXbox.axisGreaterThan(2,0.2,loop)).onTrue( // Y
+    new JoystickButton(buttonsXbox, 4).onTrue( // Y
       armHomeLeftTop.andThen(
       elevatorHighLeftTopHold));
-    new JoystickButton(buttonsXbox, 4).or(buttonsXbox.axisGreaterThan(2,0.2,loop)).onFalse( // Y
-      elevatorHighLeftTopRelease.andThen(
-      armLeftHighLeftTop).andThen(
-      elevatorZeroLeftTop.alongWith(new WaitCommand(0.13).andThen(armRightLeftTopFinal))).andThen(
-      armHomeLeftTopFinal) 
-    );
-      
-    //Place Left Middle
-    new JoystickButton(buttonsXbox, 2).and(buttonsXbox.axisGreaterThan(2,0.2,loop)).onTrue( // B
-      armHomeLeftMid.andThen(
-      elevatorHighLeftMidHold)
-      );
-    new JoystickButton(buttonsXbox, 2).or(buttonsXbox.axisGreaterThan(2,0.2,loop)).onFalse( // B
-      elevatorHighLeftMidRelease.andThen(
-      armLeftHighLeftMid).andThen(
-      elevatorZeroLeftMid.alongWith(new WaitCommand(0.13).andThen(armRightLeftMidFinal))).andThen(
-      armHomeLeftMidFinal) 
-      );
-
-    //Place Left Low
-    new JoystickButton(buttonsXbox, 1).and(buttonsXbox.axisGreaterThan(2,0.2,loop)).onTrue( // A
-      armHomeLeftLow.andThen(
-      elevatorHighLeftLowHold)
-      );
-    new JoystickButton(buttonsXbox, 1).or(buttonsXbox.axisGreaterThan(2,0.2,loop)).onFalse( // A
-      elevatorHighLeftLowRelease.andThen(
-      armLeftHighLeftLow).andThen(
-      elevatorZeroLeftLow.alongWith(new WaitCommand(0.13).andThen(armRightLeftLowFinal))).andThen(
-      armHomeLeftLowFinal))
-      ;
-
-    //Place Left Trough
-    new JoystickButton(buttonsXbox, 3).and(buttonsXbox.axisGreaterThan(2,0.2,loop)).onTrue( // X
-      armHomeLeftTrough.andThen(
-      elevatorHighLeftTrough).andThen(
-      armLeftHighLeftTrough.withTimeout(0.5)).andThen(
-        new WaitCommand(0.1)).andThen(
-        armLeftTroughOuttake.withTimeout(0.2)).andThen(new WaitCommand(0.5)).andThen(
-        elevatorZeroLeftTrough.alongWith(armRightLeftTroughFinal)).andThen(
-      armHomeLeftTroughFinal) 
-      );
-//Place Left High
-    new JoystickButton(buttonsXbox, 4).and(buttonsXbox.axisGreaterThan(2,0.2,loop)).onTrue( // Y
-      armHomeLeftTop.andThen(
-      elevatorHighLeftTopHold));
-    new JoystickButton(buttonsXbox, 4).or(buttonsXbox.axisGreaterThan(2,0.2,loop)).onFalse( // Y
-      elevatorHighLeftTopRelease.andThen(
-      armLeftHighLeftTop).andThen(
-      elevatorZeroLeftTop.alongWith(new WaitCommand(0.13).andThen(armRightLeftTopFinal))).andThen(
-      armHomeLeftTopFinal) 
-    );
-      
-    //Place Left Middle
-    new JoystickButton(buttonsXbox, 2).and(buttonsXbox.axisGreaterThan(2,0.2,loop)).onTrue( // B
-      armHomeLeftMid.andThen(
-      elevatorHighLeftMidHold)
-      );
-    new JoystickButton(buttonsXbox, 2).or(buttonsXbox.axisGreaterThan(2,0.2,loop)).onFalse( // B
-      elevatorHighLeftMidRelease.andThen(
-      armLeftHighLeftMid).andThen(
-      elevatorZeroLeftMid.alongWith(new WaitCommand(0.13).andThen(armRightLeftMidFinal))).andThen(
-      armHomeLeftMidFinal) 
-      );
-
-    //Place Left Low
-    new JoystickButton(buttonsXbox, 1).and(buttonsXbox.axisGreaterThan(2,0.2,loop)).onTrue( // A
-      armHomeLeftLow.andThen(
-      elevatorHighLeftLowHold)
-      );
-    new JoystickButton(buttonsXbox, 1).or(buttonsXbox.axisGreaterThan(2,0.2,loop)).onFalse( // A
-      elevatorHighLeftLowRelease.andThen(
-      armLeftHighLeftLow).andThen(
-      elevatorZeroLeftLow.alongWith(new WaitCommand(0.13).andThen(armRightLeftLowFinal))).andThen(
-      armHomeLeftLowFinal))
-      ;
-
-    //Place Left Trough
-    new JoystickButton(buttonsXbox, 3).and(buttonsXbox.axisGreaterThan(2,0.2,loop)).onTrue( // X
-      armHomeLeftTrough.andThen(
-      elevatorHighLeftTrough).andThen(
-      armLeftHighLeftTrough.withTimeout(0.5)).andThen(
-        new WaitCommand(0.1)).andThen(
-        armLeftTroughOuttake.withTimeout(0.2)).andThen(new WaitCommand(0.5)).andThen(
-        elevatorZeroLeftTrough.alongWith(armRightLeftTroughFinal)).andThen(
-      armHomeLeftTroughFinal) 
-      );
-    
-    //Place Right High
-    new JoystickButton(buttonsXbox, 4).and(buttonsXbox.axisLessThan(2,0.2,loop)).onTrue( // Y
-      armHomeRightTop.andThen(
-      elevatorHighRightTopHold));
     new JoystickButton(buttonsXbox, 4).onFalse( // Y
-      elevatorHighRightTopRelease.andThen(
-      armRightHighLeftTop).andThen(
-      elevatorZeroRightTop.alongWith(new WaitCommand(0.13).andThen(armRightRightTopFinal))).andThen(
-      armHomeRightTopFinal) 
+      elevatorHighLeftTopRelease.andThen(
+      armLeftHighLeftTop).andThen(
+      elevatorZeroLeftTop.alongWith(new WaitCommand(0.13).andThen(armRightLeftTopFinal))).andThen(
+      armHomeLeftTopFinal) 
     );
       
-    //Place Right Middle
-    new JoystickButton(buttonsXbox, 2).and(buttonsXbox.axisLessThan(2,0.2,loop)).onTrue( // B
+    //Place Left Middle
+    new JoystickButton(buttonsXbox, 2).onTrue( // B
       armHomeLeftMid.andThen(
       elevatorHighLeftMidHold)
       );
@@ -456,29 +368,28 @@ public class RobotContainer {
       armHomeLeftMidFinal) 
       );
 
-    //Place Right Low
-    new JoystickButton(buttonsXbox, 1).and(buttonsXbox.axisLessThan(2,0.2,loop)).onTrue( // A
-      armHomeRightLow.andThen(
-      elevatorHighRightLowHold)
+    //Place Left Low
+    new JoystickButton(buttonsXbox, 1).onTrue( // A
+      armHomeLeftLow.andThen(
+      elevatorHighLeftLowHold)
       );
     new JoystickButton(buttonsXbox, 1).onFalse( // A
-      elevatorHighRightLowRelease.andThen(
-      armRightHighLeftLow).andThen(
-      elevatorZeroRightLow.alongWith(new WaitCommand(0.13).andThen(armRightRightLowFinal))).andThen(
-      armHomeRightLowFinal))
+      elevatorHighLeftLowRelease.andThen(
+      armLeftHighLeftLow).andThen(
+      elevatorZeroLeftLow.alongWith(new WaitCommand(0.13).andThen(armRightLeftLowFinal))).andThen(
+      armHomeLeftLowFinal))
       ;
 
-    //Place Right Trough
-    new JoystickButton(buttonsXbox, 3).and(buttonsXbox.axisLessThan(2,0.2,loop)).onTrue( // X
-      armHomeRightTrough.andThen(
-      elevatorHighRightTrough).andThen(
-      armLeftHighRightTrough.withTimeout(0.5)).andThen(
+    //Place Left Trough
+    new JoystickButton(buttonsXbox, 3).onTrue( // X
+      armHomeLeftTrough.andThen(
+      elevatorHighLeftTrough).andThen(
+      armLeftHighLeftTrough.withTimeout(0.5)).andThen(
         new WaitCommand(0.1)).andThen(
-        armRightTroughOuttake.withTimeout(0.2)).andThen(new WaitCommand(0.5)).andThen(
-        elevatorZeroRightTrough.alongWith(armRightRightTroughFinal)).andThen(
-      armHomeRightTroughFinal) 
+        armLeftTroughOuttake.withTimeout(0.2)).andThen(new WaitCommand(0.5)).andThen(
+        elevatorZeroLeftTrough.alongWith(armRightLeftTroughFinal)).andThen(
+      armHomeLeftTroughFinal) 
       );
-
     
     if (OperatorConstants.XBOX_DRIVE) {
       new JoystickButton(driverXbox, 8).onTrue((new InstantCommand(drivebase::zeroGyro))); // (Start)
@@ -510,13 +421,12 @@ public class RobotContainer {
       //new JoystickButton(leftjoystick, 5).onTrue(new DriveLocalCommandAbsolute(drivebase, 8.47, new NearestTag(drivebase, true).getTarget())); // Left Closest Thumb Button
       //new JoystickButton(rightjoystick, 6).onTrue(new DriveLocalCommandAbsolute(drivebase, -4.47, new NearestTag(drivebase, true).getTarget())); // Right Closest Thumb Button (6.47 ORIGINAL VAL)
       
-      new JoystickButton(leftjoystick, 12).whileTrue(downClimber); // Right Top Base Button
-      
       //new JoystickButton(leftjoystick, 11).onTrue(driveRight);
 
       // Enable Drive To Nearest Target (for Matt)
       if(Constants.OperatorConstants.MATT_MODE){ //ADD FOR LEFT SIDE!!!
-        new JoystickButton(leftjoystick, 11).onTrue(new NearestTag(drivebase, false, 0, buttonsXbox)); // Left Trigger TAG COMMAND BROKEN
+        new JoystickButton(leftjoystick, 11).onTrue(new NearestTag(drivebase, false, -2, buttonsXbox)); 
+        new JoystickButton(leftjoystick, 12).onTrue(new NearestTag(drivebase, false, -15, buttonsXbox));
       }
 
       new JoystickButton(rightjoystick, 3).onTrue(new InstantCommand(() -> { // Right Thumb Button

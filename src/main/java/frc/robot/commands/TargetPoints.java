@@ -58,13 +58,14 @@ public enum TargetPoints {
         y -= Units.inchesToMeters(inches) * Math.sin(angle);
         }
 
-        // Return the new Pose2d.
-        if (axis > 0.2){
-            return new Pose2d(x, y, pose.getRotation());
+        return new Pose2d(x, y, pose.getRotation());
+        /* Return the new Pose2d.
+        if (axis < 0.2){
+            
         }
         else {
             return new Pose2d(x, y, pose.getRotation().plus(new Rotation2d(180)));
-        }
+        }*/
     }
 
     public Pose2d get() {

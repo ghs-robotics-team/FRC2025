@@ -26,7 +26,7 @@ public final class Constants {
 
   public static final class SetPointConstants { 
     public static final double ARM_LEFT_LOW = 5300.258;
-    public static final double ARM_LEFT_MIDDLE = 4000.898;
+    public static final double ARM_LEFT_MIDDLE = 4530.898;
     public static final double ARM_LEFT_HIGH = 3978.633;
     public static final double ARM_LEFT_TROUGH = 7100.332;
 
