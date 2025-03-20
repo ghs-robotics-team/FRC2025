@@ -19,15 +19,15 @@ import swervelib.math.Matter;
  */
 public final class Constants {
 
-  public static final double ROBOT_MASS = (95) * 0.453592; // 32lbs * kg per pound
+  public static final double ROBOT_MASS = (129) * 0.453592; // 32lbs * kg per pound
   public static final Matter CHASSIS = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);
   public static final double LOOP_TIME = 0.13; // s, 20ms + 110ms sprk max velocity lag
   public static final double MAX_SPEED = 6; // 0.2/2.0 Min/Max
 
   public static final class SetPointConstants { 
     public static final double ARM_LEFT_LOW = 5300.258;
-    public static final double ARM_LEFT_MIDDLE = 4530.898;
-    public static final double ARM_LEFT_HIGH = 3978.633;
+    public static final double ARM_LEFT_MIDDLE = 5300.898;
+    public static final double ARM_LEFT_HIGH = 5200.633;
     public static final double ARM_LEFT_TROUGH = 7100.332;
 
     public static final double ARM_RIGHT_LOW = -ARM_LEFT_LOW;
@@ -35,8 +35,8 @@ public final class Constants {
     public static final double ARM_RIGHT_HIGH = -ARM_LEFT_HIGH;
     public static final double ARM_RIGHT_TROUGH = -ARM_LEFT_TROUGH;
 
-    public static final double ELEVATOR_HIGH = -33.066;
-    public static final double ELEVATOR_MIDDLE = -20.03;
+    public static final double ELEVATOR_HIGH = -34.53;
+    public static final double ELEVATOR_MIDDLE = -18.3;
     public static final double ELEVATOR_LOW = -10.03;
     public static final double ELEVATOR_TROUGH = -18.03;
     public static final double ELEVATOR_INTAKE = -4.801;

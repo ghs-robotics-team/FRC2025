@@ -58,8 +58,8 @@ public class RobotContainer {
   private final IntakeCommand intake = new IntakeCommand(arm, -0.5);
   private final OuttakeCommand outtake = new OuttakeCommand(arm, 0.5);
 
-  private final MoveElevator upElevator = new MoveElevator(elevator, 0.1);
-  private final MoveElevator downElevator = new MoveElevator(elevator, -0.1);
+  private final MoveElevator upElevator = new MoveElevator(elevator, 0.63);
+  private final MoveElevator downElevator = new MoveElevator(elevator, -0.63);
 
   private final MoveClimber upClimber = new MoveClimber(climber, 0.75);
   private final MoveClimber downClimber = new MoveClimber(climber, -0.75);
@@ -71,82 +71,84 @@ public class RobotContainer {
   private final ArmSteady armSteady = new ArmSteady(arm);
   private final ElevatorSteady elevatorSteady = new ElevatorSteady(elevator);
 
+  // Naming Convention: subsystem-Action-Level-(Order)
   // Left Top Combine Command
-  private final ArmSetpoint armHomeLeftTop = new ArmSetpoint(arm, 0);
-  private final ArmSetpoint armRightLeftTopFinal = new ArmSetpoint(arm, -1000);
-  private final ArmSetpoint armHomeLeftTopFinal = new ArmSetpoint(arm, 0);
-  private final ArmSetpoint armLeftHighLeftTop = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_HIGH);
-  private final ElevatorSetpoint elevatorHighLeftTopHold = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_HIGH);
-  private final ElevatorSetpoint elevatorHighLeftTopRelease = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_HIGH);
-  private final ElevatorSetpoint elevatorZeroLeftTop = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
+  private final ArmSetpoint armHomeTopOne = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint armPassTop = new ArmSetpoint(arm, -1000);
+  private final ArmSetpoint armHomeTopTwo = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint armPlaceTop = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_HIGH);
+  private final ElevatorSetpoint elevatorPlaceTop = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_HIGH);
+  private final ElevatorSetpoint elevatorReleaseTop = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_HIGH);
+  private final ElevatorSetpoint elevatorZeroTop = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
 
   // Left Mid Combine Command
-  private final ArmSetpoint armHomeLeftMid = new ArmSetpoint(arm, 0);  
-  private final ArmSetpoint armRightLeftMidFinal = new ArmSetpoint(arm, -1000);
-  private final ArmSetpoint armHomeLeftMidFinal = new ArmSetpoint(arm, 0);
-  private final ArmSetpoint armLeftHighLeftMid = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_MIDDLE);
-  private final ElevatorSetpoint elevatorHighLeftMidHold = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_MIDDLE);
-  private final ElevatorSetpoint elevatorHighLeftMidRelease = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_MIDDLE);
-  private final ElevatorSetpoint elevatorZeroLeftMid = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
+  private final ArmSetpoint armHomeMidOne = new ArmSetpoint(arm, 0);  
+  private final ArmSetpoint armPassMid = new ArmSetpoint(arm, -1000);
+  private final ArmSetpoint armHomeMidTwo = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint armPlaceMid = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_MIDDLE);
+  private final ElevatorSetpoint elevatorPlaceMid = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_MIDDLE);
+  private final ElevatorSetpoint elevatorReleaseMid = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_MIDDLE);
+  private final ElevatorSetpoint elevatorZeroMid = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
 
   // Left Low Combine Command
-  private final ArmSetpoint armHomeLeftLow = new ArmSetpoint(arm, 0);
-  private final ArmSetpoint armRightLeftLowFinal = new ArmSetpoint(arm, -1000);
-  private final ArmSetpoint armHomeLeftLowFinal = new ArmSetpoint(arm, 0);
-  private final ArmSetpoint armLeftHighLeftLow = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_LOW);
-  private final ElevatorSetpoint elevatorHighLeftLowHold = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_LOW);
-  private final ElevatorSetpoint elevatorHighLeftLowRelease = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_LOW);
-  private final ElevatorSetpoint elevatorZeroLeftLow = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
+  private final ArmSetpoint armHomeLowOne = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint armPassLow = new ArmSetpoint(arm, -1000);
+  private final ArmSetpoint armHomeLowTwo = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint armPlaceLow = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_LOW);
+  private final ElevatorSetpoint elevatorPlaceLow = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_LOW);
+  private final ElevatorSetpoint elevatorReleaseLow = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_LOW);
+  private final ElevatorSetpoint elevatorZeroLow = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
 
   // Left Trough Combine Command
-  private final ArmSetpoint armHomeLeftTrough = new ArmSetpoint(arm, 0);
-  private final ArmSetpoint armRightLeftTroughFinal = new ArmSetpoint(arm, -1000);
-  private final ArmSetpoint armHomeLeftTroughFinal = new ArmSetpoint(arm, 0);
-  private final ArmSetpoint armLeftHighLeftTrough = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_TROUGH);
-  private final ElevatorSetpoint elevatorHighLeftTrough = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_TROUGH);
-  private final ElevatorSetpoint elevatorZeroLeftTrough = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
-  private final OuttakeCommand armLeftTroughOuttake = new OuttakeCommand(arm, Constants.SetPointConstants.ELEVATOR_INTAKE);
+  private final ArmSetpoint armHomeTroughOne = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint armPassTrough = new ArmSetpoint(arm, -1000);
+  private final ArmSetpoint armHomeTroughTwo = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint armPlaceTrough = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_TROUGH);
+  private final ElevatorSetpoint elevatorPlaceTrough = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_TROUGH);
+  private final ElevatorSetpoint elevatorZeroTrough = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
+  private final OuttakeCommand outtakeTrough = new OuttakeCommand(arm, Constants.SetPointConstants.ELEVATOR_INTAKE);
 
   //  Auto Chooser
   private final SendableChooser<Command> auto;
 
+  // Naming Convention: (auto)-subsystem-Action-Level-(Order)
   // Auto Intake Command
-  private final ArmSetpoint autoArmHomeIntake = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint autoArmHomeIntakeOne = new ArmSetpoint(arm, 0);
   private final ElevatorSetpoint autoElevatorSetIntake = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
   private final IntakeCommand autoIntakeSet = new IntakeCommand(arm, -0.5);
-  private final ArmSetpoint autoArmHomeIntakeFinal = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint autoArmHomeIntakeTwo = new ArmSetpoint(arm, 0);
 
   // Auto Left Top Combine Command
-  private final ArmSetpoint autoArmHomeLeftTop = new ArmSetpoint(arm, 0);
-  private final ArmSetpoint autoArmRightLeftTopFinal = new ArmSetpoint(arm, -1000);
-  private final ArmSetpoint autoArmHomeLeftTopFinal = new ArmSetpoint(arm, 0);
-  private final ArmSetpoint autoArmLeftHighLeftTop = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_HIGH);
-  private final ElevatorSetpoint autoElevatorHighLeftTop = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_HIGH);
-  private final ElevatorSetpoint autoElevatorZeroLeftTop = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
+  private final ArmSetpoint autoArmHomeTopOne = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint autoArmPassTop = new ArmSetpoint(arm, -1000);
+  private final ArmSetpoint autoArmHomeTopTwo = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint autoArmPlaceTop = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_HIGH);
+  private final ElevatorSetpoint autoElevatorPlaceTop = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_HIGH);
+  private final ElevatorSetpoint autoElevatorZeroTop = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
 
   // Auto Left Mid Combine Command
-  private final ArmSetpoint autoArmHomeLeftMid = new ArmSetpoint(arm, 0);  
-  private final ArmSetpoint autoArmRightLeftMidFinal = new ArmSetpoint(arm, -1000);
-  private final ArmSetpoint autoArmHomeLeftMidFinal = new ArmSetpoint(arm, 0);
-  private final ArmSetpoint autoArmLeftHighLeftMid = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_MIDDLE);
-  private final ElevatorSetpoint autoElevatorHighLeftMid = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_MIDDLE);
-  private final ElevatorSetpoint autoElevatorZeroLeftMid = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
+  private final ArmSetpoint autoArmHomeMidOne = new ArmSetpoint(arm, 0);  
+  private final ArmSetpoint autoArmPassMid = new ArmSetpoint(arm, -1000);
+  private final ArmSetpoint autoArmHomeMidTwo = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint autoArmPlaceMid = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_MIDDLE);
+  private final ElevatorSetpoint autoElevatorPlaceMid = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_MIDDLE);
+  private final ElevatorSetpoint autoElevatorZeroMid = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
 
   // Auto Left Low Combine Command
-  private final ArmSetpoint autoArmHomeLeftLow = new ArmSetpoint(arm, 0);
-  private final ArmSetpoint autoArmRightLeftLowFinal = new ArmSetpoint(arm, -1000);
-  private final ArmSetpoint autoArmHomeLeftLowFinal = new ArmSetpoint(arm, 0);
-  private final ArmSetpoint autoArmLeftHighLeftLow = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_LOW);
-  private final ElevatorSetpoint autoElevatorHighLeftLow = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_LOW);
-  private final ElevatorSetpoint autoElevatorZeroLeftLow = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
+  private final ArmSetpoint autoArmHomeLowOne = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint autoArmPassLow = new ArmSetpoint(arm, -1000);
+  private final ArmSetpoint autoArmHomeLowTwo = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint autoArmPlaceLow = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_LOW);
+  private final ElevatorSetpoint autoElevatorPlaceLow = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_LOW);
+  private final ElevatorSetpoint autoElevatorZeroLow = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
 
-  // Auto Left Low Combine Command
-  private final ArmSetpoint autoArmHomeLeftTrough = new ArmSetpoint(arm, 0);
-  private final ArmSetpoint autoArmRightLeftTroughFinal = new ArmSetpoint(arm, -1000);
-  private final ArmSetpoint autoArmHomeLeftTroughFinal = new ArmSetpoint(arm, 0);
-  private final ArmSetpoint autoArmLeftHighLeftTrough = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_TROUGH);
-  private final ElevatorSetpoint autoElevatorHighLeftTrough = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_TROUGH);
-  private final ElevatorSetpoint autoElevatorZeroLeftTrough = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
+  // Auto Left Trough Combine Command
+  private final ArmSetpoint autoArmHomeTroughOne = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint autoArmPassTrough = new ArmSetpoint(arm, -1000);
+  private final ArmSetpoint autoArmHomeTroughTwo = new ArmSetpoint(arm, 0);
+  private final ArmSetpoint autoarmPlaceTrough = new ArmSetpoint(arm, Constants.SetPointConstants.ARM_LEFT_TROUGH);
+  private final ElevatorSetpoint autoElevatorPlaceTrough = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_TROUGH);
+  private final ElevatorSetpoint autoElevatorZeroTrough = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
 
 
   public RobotContainer() {
@@ -158,46 +160,46 @@ public class RobotContainer {
 
     // Auto Intake
     NamedCommands.registerCommand("Intake",
-      autoArmHomeIntake.andThen(
+      autoArmHomeIntakeOne.andThen(
         autoElevatorSetIntake).andThen(
         autoIntakeSet.withTimeout(3)).andThen( //Change Time to limit switch?
-        autoArmHomeIntakeFinal) 
+        autoArmHomeIntakeTwo) 
     );
 
     // Auto Left Top Place
     NamedCommands.registerCommand("Left Top Place",
-      autoArmHomeLeftTop.andThen(
-      autoElevatorHighLeftTop).andThen(
-      autoArmLeftHighLeftTop).andThen(
-        autoElevatorZeroLeftTop.alongWith(new WaitCommand(0.13).andThen(autoArmRightLeftTopFinal))).andThen(
-      autoArmHomeLeftTopFinal) 
+      autoArmHomeTopOne.andThen(
+      autoElevatorPlaceTop).andThen(
+      autoArmPlaceTop).andThen(
+        autoElevatorZeroTop.alongWith(new WaitCommand(0.13).andThen(autoArmPassTop))).andThen(
+      autoArmHomeTopTwo) 
     );
 
     // Auto Left Middle Place
     NamedCommands.registerCommand("Left Middle Place",
-      autoArmHomeLeftMid.andThen(
-      autoElevatorHighLeftMid).andThen(
-      autoArmLeftHighLeftMid).andThen(
-        autoElevatorZeroLeftMid.alongWith(new WaitCommand(0.13).andThen(autoArmRightLeftMidFinal))).andThen(
-      autoArmHomeLeftMidFinal) 
+      autoArmHomeMidOne.andThen(
+      autoElevatorPlaceMid).andThen(
+      autoArmPlaceMid).andThen(
+        autoElevatorZeroMid.alongWith(new WaitCommand(0.13).andThen(autoArmPassMid))).andThen(
+      autoArmHomeMidTwo) 
     );
 
     // Auto Left Low Place
     NamedCommands.registerCommand("Left Low Place",
-      autoArmHomeLeftLow.andThen(
-      autoElevatorHighLeftLow).andThen(
-      autoArmLeftHighLeftLow).andThen(
-        autoElevatorZeroLeftLow.alongWith(new WaitCommand(0.13).andThen(autoArmRightLeftLowFinal))).andThen(
-      autoArmHomeLeftLowFinal) 
+      autoArmHomeLowOne.andThen(
+      autoElevatorPlaceLow).andThen(
+      autoArmPlaceLow).andThen(
+        autoElevatorZeroLow.alongWith(new WaitCommand(0.13).andThen(autoArmPassLow))).andThen(
+      autoArmHomeLowTwo) 
     );
 
     // Auto Left Trough Place
     NamedCommands.registerCommand("Left Trough Place",
-      autoArmHomeLeftTrough.andThen(
-      autoElevatorHighLeftTrough).andThen(
-      autoArmLeftHighLeftTrough).andThen(
-        autoElevatorZeroLeftTrough.alongWith(new WaitCommand(0.13).andThen(autoArmRightLeftTroughFinal))).andThen(
-      autoArmHomeLeftTroughFinal) 
+      autoArmHomeTroughOne.andThen(
+      autoElevatorPlaceTrough).andThen(
+      autoarmPlaceTrough).andThen(
+        autoElevatorZeroTrough.alongWith(new WaitCommand(0.7).andThen(autoArmPassTrough))).andThen(
+      autoArmHomeTroughTwo) 
     );
 
     // Set Controller Ids
@@ -260,49 +262,49 @@ public class RobotContainer {
 
     //Place Left High
     new JoystickButton(buttonsXbox, 4).onTrue( // Y
-      armHomeLeftTop.andThen(
-      elevatorHighLeftTopHold)
+      armHomeTopOne.andThen(
+      elevatorPlaceTop)
       );
     new JoystickButton(buttonsXbox, 4).onFalse( // Y
-      elevatorHighLeftTopRelease.andThen(
-      armLeftHighLeftTop).andThen(
-      elevatorZeroLeftTop.alongWith(new WaitCommand(0.13).andThen(armRightLeftTopFinal))).andThen(
-      armHomeLeftTopFinal) 
+      elevatorReleaseTop.andThen(
+      armPlaceTop).andThen(
+      elevatorZeroTop.alongWith(new WaitCommand(0.13).andThen(armPassTop))).andThen(
+      armHomeTopTwo) 
       );
       
     //Place Left Middle
     new JoystickButton(buttonsXbox, 2).onTrue( // B
-      armHomeLeftMid.andThen(
-      elevatorHighLeftMidHold)
+      armHomeMidOne.andThen(
+      elevatorPlaceMid)
       );
     new JoystickButton(buttonsXbox, 2).onFalse( // B
-      elevatorHighLeftMidRelease.andThen(
-      armLeftHighLeftMid).andThen(
-      elevatorZeroLeftMid.alongWith(new WaitCommand(0.13).andThen(armRightLeftMidFinal))).andThen(
-      armHomeLeftMidFinal) 
+      elevatorReleaseMid.andThen(
+      armPlaceMid).andThen(
+      elevatorZeroMid.alongWith(new WaitCommand(0.13).andThen(armPassMid))).andThen(
+      armHomeMidTwo) 
       );
 
     //Place Left Low
     new JoystickButton(buttonsXbox, 1).onTrue( // A
-      armHomeLeftLow.andThen(
-      elevatorHighLeftLowHold)
+      armHomeLowOne.andThen(
+      elevatorPlaceLow)
       );
     new JoystickButton(buttonsXbox, 1).onFalse( // A
-      elevatorHighLeftLowRelease.andThen(
-      armLeftHighLeftLow).andThen(
-      elevatorZeroLeftLow.alongWith(new WaitCommand(0.13).andThen(armRightLeftLowFinal))).andThen(
-      armHomeLeftLowFinal)
+      elevatorReleaseLow.andThen(
+      armPlaceLow).andThen(
+      elevatorZeroLow.alongWith(new WaitCommand(0.13).andThen(armPassLow))).andThen(
+      armHomeLowTwo)
       );
 
     //Place Left Trough
     new JoystickButton(buttonsXbox, 3).onTrue( // X
-      armHomeLeftTrough.andThen(
-      elevatorHighLeftTrough).andThen(
-      armLeftHighLeftTrough.withTimeout(0.5)).andThen(
+      armHomeTroughOne.andThen(
+      elevatorPlaceTrough).andThen(
+      armPlaceTrough.withTimeout(0.5)).andThen(
         new WaitCommand(0.1)).andThen(
-        armLeftTroughOuttake.withTimeout(0.2)).andThen(new WaitCommand(0.5)).andThen(
-        elevatorZeroLeftTrough.alongWith(armRightLeftTroughFinal)).andThen(
-      armHomeLeftTroughFinal) 
+        outtakeTrough.withTimeout(0.7)).andThen(new WaitCommand(0.5)).andThen(
+        elevatorZeroTrough.alongWith(armPassTrough)).andThen(
+      armHomeTroughTwo) 
       );
     
     if (OperatorConstants.XBOX_DRIVE) { // Untested
@@ -325,7 +327,7 @@ public class RobotContainer {
       //new JoystickButton(rightjoystick, 2).onTrue(new InstantCommand(drivebase::lock));
 
       // Enable Drive To Nearest Target (for Matt)
-      if(Constants.OperatorConstants.MATT_MODE){ //ADD FOR LEFT SIDE!!!
+      if(Constants.OperatorConstants.MATT_MODE){ // ADD FOR LEFT SIDE!!!
         new JoystickButton(leftjoystick, 11).onTrue(new NearestTag(drivebase, false, -2, buttonsXbox)); 
         new JoystickButton(leftjoystick, 12).onTrue(new NearestTag(drivebase, false, -15, buttonsXbox));
       }
