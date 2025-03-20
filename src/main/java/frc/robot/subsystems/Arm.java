@@ -16,8 +16,8 @@ public class Arm extends SubsystemBase {
   /** Creates a new Elevator. */
   SparkFlex hand = new SparkFlex(16, MotorType.kBrushless); 
   TalonFX armMotor = new TalonFX(18);
-
   double absoluteEncoder = armMotor.getPosition().getValue().magnitude();
+
   public Arm() {
     // Use addRequirements() here to declare subsystem dependencies.\
   }
@@ -56,7 +56,6 @@ public class Arm extends SubsystemBase {
   public double getPos(){
     return absoluteEncoder;
   }
-
 
   @Override
   public void periodic() {

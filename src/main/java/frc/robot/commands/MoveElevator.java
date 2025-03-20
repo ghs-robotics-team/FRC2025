@@ -14,6 +14,7 @@ public class MoveElevator extends Command {
   /** Creates a new moveElevator. */
   Elevator elevator;
   double amt;
+  
   public MoveElevator(Elevator elevator, double amt) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.elevator = elevator;

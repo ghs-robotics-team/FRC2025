@@ -9,14 +9,14 @@ import frc.robot.subsystems.Arm;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class IntakeCommand extends Command {
-  private Arm arm;
-  private double amt;
+    private Arm arm;
+    private double amt;
   
-    /** Creates a new Intake_Outtake. */
-    public IntakeCommand(Arm arm, double amt) {
-      // Use addRequirements() here to declare subsystem dependencies.
-      this.arm = arm;
-      this.amt = amt;
+  /** Creates a new Intake_Outtake. */
+  public IntakeCommand(Arm arm, double amt) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.arm = arm;
+    this.amt = amt;
   }
 
   // Called when the command is initially scheduled.

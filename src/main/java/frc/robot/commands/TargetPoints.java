@@ -25,12 +25,12 @@ public enum TargetPoints {
     public Pose2d distanceFromTag(Pose2d pose) {
         double x = pose.getX();
         double y = pose.getY();
-        x += Units.inchesToMeters(13.77) * Math.cos(pose.getRotation().getRadians()); //13.5
+        x += Units.inchesToMeters(13.77) * Math.cos(pose.getRotation().getRadians()); 
         y += Units.inchesToMeters(13.77) * Math.sin(pose.getRotation().getRadians());
         return new Pose2d(x, y, Rotation2d.fromDegrees(90).plus(pose.getRotation()));
     }
 
-    public static Pose2d tagPos(Pose2d pose, double inches, double axis){ // 6.47 Inches
+    public static Pose2d tagPos(Pose2d pose, double inches){ 
         // Current X and Y Position of the Robot.
         double x = pose.getX();
         double y = pose.getY();
@@ -49,7 +49,7 @@ public enum TargetPoints {
             x += Units.inchesToMeters(inches) * Math.cos(angle);
             } else {
             x -= Units.inchesToMeters(inches) * Math.cos(angle);
-            }
+        }
         
         // Calculate new Y based on if the robot is moving right or left.
         if (inches >= 0) {
@@ -59,13 +59,6 @@ public enum TargetPoints {
         }
 
         return new Pose2d(x, y, pose.getRotation());
-        /* Return the new Pose2d.
-        if (axis < 0.2){
-            
-        }
-        else {
-            return new Pose2d(x, y, pose.getRotation().plus(new Rotation2d(180)));
-        }*/
     }
 
     public Pose2d get() {
@@ -90,8 +83,9 @@ public enum TargetPoints {
 
     public static void printPlaces(){
         for(TargetPoints point: TargetPoints.values()){
-            System.out.println(point.name() + " :" + point.get());
-            System.out.println(point.name() + " :" + point.getForward());
+            //System.out.println(point.name() + " :" + point.get());
+            //System.out.println(point.name() + " :" + point.getForward());
+            System.out.println(point.name() + " :" + TargetPoints.tagPos(new Pose2d(point.get().getX(), point.get().getY(), point.get().getRotation()), -15)); //-2 or -15
         }
     }
 }

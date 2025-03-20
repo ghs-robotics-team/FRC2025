@@ -7,7 +7,6 @@ package frc.robot.commands;
 import java.util.ArrayList;
 import java.util.List;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -53,7 +52,7 @@ public class NearestTag extends Command {
     }
 
     // Create DriveToPointCommand for the closest target point.
-    command = new DriveToPointCommandForPose2d(TargetPoints.tagPos(target, amt, buttonsXbox.getRawAxis(3)));
+    command = new DriveToPointCommandForPose2d(TargetPoints.tagPos(target, amt));
     
     if(!stat){
       command.schedule();

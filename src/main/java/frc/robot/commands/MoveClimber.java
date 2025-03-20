@@ -12,6 +12,7 @@ public class MoveClimber extends Command {
   /** Creates a new MoveClimber. */
   Climber climber;
   double amt;
+  
   public MoveClimber(Climber climber, double amt) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(climber);

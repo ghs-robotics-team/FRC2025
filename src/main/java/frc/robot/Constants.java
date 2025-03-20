@@ -40,11 +40,10 @@ public final class Constants {
     public static final double ELEVATOR_LOW = -10.03;
     public static final double ELEVATOR_TROUGH = -18.03;
     public static final double ELEVATOR_INTAKE = -4.801;
-
   }
 
   public static final class AutonConstants {
-    public static final PIDConstants TRANSLATION_PID = new PIDConstants(7.3, 0, 0); // Unused?
+    public static final PIDConstants TRANSLATION_PID = new PIDConstants(7.3, 0, 0);
     public static final PIDConstants ANGLE_PID = new PIDConstants(5.0, 0, 0.00);
   }
 
@@ -59,9 +58,6 @@ public final class Constants {
     public static final double LEFT_Y_DEADBAND = 0.05;
     public static final double RIGHT_X_DEADBAND = 0.1;
     public static final double TURN_CONSTANT = 6;
-
-    // Makes data taking easier
-    public static final boolean SHOOTING_DATA_COLLECTION_MODE = false;
 
     // XBOX mode
     public static final boolean XBOX_DRIVE = false;

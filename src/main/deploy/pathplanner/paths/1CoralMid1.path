@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 5.64,
-        "y": 4.03
+        "x": 5.67,
+        "y": 3.98
       },
       "prevControl": {
-        "x": 5.9325,
-        "y": 3.9130000000000003
+        "x": 5.9625,
+        "y": 3.863
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 88.49256424122511
+    "rotation": 90.0
   },
   "reversed": false,
   "folder": "1Coral",

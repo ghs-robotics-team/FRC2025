@@ -30,7 +30,7 @@ public class ElevatorSetpoint extends Command {
       this.pid = new PIDController (0.047,0,0.005); 
     } 
     else{
-      this.pid = new PIDController (0.15,0,0.005); // 0.1
+      this.pid = new PIDController (0.15,0,0.005); 
     }
   }
 

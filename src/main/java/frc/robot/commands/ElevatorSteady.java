@@ -15,6 +15,7 @@ public class ElevatorSteady extends Command {
   /** Creates a new ArmSteady. */
   Elevator elevator;
   PIDController pid;
+  
   public ElevatorSteady(Elevator elevator) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(elevator);

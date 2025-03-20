@@ -14,6 +14,7 @@ public class MoveArm extends Command {
   /** Creates a new ArmLeft. */
   Arm arm;
   double amt;
+  
   public MoveArm(Arm arm, double amt) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.arm = arm;

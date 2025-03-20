@@ -8,14 +8,13 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Globals;
 
 public class Elevator extends SubsystemBase {
   /** Creates a new Elevator. */
-  SparkFlex Left = new SparkFlex(13, MotorType.kBrushless); //Get ID
+  SparkFlex Left = new SparkFlex(13, MotorType.kBrushless); 
   SparkFlex Right = new SparkFlex(15, MotorType.kBrushless);
   
   AbsoluteEncoder absoluteEncoder = Left.getAbsoluteEncoder();
@@ -23,6 +22,7 @@ public class Elevator extends SubsystemBase {
   RelativeEncoder RrelativeEncoder = Right.getEncoder();
   double absolutepos = absoluteEncoder.getPosition(); // 0 to 1
   double totalRotations = LrelativeEncoder.getPosition(); // Total rotations
+
   public Elevator() {
     // Use addRequirements() here to declare subsystem dependencies.
   }

@@ -21,7 +21,6 @@ public class DriveToPointCommandForPose2d extends Command {
     this.pathfindingCommand = null;
   }
 
-  
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
@@ -37,7 +36,7 @@ public class DriveToPointCommandForPose2d extends Command {
     Globals.inPath = true;
     pathfindingCommand.andThen(new InstantCommand(() -> {
         Globals.inPath = false;
-      })).schedule();
+    })).schedule();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
