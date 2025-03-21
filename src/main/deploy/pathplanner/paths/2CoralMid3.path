@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.04,
-        "y": 7.14
+        "x": 0.9847500000000002,
+        "y": 7.19375
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.1987704918032787,
-        "y": 6.896055327868852
+        "x": 1.1435204918032789,
+        "y": 6.949805327868852
       },
       "isLocked": false,
       "linkedName": "CoralMid2"
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 2.7,
+    "maxAcceleration": 2.7,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.4,

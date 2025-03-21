@@ -6,7 +6,8 @@
     "1Coral",
     "2Coral",
     "3Coral",
-    "4Coral"
+    "4Coral",
+    "Misc"
   ],
   "autoFolders": [
     "1Coral",
@@ -14,13 +15,13 @@
     "3Coral",
     "4Coral"
   ],
-  "defaultMaxVel": 2.0,
-  "defaultMaxAccel": 2.0,
+  "defaultMaxVel": 2.7,
+  "defaultMaxAccel": 2.7,
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 720.0,
   "defaultNominalVoltage": 12.4,
   "robotMass": 58.51,
-  "robotMOI": 3.55,
+  "robotMOI": 3.994,
   "robotTrackwidth": 0.546,
   "driveWheelRadius": 0.05,
   "driveGearing": 6.12,
