@@ -25,7 +25,7 @@ public class DriveToPointCommandForPose2d extends Command {
   @Override
   public void initialize() {
     // Build Command based on Point and Constraints.
-    pathfindingCommand = AutoBuilder.pathfindToPose(point, new PathConstraints(Constants.MAX_SPEED, 0.5 /* 3 */, 2*Math.PI, 4*Math.PI), 0.0);
+    pathfindingCommand = AutoBuilder.pathfindToPose(point, new PathConstraints(Constants.MAX_SPEED/3, Constants.MAX_SPEED/3, 2*Math.PI, 4*Math.PI), 0.0);
     
     // Setup Variables for Field and Robotpose.
     Field2d field = new Field2d();

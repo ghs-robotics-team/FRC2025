@@ -121,7 +121,7 @@ public class SwerveSubsystem extends SubsystemBase
     }
     else
     {
-      if(/*!DriverStation.isAutonomous()*/true){
+      if(/*!DriverStation.isAutonomous()*/true){ // To Enable Eagle, replace if condition with true
         if(Globals.LastVisionMeasurement.confidencea > 0){
           swerveDrive.addVisionMeasurement(Globals.LastVisionMeasurement.positiona, Globals.LastVisionMeasurement.timeStamp, VecBuilder.fill(Globals.LastVisionMeasurement.confidencea, Globals.LastVisionMeasurement.confidencea, 99));
           SmartDashboard.putBoolean("SS Eagleeye Read", true);

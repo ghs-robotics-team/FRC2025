@@ -323,14 +323,14 @@ public class RobotContainer {
       })); 
     }
     else{
-      new JoystickButton(leftjoystick, 4).onTrue((new InstantCommand(drivebase::zeroGyro))); // (Button 3) (Left Thumb Button)
+      new JoystickButton(leftjoystick, 4).onTrue((new InstantCommand(drivebase::zeroGyro))); // (Button 4) (Left Thumb Button)
       //new JoystickButton(rightjoystick, 2).onTrue(new InstantCommand(drivebase::lock));
 
       // Enable Drive To Nearest Target (for Matt)
-      if(Constants.OperatorConstants.MATT_MODE){
+      /*if(Constants.OperatorConstants.MATT_MODE){
         new JoystickButton(leftjoystick, 12).onTrue(new NearestTag(drivebase, false, -2, buttonsXbox)); 
         new JoystickButton(leftjoystick, 11).onTrue(new NearestTag(drivebase, false, -15, buttonsXbox));
-      }
+      }*/
 
       new JoystickButton(rightjoystick, 3).onTrue(new InstantCommand(() -> { // Right Thumb Button
         CommandScheduler.getInstance().cancelAll();
