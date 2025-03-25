@@ -1,6 +1,10 @@
 package frc.robot;
 
+import java.util.Optional;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -14,6 +18,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -72,6 +77,12 @@ public class Robot extends TimedRobot {
     // this line or comment it out
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
+    }
+    Optional<Alliance> alliance = DriverStation.getAlliance();
+    if (alliance.isPresent()) {
+      if (alliance.get() == Alliance.Blue) {
+        Globals.inversion = -1;
+      }
     }
     // Set all robot positions to zero
     Globals.targetPos.armTarget = 0;

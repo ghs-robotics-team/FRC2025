@@ -1,9 +1,13 @@
 package frc.robot;
 
 import java.io.File;
+import java.util.Optional;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -55,8 +59,8 @@ public class RobotContainer {
   private final MoveArm armLeft = new MoveArm(arm,0.1);
   private final MoveArm armRight = new MoveArm(arm,-0.1);
 
-  private final IntakeCommand intake = new IntakeCommand(arm, -0.5);
-  private final OuttakeCommand outtake = new OuttakeCommand(arm, 0.5);
+  private final IntakeCommand intake = new IntakeCommand(arm, -1);
+  private final OuttakeCommand outtake = new OuttakeCommand(arm, 1);
 
   private final MoveElevator upElevator = new MoveElevator(elevator, 0.63);
   private final MoveElevator downElevator = new MoveElevator(elevator, -0.63);
@@ -150,7 +154,6 @@ public class RobotContainer {
   private final ElevatorSetpoint autoElevatorPlaceTrough = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_TROUGH);
   private final ElevatorSetpoint autoElevatorZeroTrough = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
 
-
   public RobotContainer() {
     // Create some Subsystems
     drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
@@ -162,7 +165,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Intake",
       autoArmHomeIntakeOne.andThen(
         autoElevatorSetIntake).andThen(
-        autoIntakeSet.withTimeout(3)).andThen( //Change Time to limit switch?
+        autoIntakeSet.withTimeout(1.7)).andThen( //Change Time to limit switch?
         autoArmHomeIntakeTwo) 
     );
 
@@ -170,9 +173,12 @@ public class RobotContainer {
     NamedCommands.registerCommand("Left Top Place",
       autoArmHomeTopOne.andThen(
       autoElevatorPlaceTop).andThen(
-      autoArmPlaceTop).andThen(
-        autoElevatorZeroTop.alongWith(new WaitCommand(0.13).andThen(autoArmPassTop))).andThen(
-      autoArmHomeTopTwo) 
+      autoArmPlaceTop)
+    );
+
+    NamedCommands.registerCommand("Left Top Place Parallel",
+      autoElevatorZeroTop.alongWith(new WaitCommand(0.13).andThen(autoArmPassTop)).andThen(
+    autoArmHomeTopTwo)
     );
 
     // Auto Left Middle Place
@@ -218,13 +224,13 @@ public class RobotContainer {
     Command driveCommand = null;
     if (OperatorConstants.XBOX_DRIVE) {
       driveCommand = drivebase.driveCommand(
-          () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-          () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+          () -> MathUtil.applyDeadband(-driverXbox.getLeftY()*Globals.inversion, OperatorConstants.LEFT_Y_DEADBAND),
+          () -> MathUtil.applyDeadband(-driverXbox.getLeftX()*Globals.inversion, OperatorConstants.LEFT_X_DEADBAND),
           () -> MathUtil.applyDeadband(-driverXbox.getRightX(), OperatorConstants.RIGHT_X_DEADBAND));
     } else {
       driveCommand = drivebase.driveCommand(
-          () -> MathUtil.applyDeadband(leftjoystick.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
-          () -> MathUtil.applyDeadband(leftjoystick.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
+          () -> MathUtil.applyDeadband(leftjoystick.getRawAxis(1)*Globals.inversion, OperatorConstants.LEFT_Y_DEADBAND),
+          () -> MathUtil.applyDeadband(leftjoystick.getRawAxis(0)*Globals.inversion, OperatorConstants.LEFT_X_DEADBAND),
           () -> -rightjoystick.getRawAxis(0));
     }
     configureBindings();

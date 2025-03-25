@@ -31,4 +31,5 @@ public final class Globals {
 
   public static boolean inPath = false;
   public static XboxController buttonsXbox;
+  public static double inversion = 1;
 }
