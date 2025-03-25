@@ -17,9 +17,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "2CoralTop2"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "2CoralTop2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Left Top Place Parallel"
+                }
+              }
+            ]
           }
         },
         {
@@ -32,6 +45,18 @@
           "type": "path",
           "data": {
             "pathName": "3CoralTop3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Left Top Place"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Left Top Place Parallel"
           }
         }
       ]
