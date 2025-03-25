@@ -66,7 +66,7 @@ public final class Constants {
   }
 
   public static class EagleEyeConstants {
-    public static final double MAX_VISION_SPEED = 2; // m/s
+    public static final double MAX_VISION_SPEED = 2; // m/s (Usually 1.5-2.5) before it stops reading vision measurements)
     public static final boolean IN_PATH_END = false;
   }
 
