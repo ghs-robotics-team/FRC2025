@@ -17,9 +17,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "2CoralBottom2"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "2CoralBottom2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Left Top Place Parallel"
+                }
+              }
+            ]
           }
         },
         {
@@ -41,9 +54,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "3CoralBottom4"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "3CoralBottom4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Left Top Place Parallel"
+                }
+              }
+            ]
           }
         },
         {
@@ -62,6 +88,12 @@
           "type": "named",
           "data": {
             "name": "Left Top Place"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Left Top Place Parallel"
           }
         }
       ]
