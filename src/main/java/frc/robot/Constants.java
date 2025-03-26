@@ -39,7 +39,7 @@ public final class Constants {
     public static final double ELEVATOR_MIDDLE = -18.3;
     public static final double ELEVATOR_LOW = -10.03;
     public static final double ELEVATOR_TROUGH = -18.03;
-    public static final double ELEVATOR_INTAKE = -4.801;
+    public static final double ELEVATOR_INTAKE = 0.3; //-4.801
   }
 
   public static final class AutonConstants {
