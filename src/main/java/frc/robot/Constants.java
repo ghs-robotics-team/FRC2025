@@ -39,7 +39,7 @@ public final class Constants {
     public static final double ELEVATOR_MIDDLE = -18.3;
     public static final double ELEVATOR_LOW = -10.03;
     public static final double ELEVATOR_TROUGH = -18.03;
-    public static final double ELEVATOR_INTAKE = 0.3; //-4.801
+    public static final double ELEVATOR_INTAKE = -2; //-4.801
   }
 
   public static final class AutonConstants {
@@ -66,7 +66,7 @@ public final class Constants {
   }
 
   public static class EagleEyeConstants {
-    public static final double MAX_VISION_SPEED = 2; // m/s (Usually 1.5-2.5) before it stops reading vision measurements)
+    public static final double MAX_VISION_SPEED = 2.25; // m/s (Usually 1.5-2.5) before it stops reading vision measurements) WAS AT 2
     public static final boolean IN_PATH_END = false;
   }
 
