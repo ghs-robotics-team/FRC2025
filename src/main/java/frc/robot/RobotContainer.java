@@ -1,13 +1,9 @@
 package frc.robot;
 
 import java.io.File;
-import java.util.Optional;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -20,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.OperatorConstants;
-//import frc.robot.commands.TargetPoints;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.EagleEyeCommand;
 import frc.robot.commands.ElevatorSetpoint;
@@ -173,12 +168,12 @@ public class RobotContainer {
     NamedCommands.registerCommand("Left Top Place",
       autoArmHomeTopOne.andThen(
       autoElevatorPlaceTop).andThen(
-      autoArmPlaceTop)
+      autoArmPlaceTop.withTimeout(5.3))
     );
 
     NamedCommands.registerCommand("Left Top Place Parallel",
-      autoElevatorZeroTop.alongWith(new WaitCommand(0.13).andThen(autoArmPassTop)).andThen(
-    autoArmHomeTopTwo)
+      autoElevatorZeroTop.alongWith(new WaitCommand(0.13).andThen(
+    autoArmHomeTopTwo))
     );
 
     // Auto Left Middle Place
@@ -274,8 +269,8 @@ public class RobotContainer {
     new JoystickButton(buttonsXbox, 4).onFalse( // Y
       elevatorReleaseTop.andThen(
       armPlaceTop).andThen(
-      elevatorZeroTop.alongWith(new WaitCommand(0.13).andThen(armPassTop))).andThen(
-      armHomeTopTwo) 
+      elevatorZeroTop.alongWith(new WaitCommand(0.13).andThen(
+      armHomeTopTwo))) 
       );
       
     //Place Left Middle
@@ -286,7 +281,7 @@ public class RobotContainer {
     new JoystickButton(buttonsXbox, 2).onFalse( // B
       elevatorReleaseMid.andThen(
       armPlaceMid).andThen(
-      elevatorZeroMid.alongWith(new WaitCommand(0.13).andThen(armPassMid))).andThen(
+      elevatorZeroMid.alongWith(new WaitCommand(0.13))).andThen(
       armHomeMidTwo) 
       );
 
@@ -298,7 +293,7 @@ public class RobotContainer {
     new JoystickButton(buttonsXbox, 1).onFalse( // A
       elevatorReleaseLow.andThen(
       armPlaceLow).andThen(
-      elevatorZeroLow.alongWith(new WaitCommand(0.13).andThen(armPassLow))).andThen(
+      elevatorZeroLow.alongWith(new WaitCommand(0.13))).andThen(
       armHomeLowTwo)
       );
 
@@ -333,10 +328,10 @@ public class RobotContainer {
       //new JoystickButton(rightjoystick, 2).onTrue(new InstantCommand(drivebase::lock));
 
       // Enable Drive To Nearest Target (for Matt)
-      /*if(Constants.OperatorConstants.MATT_MODE){
+      if(Constants.OperatorConstants.MATT_MODE){
         new JoystickButton(leftjoystick, 12).onTrue(new NearestTag(drivebase, false, -2, buttonsXbox)); 
         new JoystickButton(leftjoystick, 11).onTrue(new NearestTag(drivebase, false, -15, buttonsXbox));
-      }*/
+      }
 
       new JoystickButton(rightjoystick, 3).onTrue(new InstantCommand(() -> { // Right Thumb Button
         CommandScheduler.getInstance().cancelAll();
