@@ -160,7 +160,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Intake",
       autoArmHomeIntakeOne.andThen(
         autoElevatorSetIntake).andThen(
-        autoIntakeSet.withTimeout(1.7)).andThen( //Change Time to limit switch?
+        autoIntakeSet.withTimeout(1)).andThen( //Change Time to limit switch?
         autoArmHomeIntakeTwo) 
     );
 
@@ -328,10 +328,10 @@ public class RobotContainer {
       //new JoystickButton(rightjoystick, 2).onTrue(new InstantCommand(drivebase::lock));
 
       // Enable Drive To Nearest Target (for Matt)
-      if(Constants.OperatorConstants.MATT_MODE){
+      /*if(Constants.OperatorConstants.MATT_MODE){
         new JoystickButton(leftjoystick, 12).onTrue(new NearestTag(drivebase, false, -2, buttonsXbox)); 
         new JoystickButton(leftjoystick, 11).onTrue(new NearestTag(drivebase, false, -15, buttonsXbox));
-      }
+      }*/
 
       new JoystickButton(rightjoystick, 3).onTrue(new InstantCommand(() -> { // Right Thumb Button
         CommandScheduler.getInstance().cancelAll();
