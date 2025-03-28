@@ -164,6 +164,10 @@ public class RobotContainer {
         autoArmHomeIntakeTwo) 
     );
 
+    // Auto Dislodge
+    NamedCommands.registerCommand("Dislodge", new MoveElevator(elevator, 0.73).withTimeout(0.2).andThen(new WaitCommand(0.1))
+    .andThen(new MoveElevator(elevator, -0.73).withTimeout(0.2)));
+
     // Auto Left Top Place
     NamedCommands.registerCommand("Left Top Place",
       autoArmHomeTopOne.andThen(
