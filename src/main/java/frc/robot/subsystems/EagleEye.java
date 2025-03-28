@@ -81,22 +81,25 @@ public class EagleEye extends SubsystemBase {
     LimelightHelpers.PoseEstimate limelightMeasurementb = LimelightHelpers
         .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-camb");
 
-    SmartDashboard.putNumber("EEA NumTags", limelightMeasurementa.tagCount);
-    SmartDashboard.putNumber("EEA Avg Tag Dist", limelightMeasurementa.avgTagDist);
-    SmartDashboard.putNumber("EEB NumTags", limelightMeasurementb.tagCount);
-    SmartDashboard.putNumber("EEB Avg Tag Dist", limelightMeasurementb.avgTagDist);
-    SmartDashboard.putNumber("EE Rotation Vel", Globals.EagleEye.rotVel);
-    SmartDashboard.putNumber("EE Total Vel", Math.hypot(Globals.EagleEye.xVel, Globals.EagleEye.yVel));
+    if (limelightMeasurementa != null && limelightMeasurementb != null) {
+      SmartDashboard.putNumber("EEA NumTags", limelightMeasurementa.tagCount);
+      SmartDashboard.putNumber("EEA Avg Tag Dist", limelightMeasurementa.avgTagDist);
+      SmartDashboard.putNumber("EEB NumTags", limelightMeasurementb.tagCount);
+      SmartDashboard.putNumber("EEB Avg Tag Dist", limelightMeasurementb.avgTagDist);
+      SmartDashboard.putNumber("EE Rotation Vel", Globals.EagleEye.rotVel);
+      SmartDashboard.putNumber("EE Total Vel", Math.hypot(Globals.EagleEye.xVel, Globals.EagleEye.yVel));
+    
 
-    confidencea = limelightMeasurement(limelightMeasurementa);
-    confidenceb = limelightMeasurement(limelightMeasurementb);
+      confidencea = limelightMeasurement(limelightMeasurementa);
+      confidenceb = limelightMeasurement(limelightMeasurementb);
 
-    // No tag found so check no further or pose not within field boundary
-    Globals.LastVisionMeasurement.positiona = limelightMeasurementa.pose;
-    Globals.LastVisionMeasurement.positionb = limelightMeasurementb.pose;
-    Globals.LastVisionMeasurement.timeStamp = limelightMeasurementa.timestampSeconds;
-    Globals.LastVisionMeasurement.notRead = true;
-    Globals.LastVisionMeasurement.confidencea = confidencea;
-    Globals.LastVisionMeasurement.confidenceb = confidenceb;
+      // No tag found so check no further or pose not within field boundary
+      Globals.LastVisionMeasurement.positiona = limelightMeasurementa.pose;
+      Globals.LastVisionMeasurement.positionb = limelightMeasurementb.pose;
+      Globals.LastVisionMeasurement.timeStamp = limelightMeasurementa.timestampSeconds;
+      Globals.LastVisionMeasurement.notRead = true;
+      Globals.LastVisionMeasurement.confidencea = confidencea;
+      Globals.LastVisionMeasurement.confidenceb = confidenceb;
+    }
   }
 }
