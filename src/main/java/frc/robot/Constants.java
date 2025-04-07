@@ -39,11 +39,11 @@ public final class Constants {
     public static final double ELEVATOR_MIDDLE = -18.3;
     public static final double ELEVATOR_LOW = -10.03;
     public static final double ELEVATOR_TROUGH = -18.03;
-    public static final double ELEVATOR_INTAKE = -2; //-4.801
+    public static final double ELEVATOR_INTAKE = -2; // -4.801, 0.3
   }
 
   public static final class AutonConstants {
-    public static final PIDConstants TRANSLATION_PID = new PIDConstants(7.3, 0, 0); // D of 3?
+    public static final PIDConstants TRANSLATION_PID = new PIDConstants(7.7, 0, 0.035); // D of 3?
     public static final PIDConstants ANGLE_PID = new PIDConstants(5.0, 0, 0.00);
   }
 

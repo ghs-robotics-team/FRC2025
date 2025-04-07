@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.191717948720039,
-        "y": 0.4620576923076921
+        "x": 6.408059210526315,
+        "y": 0.8402138157894741
       },
       "isLocked": false,
       "linkedName": null
@@ -30,11 +30,22 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "pointTowardsZones": [],
+  "pointTowardsZones": [
+    {
+      "fieldPosition": {
+        "x": 20.0,
+        "y": -3.0
+      },
+      "rotationOffset": 0.0,
+      "minWaypointRelativePos": 0.0,
+      "maxWaypointRelativePos": 0.2540106951871648,
+      "name": "Point Towards Zone"
+    }
+  ],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.25,
-    "maxAcceleration": 2.25,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.4,
@@ -48,7 +59,7 @@
   "folder": "1Coral",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -179.00628539797174
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }
