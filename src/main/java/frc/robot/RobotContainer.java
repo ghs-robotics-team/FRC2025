@@ -160,7 +160,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Intake",
       autoArmHomeIntakeOne.withTimeout(1).andThen(
         autoElevatorSetIntake.withTimeout(2)).andThen(
-        autoIntakeSet.withTimeout(1.7)).andThen( //Change Time to limit switch?
+        autoIntakeSet.withTimeout(4)).andThen( //Change Time to limit switch?
         autoArmHomeIntakeTwo.withTimeout(1)) 
     );
 
