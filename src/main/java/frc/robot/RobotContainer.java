@@ -63,8 +63,7 @@ public class RobotContainer {
   private final MoveClimber upClimber = new MoveClimber(climber, 0.75);
   private final MoveClimber downClimber = new MoveClimber(climber, -0.75);
 
-  // private final ElevatorSetpoint elevatorZero = new ElevatorSetpoint(elevator, 0.3);
-  private final ElevatorSetpoint elevatorIntake = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE);
+  private final ElevatorSetpoint elevatorIntake = new ElevatorSetpoint(elevator, Constants.SetPointConstants.ELEVATOR_INTAKE); // or 0.3
   private final ArmSetpoint armHome = new ArmSetpoint(arm, 0);
   
   private final ArmSteady armSteady = new ArmSteady(arm);
@@ -152,7 +151,6 @@ public class RobotContainer {
   public RobotContainer() {
     // Create some Subsystems
     drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
-    //TargetPoints.printPlaces();
 
     // Named Commands
 
@@ -253,7 +251,7 @@ public class RobotContainer {
     new POVButton(buttonsXbox, 0).whileTrue(upElevator);
     new POVButton(buttonsXbox, 180).whileTrue(downElevator);
 
-    //new JoystickButton(buttonsXbox, 8).onTrue(elevatorZero); // Delete?
+    //new JoystickButton(buttonsXbox, 8).onTrue(elevatorZero); // Uneeded for Now
     new JoystickButton(buttonsXbox, 10).onTrue(elevatorIntake);
 
     new JoystickButton(buttonsXbox, 7).whileTrue(upClimber);
@@ -314,7 +312,7 @@ public class RobotContainer {
     
     if (OperatorConstants.XBOX_DRIVE) { // Untested
       new JoystickButton(driverXbox, 8).onTrue((new InstantCommand(drivebase::zeroGyro))); // (Start)
-      //new JoystickButton(rightjoystick, 2).onTrue(new InstantCommand(drivebase::lock)); GET CORRECT ID 
+      //new JoystickButton(rightjoystick, 2).onTrue(new InstantCommand(drivebase::lock));
 
       // Enable Drive To Nearest Target (for Matt)
       if(Constants.OperatorConstants.MATT_MODE){

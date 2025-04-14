@@ -24,6 +24,7 @@ public final class Globals {
     public static double topShooterTemp = 0;
     public static double bottomShooterTemp = 0;
   }
+  
   public static class targetPos {
     public static double armTarget = 0;
     public static double elevatorTarget = 0;

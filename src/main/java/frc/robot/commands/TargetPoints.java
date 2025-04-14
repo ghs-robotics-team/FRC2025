@@ -13,9 +13,7 @@ public enum TargetPoints {
     LEFT(new Pose2d(Units.inchesToMeters(144), Units.inchesToMeters(158.5), Rotation2d.fromDegrees(180))),
     BOTTOM_RIGHT(new Pose2d(Units.inchesToMeters(193.1), Units.inchesToMeters(130.17), Rotation2d.fromDegrees(300))),
     BOTTOM_LEFT(new Pose2d(Units.inchesToMeters(160.39), Units.inchesToMeters(130.17), Rotation2d.fromDegrees(240)));
-    //TOP_STATION(new Pose2d(Units.inchesToMeters(33.51), Units.inchesToMeters(291.2), Rotation2d.fromDegrees(306))),
-    //BOTTOM_STATION(new Pose2d(Units.inchesToMeters(33.51), Units.inchesToMeters(25.8), Rotation2d.fromDegrees(54)));
-
+    
     public Pose2d pose;
 
     private TargetPoints(Pose2d pose) {
@@ -83,8 +81,6 @@ public enum TargetPoints {
 
     public static void printPlaces(){
         for(TargetPoints point: TargetPoints.values()){
-            //System.out.println(point.name() + " :" + point.get());
-            //System.out.println(point.name() + " :" + point.getForward());
             System.out.println(point.name() + " :" + TargetPoints.tagPos(new Pose2d(point.get().getX(), point.get().getY(), point.get().getRotation()), -15)); //-2 or -15
         }
     }

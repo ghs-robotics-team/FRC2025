@@ -10,9 +10,6 @@ import frc.robot.LimelightHelpers;
 import frc.robot.Constants.EagleEyeConstants;
 
 public class EagleEye extends SubsystemBase {
-
-  //Pigeon2 pigeon = new Pigeon2(14);
-
   /** Creates a new EagleEye. */
   public EagleEye() {
   }
