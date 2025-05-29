@@ -156,10 +156,10 @@ public class RobotContainer {
 
     // Auto Intake
     NamedCommands.registerCommand("Intake",
-      autoArmHomeIntakeOne.andThen(
-        autoElevatorSetIntake).andThen(
-        autoIntakeSet.withTimeout(1)).andThen( //Change Time to limit switch?
-        autoArmHomeIntakeTwo) 
+      autoArmHomeIntakeOne.withTimeout(1).andThen(
+        autoElevatorSetIntake.withTimeout(2)).andThen(
+        autoIntakeSet.withTimeout(4)).andThen( //Change Time to limit switch?
+        autoArmHomeIntakeTwo.withTimeout(1)) 
     );
 
     // Auto Dislodge
@@ -168,41 +168,14 @@ public class RobotContainer {
 
     // Auto Left Top Place
     NamedCommands.registerCommand("Left Top Place",
-      autoArmHomeTopOne.andThen(
-      autoElevatorPlaceTop).andThen(
-      autoArmPlaceTop.withTimeout(5.3))
+      autoArmHomeTopOne.withTimeout(1).andThen(
+      autoElevatorPlaceTop.withTimeout(2)).andThen(
+      autoArmPlaceTop.withTimeout(1))
     );
 
     NamedCommands.registerCommand("Left Top Place Parallel",
-      autoElevatorZeroTop.alongWith(new WaitCommand(0.13).andThen(
-    autoArmHomeTopTwo))
-    );
-
-    // Auto Left Middle Place
-    NamedCommands.registerCommand("Left Middle Place",
-      autoArmHomeMidOne.andThen(
-      autoElevatorPlaceMid).andThen(
-      autoArmPlaceMid).andThen(
-        autoElevatorZeroMid.alongWith(new WaitCommand(0.13).andThen(autoArmPassMid))).andThen(
-      autoArmHomeMidTwo) 
-    );
-
-    // Auto Left Low Place
-    NamedCommands.registerCommand("Left Low Place",
-      autoArmHomeLowOne.andThen(
-      autoElevatorPlaceLow).andThen(
-      autoArmPlaceLow).andThen(
-        autoElevatorZeroLow.alongWith(new WaitCommand(0.13).andThen(autoArmPassLow))).andThen(
-      autoArmHomeLowTwo) 
-    );
-
-    // Auto Left Trough Place
-    NamedCommands.registerCommand("Left Trough Place",
-      autoArmHomeTroughOne.andThen(
-      autoElevatorPlaceTrough).andThen(
-      autoarmPlaceTrough).andThen(
-        autoElevatorZeroTrough.alongWith(new WaitCommand(0.7).andThen(autoArmPassTrough))).andThen(
-      autoArmHomeTroughTwo) 
+      autoElevatorZeroTop.withTimeout(2).alongWith(new WaitCommand(0.13).andThen(autoArmPassTop.withTimeout(1))).andThen(
+    autoArmHomeTopTwo.withTimeout(1))
     );
 
     // Set Controller Ids
@@ -287,7 +260,7 @@ public class RobotContainer {
       armHomeMidTwo) 
       );
 
-    //Place Left Low
+    /*//Place Left Low
     new JoystickButton(buttonsXbox, 1).onTrue( // A
       armHomeLowOne.andThen(
       elevatorPlaceLow)
@@ -297,7 +270,7 @@ public class RobotContainer {
       armPlaceLow).andThen(
       elevatorZeroLow.alongWith(new WaitCommand(0.13))).andThen(
       armHomeLowTwo)
-      );
+      ); */
 
     //Place Left Trough
     new JoystickButton(buttonsXbox, 3).onTrue( // X
