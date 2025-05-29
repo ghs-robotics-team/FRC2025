@@ -117,7 +117,7 @@ public class SwerveSubsystem extends SubsystemBase
     }*/
     if (RobotBase.isSimulation())
     {
-      //addFakeVisionReading();
+      
     }
     else
     {
