@@ -26,8 +26,8 @@ public class SimEye extends SubsystemBase {
     VisionTargetSim visionTarget = new VisionTargetSim(targetPose, targetModel);
     visionSim.addVisionTargets(visionTarget);
 
-    AprilTagFieldLayout tagLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.kDefaultField.m_resourceFile);
-    visionSim.addAprilTags(tagLayout);
+    //AprilTagFieldLayout tagLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.kDefaultField.m_resourceFile);
+    //visionSim.addAprilTags(tagLayout);
   }
 
   @Override

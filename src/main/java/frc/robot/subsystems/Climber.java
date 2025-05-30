@@ -19,7 +19,7 @@ public class Climber extends SubsystemBase {
 
   public void move(double amt){
     encoder = motor.getEncoder().getPosition();
-    amt = -amt;
+    //amt = -amt;
     motor.set(amt);
   }
 
