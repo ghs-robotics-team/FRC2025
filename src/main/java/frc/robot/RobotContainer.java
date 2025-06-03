@@ -107,7 +107,7 @@ public class RobotContainer {
   private final OuttakeCommand outtakeTrough = new OuttakeCommand(arm, Constants.SetPointConstants.ELEVATOR_INTAKE);
 
   //  Auto Chooser
-  private final SendableChooser<Command> auto;
+  //private final SendableChooser<Command> auto;
 
   // Naming Convention: (auto)-subsystem-Action-Level-(Order)
   // Auto Intake Command
@@ -212,8 +212,8 @@ public class RobotContainer {
     //arm.setDefaultCommand(armSteady);
     //elevator.setDefaultCommand(elevatorSteady);
 
-    auto = AutoBuilder.buildAutoChooser();
-    SmartDashboard.putData("chooseAuto", auto); 
+    //auto = AutoBuilder.buildAutoChooser();
+    //SmartDashboard.putData("chooseAuto", auto); 
   }
 
   private void configureBindings() {
@@ -315,6 +315,7 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return auto.getSelected();
+    //return auto.getSelected();
+    return null;
   }
 }
