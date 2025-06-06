@@ -19,7 +19,7 @@ public class ElevatorSteady extends Command {
   public ElevatorSteady(Elevator elevator) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(elevator);
-    this.pid = new PIDController(0.05, 0, 0.00005);
+    this.pid = new PIDController(0.037, 0, 0.00005);
     this.elevator = elevator;
   }
 

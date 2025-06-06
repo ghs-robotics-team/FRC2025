@@ -27,10 +27,10 @@ public class ElevatorSetpoint extends Command {
   public void initialize() {
     error = pid.getPositionError();
     if(elevator.getRelPos() <= setPoint){ // If going down
-      this.pid = new PIDController (0.047,0,0.005); 
+      this.pid = new PIDController (0.037,0,0.00005); 
     } 
     else{
-      this.pid = new PIDController (0.15,0,0.0063); 
+      this.pid = new PIDController (0.047,0,0.0001); 
     }
   }
 

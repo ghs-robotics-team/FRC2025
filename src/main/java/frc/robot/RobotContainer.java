@@ -57,8 +57,8 @@ public class RobotContainer {
   private final IntakeCommand intake = new IntakeCommand(arm, -1);
   private final OuttakeCommand outtake = new OuttakeCommand(arm, 1);
 
-  private final MoveElevator upElevator = new MoveElevator(elevator, 0.73);
-  private final MoveElevator downElevator = new MoveElevator(elevator, -0.73);
+  private final MoveElevator upElevator = new MoveElevator(elevator, 0.13);
+  private final MoveElevator downElevator = new MoveElevator(elevator, -0.13);
 
   private final MoveClimber upClimber = new MoveClimber(climber, 0.75);
   private final MoveClimber downClimber = new MoveClimber(climber, -0.75);
@@ -209,8 +209,8 @@ public class RobotContainer {
 
     eagleye.setDefaultCommand(eagleeyecommand);
     drivebase.setDefaultCommand(driveCommand);
-    //arm.setDefaultCommand(armSteady);
-    //elevator.setDefaultCommand(elevatorSteady);
+    arm.setDefaultCommand(armSteady);
+    elevator.setDefaultCommand(elevatorSteady);
 
     //auto = AutoBuilder.buildAutoChooser();
     //SmartDashboard.putData("chooseAuto", auto); 

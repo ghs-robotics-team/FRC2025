@@ -4,10 +4,11 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Globals;
@@ -25,11 +26,11 @@ public class Elevator extends SubsystemBase {
 
   public Elevator() {
     // Use addRequirements() here to declare subsystem dependencies.
-  }
+  } //-19.5668 top
 
   public void move(double amt, double pos){ //Bottom for both at 0, Top at -36.706 for 13, 37.828 for 15
     if(amt<=0){
-      if(pos <= 0){
+      if(pos <= 0){ 
         Left.set(-amt);
         Right.set(amt);
       }
@@ -39,7 +40,7 @@ public class Elevator extends SubsystemBase {
       }
     }
     else{
-      if(pos > -36.6){
+      if(pos > -20.7){
         Left.set(-amt);
         Right.set(amt);
       }
@@ -49,7 +50,8 @@ public class Elevator extends SubsystemBase {
       }
     }
     SmartDashboard.putNumber("ES AbsPos", getAbsPos()); // Doesn't show up
-    SmartDashboard.putNumber("ES RelPos", getRelPos());
+    SmartDashboard.putNumber("ES LeftRelPos", getRelPos());
+    SmartDashboard.putNumber("ES RightRelPos", getRightRelPos());
   }
 
   public double getAbsPos(){
@@ -58,6 +60,10 @@ public class Elevator extends SubsystemBase {
 
   public double getRelPos(){
     return LrelativeEncoder.getPosition();
+  }
+
+  public double getRightRelPos(){
+    return RrelativeEncoder.getPosition();
   }
 
   @Override
