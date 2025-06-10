@@ -36,8 +36,10 @@ public final class Constants {
     public static final double ARM_RIGHT_TROUGH = -ARM_LEFT_TROUGH;
 
     public static final double ELEVATOR_HIGH = -20.2;
-    public static final double ELEVATOR_MIDDLE = -18.3;
-    public static final double ELEVATOR_LOW = -10.03;
+    // NOTE: Actual ELEVATOR_MIDDLE is -10.8, overshoot due to PID coming up short
+    public static final double ELEVATOR_MIDDLE = -11.8;
+    // NOTE: Actual ELEVATOR_LOW is -6.4, overshoot due to PID coming up short
+    public static final double ELEVATOR_LOW = -7.1;
     public static final double ELEVATOR_TROUGH = -18.03;
     public static final double ELEVATOR_INTAKE = -2; // -4.801, 0.3
   }
