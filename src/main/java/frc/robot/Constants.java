@@ -26,7 +26,7 @@ public final class Constants {
 
   public static final class SetPointConstants { 
     public static final double ARM_LEFT_LOW = 5300.258;
-    public static final double ARM_LEFT_MIDDLE = 5300.898;
+    public static final double ARM_LEFT_MIDDLE = 5400.898;
     public static final double ARM_LEFT_HIGH = 5200.633;
     public static final double ARM_LEFT_TROUGH = 7100.332;
 
@@ -41,7 +41,7 @@ public final class Constants {
     // NOTE: Actual ELEVATOR_LOW is -6.4, overshoot due to PID coming up short
     public static final double ELEVATOR_LOW = -7.1;
     public static final double ELEVATOR_TROUGH = -18.03;
-    public static final double ELEVATOR_INTAKE = -2; // -4.801, 0.3
+    public static final double ELEVATOR_INTAKE = 0; // -4.801, 0.3
   }
 
   public static final class AutonConstants {

@@ -107,7 +107,7 @@ public class RobotContainer {
   private final OuttakeCommand outtakeTrough = new OuttakeCommand(arm, Constants.SetPointConstants.ELEVATOR_INTAKE);
 
   //  Auto Chooser
-  //private final SendableChooser<Command> auto;
+  private final SendableChooser<Command> auto;
 
   // Naming Convention: (auto)-subsystem-Action-Level-(Order)
   // Auto Intake Command
@@ -156,10 +156,7 @@ public class RobotContainer {
 
     // Auto Intake
     NamedCommands.registerCommand("Intake",
-      autoArmHomeIntakeOne.withTimeout(1).andThen(
-        autoElevatorSetIntake.withTimeout(2)).andThen(
-        autoIntakeSet.withTimeout(4)).andThen( //Change Time to limit switch?
-        autoArmHomeIntakeTwo.withTimeout(1)) 
+      autoIntakeSet.withTimeout(3)
     );
 
     // Auto Dislodge
@@ -174,8 +171,7 @@ public class RobotContainer {
     );
 
     NamedCommands.registerCommand("Left Top Place Parallel",
-      autoElevatorZeroTop.withTimeout(2).alongWith(new WaitCommand(0.13).andThen(autoArmPassTop.withTimeout(1))).andThen(
-    autoArmHomeTopTwo.withTimeout(1))
+      autoElevatorZeroTop.withTimeout(2).alongWith(autoArmHomeTopTwo.withTimeout(1))
     );
 
     // Set Controller Ids
@@ -212,8 +208,8 @@ public class RobotContainer {
     arm.setDefaultCommand(armSteady);
     elevator.setDefaultCommand(elevatorSteady);
 
-    //auto = AutoBuilder.buildAutoChooser();
-    //SmartDashboard.putData("chooseAuto", auto); 
+    auto = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("chooseAuto", auto); 
   }
 
   private void configureBindings() {
@@ -244,8 +240,7 @@ public class RobotContainer {
     new JoystickButton(buttonsXbox, 4).onFalse( // Y
       elevatorReleaseTop.andThen(
       armPlaceTop).andThen(
-      elevatorZeroTop.alongWith(new WaitCommand(0.13).andThen(
-      armHomeTopTwo))) 
+      elevatorZeroTop.alongWith(armHomeTopTwo)) 
       );
       
     //Place Left Middle
@@ -256,8 +251,7 @@ public class RobotContainer {
     new JoystickButton(buttonsXbox, 2).onFalse( // B
       elevatorReleaseMid.andThen(
       armPlaceMid).andThen(
-      elevatorZeroMid.alongWith(new WaitCommand(0.13))).andThen(
-      armHomeMidTwo) 
+      elevatorZeroMid.alongWith(armHomeMidTwo)) 
       );
 
     /*//Place Left Low
@@ -315,7 +309,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    //return auto.getSelected();
-    return null;
+    return auto.getSelected();
   }
 }

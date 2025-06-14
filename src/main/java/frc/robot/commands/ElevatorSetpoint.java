@@ -19,7 +19,7 @@ public class ElevatorSetpoint extends Command {
     addRequirements(elevator);
     this.elevator = elevator;
     this.setPoint = setPoint;
-    this.pid = new PIDController (0.15,0,0.005); 
+    this.pid = new PIDController (0.28,0,0.003); // THIS IS NOT THE PID, IT IS IN INIT
   }
 
   // Called when the command is initially scheduled.
@@ -27,10 +27,10 @@ public class ElevatorSetpoint extends Command {
   public void initialize() {
     error = pid.getPositionError();
     if(elevator.getRelPos() <= setPoint){ // If going down
-      this.pid = new PIDController (0.037,0,0.00005); 
+      this.pid = new PIDController (0.017,0,0.00005); // 0.037,0,0.00005
     } 
     else{
-      this.pid = new PIDController (0.047,0,0.0001); 
+      this.pid = new PIDController (0.05,0,0.0001); // 0.047,0,0.0001
     }
   }
 
@@ -44,7 +44,7 @@ public class ElevatorSetpoint extends Command {
     error = pid.getPositionError();
 
     // If error is within 1 unit, stop moving arm.
-    if (error > -0.3 && error < 0.3) {
+    if (error > -1 && error < 1) {
       elevator.move(0, elevator.getRelPos()); // deadzone
     } else {
       elevator.move(-direction, elevator.getRelPos()); // Move Arm
@@ -63,6 +63,6 @@ public class ElevatorSetpoint extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return error > -0.3 && error < 0.3;
+    return error > -1 && error < 1;
   }
 }
