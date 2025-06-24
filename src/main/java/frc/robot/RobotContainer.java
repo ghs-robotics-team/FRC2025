@@ -250,7 +250,7 @@ public class RobotContainer {
       );
     new JoystickButton(buttonsXbox, 2).onFalse( // B
       elevatorReleaseMid.andThen(
-      armPlaceMid).alongWith(new WaitCommand(0.5).andThen(new OuttakeCommand(arm, 0.5).withTimeout(0.3))).andThen(
+      armPlaceMid)/* .andThen(new OuttakeCommand(arm, 0.5).withTimeout(0.3))*/.andThen(
       elevatorZeroMid.alongWith(armHomeMidTwo)) 
       );
 
