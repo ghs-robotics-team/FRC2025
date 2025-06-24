@@ -39,6 +39,7 @@ public class ArmSteady extends Command {
     }
 
     // This will cause the intake roller to always run to hold the coral in.
+    
     arm.intake(-0.05);
   }
 
